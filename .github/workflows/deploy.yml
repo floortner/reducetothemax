@@ -42,7 +42,6 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
-          # world4you serves the FTP account root at the domain root.
-          # Verify server-dir against your Kundencenter if files land in a subfolder.
+          # Trailing slash is required. Target the /rttm folder on the FTP server.
           local-dir: ./site/
-          server-dir: /
+          server-dir: /rttm/
