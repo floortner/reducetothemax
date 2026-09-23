@@ -34,9 +34,13 @@ python3 -m http.server 8000   # then open http://localhost:8000
 ## Deploy
 
 `index.html`, `styles.css`, `app.js` and `mantras.json` are the whole site — no build
-step. Publish the `site/` folder to any static host. This repo includes a GitHub Pages
-workflow ([`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml)) that deploys
-on every push to `main`; the custom domain is set via [`CNAME`](./CNAME).
+step. It's hosted on **world4you** and deployed over **FTPS** by
+[`.github/workflows/deploy.yml`](../.github/workflows/deploy.yml): open a PR (a validation
+check runs), merge to `main`, then approve the `production` deployment to upload `site/`.
+
+Deploy needs three repo secrets from the world4you Kundencenter (Webspace → FTP):
+`FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`. Any static host works too — the four `site/`
+files are self-contained.
 
 ## Structure
 

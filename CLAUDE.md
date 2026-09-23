@@ -38,6 +38,12 @@ There is no lint, test, or build command.
 
 ## Deploy
 
-Publish the `site/` folder to any static host; `CNAME` sets the custom domain for GitHub
-Pages. `.github/workflows/deploy.yml` deploys the `site/` folder to GitHub Pages on every
-push to `main`.
+The site is hosted on **world4you** and deployed over **FTPS**. `.github/workflows/deploy.yml`
+runs on push to `main`: a `validate` job checks `mantras.json` on every PR, and a `deploy`
+job uploads `site/` to the world4you FTP root. The deploy job is gated by the `production`
+GitHub Environment, which requires a manual approval (the repo owner) before the upload runs.
+
+FTP connection values are repo secrets — `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD` — taken
+from the world4you Kundencenter (Webspace → FTP). `server-dir` is `/` (world4you serves the
+FTP account root at the domain root). The `site/CNAME` file is a leftover from the old GitHub
+Pages setup and is unused by FTP hosting.
