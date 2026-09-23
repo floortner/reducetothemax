@@ -1,0 +1,73 @@
+{
+  "intro": "Dynatrace R&D has grown from hundreds to thousands, and now agents are producing code, tests, and artifacts — more power than we've ever had. That scale moves {roleWord} up: closer to the problem, the customer, and the value. It's on us to deliver. Here's what it means to you.",
+  "signature": "stefan.frandl florian.ortner andreas.lehofer",
+  "roles": [
+    { "id": "eng",       "label": "engineer",        "word": "engineers" },
+    { "id": "architect", "label": "architect",       "word": "architects" },
+    { "id": "design",    "label": "designer",        "word": "designers" },
+    { "id": "product",   "label": "product manager", "word": "product managers" },
+    { "id": "manager",   "label": "manager",         "word": "managers" }
+  ],
+  "mantras": [
+    {
+      "num": "1",
+      "title": "reduce to the max",
+      "sub": "start small. validate. iterate.",
+      "roles": {
+        "eng":       { "do": "implement a simple solution that does the job", "dont": "build for a potential future problem" },
+        "architect": { "do": "the simplest design that ships", "dont": "a framework for a problem you may never have" },
+        "design":    { "do": "focus on the experience", "dont": "six variants nobody chose between" },
+        "product":   { "do": "focus on customer value, cut the rest", "dont": "a backlog of 200 \"P2s\" nobody kills" },
+        "manager":   { "do": "focus on the highest priorities", "dont": "a bit of everything: low value, high effort" }
+      }
+    },
+    {
+      "num": "2",
+      "title": "show, don't tell",
+      "sub": "demo over docs. results tell more than 1000 words.",
+      "roles": {
+        "eng":       { "do": "review in the product", "dont": "show how beautiful the spec is" },
+        "architect": { "do": "prove it in production", "dont": "a 30-page reference architecture pdf" },
+        "design":    { "do": "show it running, not the slideware", "dont": "40 annotated static mocks" },
+        "product":   { "do": "demo the product to customers", "dont": "just \"talk\" about the feature" },
+        "manager":   { "do": "data-driven decision making", "dont": "present a status deck about the work" }
+      }
+    },
+    {
+      "num": "3",
+      "title": "think customer-first",
+      "sub": "understand the real pain. ask 5x why.",
+      "roles": {
+        "eng":       { "do": "make it work in 5 minutes for a developer who has never seen us", "dont": "implement the literal jira line" },
+        "architect": { "do": "design for the real constraint, not the ask", "dont": "add extensibility nobody requested" },
+        "design":    { "do": "solve the job, not the request", "dont": "reskin exactly what they sketched" },
+        "product":   { "do": "interrogate the \"why\" five times", "dont": "build the request before understanding the pain" },
+        "manager":   { "do": "understand the ask before the team builds it", "dont": "forward the request without the why" }
+      }
+    },
+    {
+      "num": "4",
+      "title": "don't reinvent the wheel",
+      "sub": "if it exists, use it. if you don't like it, make it better.",
+      "roles": {
+        "eng":       { "do": "reuse and contribute back — make the shared things better", "dont": "build a new parser / client / wrapper because yours will be cleaner" },
+        "architect": { "do": "standardize and enhance the proven building blocks", "dont": "a homegrown framework for something standard tools already do" },
+        "design":    { "do": "build from the design system as much as possible", "dont": "a one-off component that breaks consistency" },
+        "product":   { "do": "reuse the flow customers already know", "dont": "invent a new pattern for a solved problem" },
+        "manager":   { "do": "review and adopt the team's proven way of working", "dont": "reinvent the process because it's \"yours\"" }
+      }
+    },
+    {
+      "num": "5",
+      "title": "you build it, you own it",
+      "sub": "the model suggests. you decide. every line that merges is yours.",
+      "roles": {
+        "eng":       { "do": "watch your change in prod after it ships", "dont": "merge it and move on" },
+        "architect": { "do": "live with the design you chose", "dont": "pick the pattern, leave others to run it" },
+        "design":    { "do": "follow the feature into real usage", "dont": "hand off the mocks and disappear" },
+        "product":   { "do": "own the outcome, not just the launch", "dont": "declare victory at GA" },
+        "manager":   { "do": "take the incident, shield the team, fix the system", "dont": "hunt for whom to blame" }
+      }
+    }
+  ]
+}
