@@ -128,8 +128,8 @@
       var tag = (e.target && e.target.tagName) || '';
       if (e.metaKey || e.ctrlKey || e.altKey || tag === 'INPUT' || tag === 'TEXTAREA') return;
       if (e.key === 't' || e.key === 'T') { e.preventDefault(); toggleTheme(); }
-      else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); moveRole(1); }
-      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); moveRole(-1); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); moveRole(1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); moveRole(-1); }
     });
 
     renderRoles();
