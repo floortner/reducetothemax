@@ -101,6 +101,16 @@
     renderMantras();
   }
 
+  // Step to the previous/next role, wrapping around at both ends.
+  function moveRole(delta) {
+    var ids = data.roles.map(function (r) { return r.id; });
+    var i = ids.indexOf(activeRole);
+    if (i < 0) i = 0;
+    setRole(ids[(i + delta + ids.length) % ids.length]);
+    var on = document.querySelector('.chip.on');
+    if (on) on.focus();
+  }
+
   // Boot ---------------------------------------------------------------
   function init(json) {
     data = json;
@@ -118,6 +128,8 @@
       var tag = (e.target && e.target.tagName) || '';
       if (e.metaKey || e.ctrlKey || e.altKey || tag === 'INPUT' || tag === 'TEXTAREA') return;
       if (e.key === 't' || e.key === 'T') { e.preventDefault(); toggleTheme(); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); moveRole(1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); moveRole(-1); }
     });
 
     renderRoles();
