@@ -5,7 +5,7 @@ The five engineering mantras for Dynatrace R&D, as a small static site. Live at
 
 ## Editing content
 
-All copy lives in [`mantras.json`](./mantras.json) — nothing else needs to change to
+All copy lives in [`mantras.json`](./site/mantras.json) — nothing else needs to change to
 update text.
 
 - **intro** — the paragraph under the role picker. Use `{roleWord}` where the selected
@@ -35,7 +35,7 @@ python3 -m http.server 8000   # then open http://localhost:8000
 
 `index.html`, `styles.css`, `app.js` and `mantras.json` are the whole site — no build
 step. It's hosted on **world4you** and deployed over **FTPS** by
-[`.github/workflows/deploy.yml`](../.github/workflows/deploy.yml): open a PR (a validation
+[`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml): open a PR (a validation
 check runs), merge to `main`, then approve the `production` deployment to upload `site/`.
 
 Deploy needs three repo secrets from the world4you Kundencenter (Webspace → FTP):
