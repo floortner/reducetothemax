@@ -4,6 +4,7 @@
   var STORE_THEME = 'rttm_theme';
   var data = null;
   var activeRole = null;
+  var toggleBtn = null;
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -34,6 +35,8 @@
 
   function renderRoles() {
     var bar = document.getElementById('rolebar');
+    // Keep a stable reference so re-rendering doesn't drop the toggle's listener.
+    if (!toggleBtn) toggleBtn = document.querySelector('.theme-toggle');
     bar.innerHTML = '';
     bar.appendChild(el('span', 'prompt', '>'));
     bar.appendChild(el('span', 'lead', "I'm a"));
@@ -44,6 +47,8 @@
       chip.addEventListener('click', function () { setRole(r.id); });
       bar.appendChild(chip);
     });
+    // Toggle rides the same flex row as the chips, pushed to the far right.
+    if (toggleBtn) bar.appendChild(toggleBtn);
   }
 
   function renderIntro() {
