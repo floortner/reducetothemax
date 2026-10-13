@@ -13,8 +13,8 @@
   - Home: Overview, Business (industry dashboard templates)
   - Problems: Problems, Investigations, Recommendations
   - Smartscape: 10 views in a top-bar picker, no tabs
-  - Infrastructure: Hosts, Network, Clouds, Kubernetes, Synthetic, SLOs, Alert templates
-  - Applications: Services, Errors, Response time, Frontends, Feature flags, Alert templates
+  - Infrastructure: Hosts, Network, Clouds, Kubernetes, Synthetic, Alert templates
+  - Applications: Services, Errors, SLOs, Response time, Frontends, Feature flags, Alert templates
   - Telemetry: Logs, Metrics, Traces, User sessions, Events, AI
   - Security: Vulnerabilities, SIEM (MITRE ATT&CK matrix), User audits, Detections, Alert templates
   - Documents: Dashboards, Notebooks, Pages, Launchpads
