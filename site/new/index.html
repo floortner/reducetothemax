@@ -134,6 +134,10 @@ td.mono,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:
 .cols2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 0}
 .card h2{font-size:14px;margin:0;padding:10px 16px}
+/* one card style */
+.ph-card,.qs-card,.fd-card,.tpl,.db-tile,.dt-left,.dt-right,.sx-panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--rad);padding:14px 16px}
+.dt-right{padding:0}
+.ph-card h3,.fd-card h3,.qs-card h2,.tpl h3,.dt-left h2{margin:0 0 10px;font-size:14px;font-weight:500}
 .row{display:flex;gap:10px;align-items:center;padding:9px 16px;border-top:1px solid var(--line);cursor:pointer;width:100%;background:none;border-left:0;border-right:0;border-bottom:0;text-align:left}
 .row:hover{background:rgba(255,255,255,.03)}
 .row .grow{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -242,17 +246,6 @@ tbody tr:hover{background:var(--hover)}
 .menu .mi[aria-checked=true]{background:var(--accent-soft)}
 .menu .mi i{width:14px;height:14px;border-radius:50%;border:2px solid var(--line2);flex:none}
 .menu .mi[aria-checked=true] i{border-color:var(--accent);background:radial-gradient(var(--accent) 45%,transparent 50%)}
-.ss-h small{display:block;font-size:18px;color:var(--muted);font-weight:400}
-.ss-h h2{margin:2px 0 20px;font-size:30px;line-height:1.2;font-weight:700;letter-spacing:-.4px}
-.ss-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.ss-card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;min-height:290px}
-.ss-card.wide{grid-column:span 2;flex-direction:row;align-items:center;gap:40px}
-.ss-card .art{display:grid;place-items:center;flex:1}
-.ss-card.wide .art{flex:0 0 42%}
-.ss-card .txt{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
-.ss-card.wide .txt{flex:1}
-.ss-card p{margin:0;font-size:14px}
-.ss-card .art svg{max-width:100%;height:auto}
 .ss-note{color:var(--muted);margin:10px 0 0}
 .body.flush{padding:0;overflow:hidden}
 .ss-wrap{display:grid;grid-template-columns:1fr;height:100%;min-height:0}
@@ -264,10 +257,17 @@ tbody tr:hover{background:var(--hover)}
 .ss-nav a[aria-current=page]{background:var(--accent-soft);color:var(--accent);font-weight:500}
 .ss-nav a[aria-current=page]::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:3px;background:var(--accent);border-radius:2px}
 .ss-main{position:relative;min-width:0;overflow:auto}
-.ss-land{padding:24px 28px 40px}
 .ss-canvas{position:absolute;inset:0;overflow:hidden}
 .ss-canvas>svg{width:100%;height:100%;display:block}
 .gn{cursor:pointer}
+.ss-canvas>svg{cursor:grab;touch-action:none}.ss-canvas>svg.grab{cursor:grabbing}
+.ss-canvas>svg line,.ss-canvas>svg circle,.ss-canvas>svg path{vector-effect:non-scaling-stroke}
+.ss-nav2{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;z-index:4}
+.ss-zoom{display:flex;gap:4px}.ss-zoom .btn{width:34px;height:34px;padding:0;justify-content:center;display:inline-flex;align-items:center;background:var(--panel)}
+.ss-mm{width:200px;height:140px;background:var(--panel);border:1px solid var(--line);border-radius:var(--rad);box-shadow:0 2px 10px rgba(30,30,50,.08);cursor:pointer;touch-action:none}
+.ss-mm *{pointer-events:none;vector-effect:none}
+.ss-mm line{stroke-width:.6}.ss-mm circle{stroke-width:1.5}
+.ss-mmv{fill:var(--accent);fill-opacity:.12;stroke:var(--accent);stroke-width:5}
 .gn:hover circle{stroke-width:3}
 .ss-panels{position:absolute;left:12px;top:12px;bottom:12px;width:340px;display:flex;flex-direction:column;gap:12px;pointer-events:none;overflow:auto}
 .ss-panel{pointer-events:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 2px 10px rgba(30,30,50,.08);flex:none}
@@ -320,24 +320,30 @@ tbody tr:hover{background:var(--hover)}
 .menu .del:hover{background:var(--panel2);color:var(--r)}
 .pickbtn[disabled].sq{cursor:not-allowed}
 .ph-wrap{margin-bottom:12px}
-.ph-wrap>summary{cursor:pointer;list-style:none;font-weight:600;padding:2px 0 8px;display:flex;gap:8px;align-items:center}
+.ph-wrap>summary{cursor:pointer;list-style:none;font-weight:500;display:inline-flex;gap:8px;align-items:center;height:34px;padding:0 10px;margin-bottom:10px;background:var(--panel);border:1px solid var(--ctl);border-radius:6px}
+.ph-wrap>summary svg{flex:none}
+.ph-wrap[open]>summary svg{transform:rotate(180deg)}
 .ph-wrap>summary::-webkit-details-marker{display:none}
-.ph-wrap>summary::before{content:"▾";color:var(--muted)}
-.ph-wrap:not([open])>summary::before{content:"▸"}
 .ph{display:grid;grid-template-columns:minmax(260px,1fr) minmax(260px,1fr) minmax(340px,1.5fr);gap:12px}
-.ph-card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:0}
-.ph-card h3{margin:0 0 8px;font-size:13px}
+.ph-card{min-width:0}
+.ph-card h3{margin:0 0 8px;font-size:13px;font-weight:500;display:flex;gap:8px;align-items:baseline}
+.ph-card h3 .muted{font-weight:400;font-size:12px}
+.pf-n{font-weight:500}
+.slo-s{font-size:12px;white-space:nowrap;flex:none}
+.slo-t>span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ph-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.ph-stats b{display:block;font-size:19px;font-weight:600;line-height:1.2;white-space:nowrap}
+.ph-stats b{display:block;font-size:19px;font-weight:500;line-height:1.2;white-space:nowrap}
 .ph-stats span{color:var(--muted);font-size:12px}
 .ph-chart{display:flex;align-items:flex-end;gap:2px;height:56px;margin:12px 0 4px}
 .ph-chart i{flex:1;background:var(--tint);border-radius:2px 2px 0 0;position:relative;display:block;min-height:2px}
 .ph-chart i b{position:absolute;left:0;right:0;bottom:0;background:var(--r);border-radius:2px 2px 0 0}
-.slo{padding:7px 0;border-top:1px solid var(--line)}
+.slo{padding:8px 0;border-top:1px solid var(--line)}
+.slo small{display:block;font-size:12px}
 .slo:first-of-type{border-top:none;padding-top:0}
 .slo-t,.slo-m{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.slo-t .tag{white-space:nowrap;flex:none}
 .slo-m{margin:4px 0;font-size:12.5px}
-.meter{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-bottom:3px}
+.meter{height:4px;border-radius:2px;background:var(--line);overflow:hidden;margin:5px 0 4px}
 .meter i{display:block;height:100%}
 .pf-steps{display:grid;gap:8px;margin-top:10px}
 .pf-steps>div{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
@@ -362,8 +368,7 @@ tbody tr:hover{background:var(--hover)}
 .pn{cursor:pointer}
 .pn:hover polygon{stroke-width:4.5}
 .pg-sel{width:100%;padding:7px 8px;border:1px solid var(--ctl);border-radius:6px;background:var(--bg);color:var(--text)}
-.qs-card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-bottom:12px}
-.qs-card h2{margin:0;font-size:16px}
+.qs-card{margin-bottom:12px}
 .qs-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .qs-head .scopebar{margin:0}
 .qs-tech{display:flex;gap:6px}
@@ -396,7 +401,7 @@ tbody tr:hover{background:var(--hover)}
 .shell{border-top:3px solid transparent;border-image:linear-gradient(90deg,#73be28,#1496ff,#1a62d6) 1}
 .main{height:100%;min-height:0}
 .btn,.find,.gsearch,.seg,.pickbtn,.tabs a,.menu,.menu .mi,.menu .mtext,.menu .msearch,.fg summary,.ss-row,.ss-lay,.ss-lay button,.rail a.app,.rail button.app,.ss-nav a,.rc-it,.rc-it .go,.rc-ico,.qs-sel,.pg-sel,.aform input,.asug button,.count,.chip,.scopes button,.pal .pc button,.mini i,.qs-ico,.qs-fi,.qs-tech i,.pal .in,select.sel,.menu .del{border-radius:var(--rad)}
-.card,.tile,.gridwrap,.facets,.empty,.kpi,.topo,.qs-card,.qs-topo,.qs-bar,.ph-card,.ss-card,.ss-panel,.ss-float,.pal,.toast{border-radius:var(--rad)}
+.card,.tile,.gridwrap,.facets,.empty,.kpi,.topo,.qs-card,.qs-topo,.qs-bar,.ph-card,.ss-panel,.ss-float,.pal,.toast{border-radius:var(--rad)}
 .qs-group{border-radius:2px}
 .gsearch{margin-left:auto}
 .tag{border-radius:3px}
@@ -572,7 +577,7 @@ html[data-theme=dark],html[data-theme=midnight],html[data-theme=terminal],html[d
 .sx-bd.act{background:var(--sxcovd);color:#fff}
 .sx-c.sel .sx-bd.act{background:#fff;color:var(--sxcovd)}
 .sx-bd.pot{background:var(--sxpotb);color:#3a2a00}
-.sx-panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--rad);padding:16px;max-height:calc(100vh - 330px);min-height:420px;overflow:auto;display:none}
+.sx-panel{max-height:calc(100vh - 330px);min-height:420px;overflow:auto;display:none}
 .sx-main.open .sx-panel{display:block}
 .sxp-h{display:flex;justify-content:space-between;gap:10px;margin-bottom:10px}
 .sxp-h h2{margin:0 0 6px;font-size:18px}
@@ -669,7 +674,6 @@ html[data-theme=dark],html[data-theme=midnight],html[data-theme=terminal],html[d
 .nb-q{width:100%;border:1px solid var(--line);border-radius:var(--rad);background:var(--bg);color:var(--text);padding:8px 10px;resize:vertical}
 .nb-bar{display:flex;align-items:center;gap:10px;margin-top:8px}
 .db-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:12px}
-.db-tile{border:1px solid var(--line);border-radius:var(--rad);background:var(--panel);padding:12px 14px}
 .db-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .db-num{font-size:32px}
 .db-add{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
@@ -677,9 +681,9 @@ html[data-theme=dark],html[data-theme=midnight],html[data-theme=terminal],html[d
 .lp-go{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;flex:1;padding:6px 4px}
 .lp-go:focus-visible{outline:2px solid var(--accent);border-radius:var(--rad)}
 .dt-wrap{display:grid;grid-template-columns:minmax(300px,420px) minmax(0,1fr);gap:16px;align-items:start}
-.dt-left,.dt-right{background:var(--panel);border:1px solid var(--line);border-radius:var(--rad)}
-.dt-left{padding:16px;min-width:0}
-.dt-left h2,.dtf-head h2{margin:0 0 4px;font-size:18px}
+.dt-left{min-width:0}
+.dtf-head h2{margin:0 0 4px;font-size:18px}
+.dt-left h2{margin-bottom:4px}
 .dt-left>p{margin:0 0 12px}
 .dt-tool{display:flex;align-items:center;gap:6px;margin-bottom:10px}
 .dt-tool .find{flex:1;min-width:0}
@@ -757,8 +761,6 @@ html[data-theme=dark],html[data-theme=midnight],html[data-theme=terminal],html[d
 .fd-tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 .fd-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:14px;align-items:start}
 .fd-main,.fd-side,.fd-stack{display:grid;gap:14px}
-.fd-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--rad,8px);padding:14px 16px}
-.fd-card h3{margin:0 0 10px;font-size:14px}
 .fd-h{display:flex;align-items:center;gap:8px;margin-bottom:10px}.fd-h h3{margin:0}
 .fd-last,.fd-row,.fd-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .fd-bar{margin-top:8px}
@@ -778,7 +780,7 @@ html[data-theme=dark],html[data-theme=midnight],html[data-theme=terminal],html[d
 .tpl-sec{margin-top:18px}
 .tpl-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px}.tpl-h h2{margin:0;font-size:16px}
 .tpl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
-.tpl{background:var(--panel);border:1px solid var(--line);border-radius:var(--rad,8px);padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.tpl{display:flex;flex-direction:column;gap:8px}
 .tpl:hover{border-color:var(--line2)}
 .tpl-oss{border-style:dashed}
 .tpl-f a.btn{text-decoration:none;color:inherit}
@@ -795,7 +797,15 @@ html[data-theme=dark],html[data-theme=midnight],html[data-theme=terminal],html[d
 .rm-b{display:flex;gap:8px;justify-content:flex-end;padding:0 8px 6px}
 .btn.danger{color:#fff;background:var(--r);border-color:var(--r)}
 .sx-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 12px}.sx-head h2{margin:0;font-size:16px}
-@media (max-width:900px){.ss-grid{grid-template-columns:1fr}.ss-card.wide{grid-column:auto;flex-direction:column}.gsearch{width:auto}.gsearch span,.gsearch kbd{display:none}}
+.scopebar .find,.scopebar .btn,.scopebar .seg,.scopebar .pickbtn{height:34px;box-sizing:border-box}
+.scopebar .btn{display:inline-flex;align-items:center}
+.scopebar .find{padding-top:0;padding-bottom:0}
+.find .clr{height:auto;padding:0 6px}
+.find input:placeholder-shown~.clr{display:none}
+.scopebar .find .btn{height:auto}
+.scopebar .seg button{display:flex;align-items:center}
+.find.hero{min-height:34px;font-size:inherit}
+@media (max-width:900px){.gsearch{width:auto}.gsearch span,.gsearch kbd{display:none}}
 </style>
 </head>
 <body>
@@ -1100,10 +1110,14 @@ const APPS=[
    {id:'kubernetes',name:'Kubernetes',kind:'Entities',noun:'Kubernetes entities',rows:K8S,cols:[C('name','Name','name'),C('type','Type'),C('health','Health','health'),C('cluster','Cluster'),C('cpu','CPU','pct',{num:1}),C('mem','Memory','pct',{num:1}),C('pods','Pods','int',{num:1})],
      facets:[{k:'type',label:'Type'},{k:'health',label:'Health'},{k:'cluster',label:'Cluster'}],
      related:[{label:'Open in Smartscape',app:'smartscape',tab:'k8s',all:true}]},
+   {id:'synthetic',name:'Synthetic',kind:'Entities',noun:'monitors',rows:SYNTH,cols:[C('name','Monitor','name'),C('type','Type'),C('status','Status','badge'),C('avail','Availability','pct1',{num:1}),C('dur','Duration','ms',{num:1}),C('freq','Frequency'),C('loc','Location')],
+     facets:[{k:'type',label:'Type'},{k:'status',label:'Status'},{k:'freq',label:'Frequency'},{k:'loc',label:'Location'}],
+     badge:{fn:()=>cnt(SYNTH,r=>r.status==='Failing'),tone:'r',square:true},
+     related:[{label:'Show SLOs',app:'infrastructure',tab:'slos',all:true},{label:'Show problems',app:'issues',tab:'problems',all:true}]},
    {id:'slos',name:'SLOs',kind:'Entities',noun:'SLOs',rows:SLOS,scoped:false,sort:{k:'budget',dir:1},search:['name','service'],badge:{fn:()=>SLOS.filter(s=>s.budget<0).length,tone:'r',square:true},
      cols:[C('name','SLO','name'),C('service','Service'),C('target','Target','pct2',{num:1}),C('cur','Current','pct2',{num:1}),C('budget','Error budget','slobudget',{num:1}),C('burn','Burn rate','burn',{num:1}),C('status','Status','badge')],
      facets:[{k:'status',label:'Status'},{k:'service',label:'Service'}],drawerHtml:sloDrawer,
-     related:[{label:'Show service',app:'applications',tab:'services',key:'service'},{label:'Show problems',app:'issues',tab:'problems',key:'service'},{label:'Open guardians',app:'automate',tab:'guardians'}]},
+     related:[{label:'Show service',app:'applications',tab:'services',key:'service'},{label:'Show problems',app:'issues',tab:'problems',key:'service'},{label:'Show monitors',app:'infrastructure',tab:'synthetic',all:true},{label:'Open guardians',app:'automate',tab:'guardians'}]},
    {id:'alert-templates',name:'Alert templates',kind:'Entities',noun:'templates',rows:ALERT_T,scoped:false,cols:[C('name','Template','name'),C('applies','Applies to'),C('metric','Metric'),C('action','','action')],facets:[{k:'applies',label:'Applies to'}]}]},
  {id:'applications',name:'Applications',icon:'<rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/>',tabs:[
    {id:'services',name:'Services',kind:'Entities',noun:'services',rows:SERVICES,cols:[C('name','Name','name'),C('type','Type'),C('health','Health','health'),C('fail','Error rate','failpct',{num:1}),C('p50','Median response','ms',{num:1}),C('tput','Requests/min','int',{num:1}),C('tech','Technology')],
@@ -1134,7 +1148,7 @@ const APPS=[
      related:[{label:'Open in Smartscape',app:'smartscape',tab:'ai',all:true}]}]},
  {id:'issues',name:'Problems',icon:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 8v5M12 16h.01"/>',badge:()=>openProb(),tabs:[
    {id:'problems',name:'Problems',kind:'Issues',noun:'problems',rows:PROB,init:{f:{status:['Open']}},sort:{k:'started',dir:1},search:['name','id','entity'],header:problemHeader,tk:'started',tkOpen:(r,to)=>r.status==='Open'&&r.started>=to,badge:{fn:openProb,tone:'r'},
-     cols:[C('id','ID','mono'),C('name','Problem','name'),C('status','Status','badge'),C('category','Category'),C('entity','Affected entity'),C('impact','Impact'),C('started','Started','ago')],
+     cols:[C('id','ID','mono'),C('name','Problem','name'),C('status','Status','health'),C('category','Category'),C('entity','Affected entity'),C('impact','Impact'),C('started','Started','ago')],
      facets:[{k:'status',label:'Status'},{k:'category',label:'Category'},{k:'impact',label:'Impact'}],
      views:[{name:'Open problems',f:{status:['Open']}},{name:'Open availability problems',f:{status:['Open'],category:['Availability']}},{name:'All problems',f:{}}],
      related:[{label:'Investigate',investigate:true,key:'id'},{label:'Root-cause graph',app:'smartscape',tab:'problem',key:'id'},{label:'Show affected entity',entity:true,key:'entity'},{label:'Show logs',logs:true,key:'entity'}]},
@@ -1267,11 +1281,11 @@ function renderRail(){
   <button class="app" id="assistbtn" aria-haspopup="dialog" aria-expanded="${assistOpen}" title="Assist">${svgI(NAVI.assist)}<span class="lbl">Assist</span><kbd class="tail">${/Mac/.test(navigator.platform)?'⌘ I':'Ctrl I'}</kbd></button>
   <button class="app" id="recbtn" aria-haspopup="dialog" aria-expanded="${recOpen}" title="Recents">${svgI(NAVI.recents)}<span class="lbl">Recents</span><span class="mini tail" aria-hidden="true">${ra.map(id=>`<i>${appIcon(appOf(id),14)}</i>`).join('')}</span></button>
   <div class="sep"></div>`+
-  ['issues','smartscape','infrastructure','applications','security','telemetry',...APPS.map(a=>a.id).filter(id=>!['home','issues','smartscape','infrastructure','applications','security','telemetry','documents','automate','admin','quickstart'].includes(id))].map(id=>appLink(APPS.find(a=>a.id===id))).join('')+`<div class="sep"></div>`+['documents','automate','quickstart','admin'].map(id=>appLink(APPS.find(a=>a.id===id))).join('')+
+  ['issues','smartscape','infrastructure','applications','telemetry','security',...APPS.map(a=>a.id).filter(id=>!['home','issues','smartscape','infrastructure','applications','telemetry','security','documents','automate','admin','quickstart'].includes(id))].map(id=>appLink(APPS.find(a=>a.id===id))).join('')+`<div class="sep"></div>`+['documents','automate','quickstart','admin'].map(id=>appLink(APPS.find(a=>a.id===id))).join('')+
   (pins.length?`<div class="sep"></div>`+pins.map(x=>`<button class="app" data-h="${x.id}" title="${esc(x.label)}"><svg class="i" viewBox="0 0 24 24">${ICO.pin}</svg><span class="lbl">${esc(x.label)}</span></button>`).join(''):'')+
   `<div class="grow"></div><div class="foot"><button class="app" id="collapse" title="Collapse navigation">${svgI(NAVI.collapse)}<span class="lbl">Collapse</span></button></div>`;
 }
-const BADGE_LABEL={access:'waiting for approval',problems:'open problems',vulnerabilities:'critical, open',recommendations:'high priority',workflows:'could not be triggered',guardians:'failing',slos:'breaching'};
+const BADGE_LABEL={access:'waiting for approval',problems:'open problems',vulnerabilities:'critical, open',recommendations:'high priority',workflows:'could not be triggered',guardians:'failing',slos:'breaching',synthetic:'failing monitors'};
 function renderHead(){
   $('#appid').innerHTML=`${appIcon(cur.app,24)}<span>${esc(cur.app.name)}</span>`;
   const vt=visibleTabs(cur.app),hasDocs=vt.some(t=>t.isDoc);
@@ -1298,7 +1312,7 @@ function renderTable(tab,host){
   host.innerHTML=`
    ${def.header?'<div id="phead"></div>':''}
    ${def.kpis?'<div class="kpis" id="kpis"></div>':''}
-   ${scopeBar(`<label class="find"><svg class="i fill" viewBox="0 0 20 20" aria-hidden="true"><path d="M11.525 12.855a6 6 0 1 1 1.4-1.429l3.816 3.817a1 1 0 0 1-1.415 1.414zM12.498 8a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0"/></svg><input id="q" placeholder="Filter ${esc(noun)}" value="${esc(s.q)}" autocomplete="off" aria-label="Filter ${esc(noun)}"><kbd>/</kbd></label>`,false,extra)}
+   ${scopeBar(`<label class="find"><svg class="i fill" viewBox="0 0 20 20" aria-hidden="true"><path d="M11.525 12.855a6 6 0 1 1 1.4-1.429l3.816 3.817a1 1 0 0 1-1.415 1.414zM12.498 8a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0"/></svg><input id="q" placeholder="Filter ${esc(noun)}" value="${esc(s.q)}" autocomplete="off" aria-label="Filter ${esc(noun)}"><button class="btn ghost clr" id="qclear" aria-label="Clear filter">×</button><kbd>/</kbd></label>`,false,extra)}
    ${def.scopes?`<div class="scopes" id="scopes" role="group" aria-label="Show"></div>`:''}
    <div class="statusrow"><span class="muted" id="rc"></span><div class="chips" id="chips"></div></div>
    <div class="split ${s.panel&&hasF?'':'nopanel'}"><aside class="facets" id="facets" aria-label="Filters"></aside><div class="gridwrap" id="grid"></div></div>`;
@@ -1390,7 +1404,7 @@ const ICONS={"clouds":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAY
 const APPKEY={security:'vulnerabilities',infrastructure:'infrastructure-and-operations',applications:'services',smartscape:'smartscape',telemetry:'logs',issues:'problems',documents:'dashboards',automate:'workflows',admin:'settings',quickstart:'quickstart'};
 const DOCKEY={dashboards:'dashboards-document-type',notebooks:'notebooks',pages:'notebooks',launchpads:'dynatrace-launcher'};
 const TABKEY={'security/detectors':'vulnerabilities','security/user-audits':'vulnerabilities','infrastructure/network':'infrastructure-and-operations','security/alert-templates':'vulnerabilities','telemetry/ai':'smartscape','security/siem':'vulnerabilities','infrastructure/hosts':'infrastructure-and-operations','infrastructure/kubernetes':'kubernetes','infrastructure/clouds':'clouds','infrastructure/alert-templates':'infrastructure-and-operations',
- 'applications/services':'services','applications/errors':'services','applications/response-time':'services','infrastructure/slos':'site-reliability-guardian','applications/frontends':'experience-vitals','applications/alert-templates':'services',
+ 'applications/services':'services','applications/errors':'services','applications/response-time':'services','infrastructure/slos':'site-reliability-guardian','infrastructure/synthetic':'synthetic','applications/frontends':'experience-vitals','applications/alert-templates':'services',
  'telemetry/metrics':'logs','telemetry/logs':'logs','telemetry/traces':'distributed-tracing','telemetry/user-sessions':'experience-vitals','telemetry/business-events':'explore-business-events',
  'issues/problems':'problems','security/vulnerabilities':'vulnerabilities','issues/investigations':'investigations','issues/recommendations':'problems',
  'documents/dashboards':'dashboards','documents/notebooks':'notebooks','documents/pages':'notebooks','documents/launchpads':'dynatrace-launcher',
@@ -1467,17 +1481,7 @@ function openHist(h){closeRecents();go(h.app,h.tab,h.q?{q:h.q,f:{}}:{})}
 
 /* ---------- smartscape ---------- */
 const hexp=(cx,cy,r)=>[0,1,2,3,4,5].map(i=>{const a=Math.PI/3*i-Math.PI/2;return (cx+r*Math.cos(a)).toFixed(1)+','+(cy+r*Math.sin(a)).toFixed(1)}).join(' ');
-const GEN=c=>`<svg viewBox="0 0 240 190" width="220" aria-hidden="true"><g stroke="${c}" stroke-width="2" opacity=".5"><path d="M120 95L60 55M120 95L185 60M120 95L60 140M120 95L185 135"/></g><polygon points="${hexp(120,95,38)}" fill="${c}"/><g fill="var(--panel)" stroke="${c}" stroke-width="2"><polygon points="${hexp(60,55,14)}"/><polygon points="${hexp(185,60,14)}"/><polygon points="${hexp(60,140,14)}"/><polygon points="${hexp(185,135,14)}"/></g><circle cx="120" cy="95" r="12" fill="none" stroke="#fff" stroke-width="3"/></svg>`;
-const SPOKES=Array.from({length:7},(_,i)=>{const a=i*2*Math.PI/7;return `<line x1="120" y1="95" x2="${(120+20*Math.cos(a)).toFixed(1)}" y2="${(95+20*Math.sin(a)).toFixed(1)}" stroke="#fff" stroke-width="3"/>`}).join('');
-const ART={
- grail:`<svg viewBox="0 0 240 190" width="240" aria-hidden="true"><defs><radialGradient id="pg"><stop offset="0" stop-color="#f4a1d3" stop-opacity=".75"/><stop offset="1" stop-color="#f4a1d3" stop-opacity="0"/></radialGradient><filter id="bl"><feGaussianBlur stdDeviation="3"/></filter></defs><circle cx="120" cy="95" r="90" fill="url(#pg)"/><g filter="url(#bl)" fill="var(--line2)"><circle cx="60" cy="55" r="26"/><circle cx="170" cy="45" r="32"/><circle cx="60" cy="140" r="30"/><circle cx="165" cy="145" r="26"/></g><polygon points="${hexp(120,95,28)}" fill="#c2399b"/><g stroke="#fff" stroke-width="3" fill="#fff"><circle cx="120" cy="95" r="4"/><circle cx="108" cy="104" r="3"/><circle cx="133" cy="86" r="3"/><path d="M108 104L120 95L133 86" fill="none"/></g></svg>`,
- infra:`<svg viewBox="0 0 240 190" width="220" aria-hidden="true"><rect x="45" y="35" width="130" height="95" rx="10" fill="var(--panel)" stroke="var(--line2)" stroke-width="2"/><rect x="62" y="48" width="86" height="8" rx="4" fill="var(--line)"/><polyline points="62,105 85,85 105,100 130,78 160,92" fill="none" stroke="#3aa3a8" stroke-width="2.5"/><g fill="var(--panel)" stroke="#3aa3a8" stroke-width="2"><circle cx="85" cy="85" r="5"/><circle cx="105" cy="100" r="5"/><circle cx="130" cy="78" r="5"/></g><rect x="22" y="20" width="48" height="48" rx="8" fill="#4aa7ad"/><path d="M36 48a8 8 0 0 1 8-12 10 10 0 0 1 18 4 6 6 0 0 1 0 12H38a6 6 0 0 1-2-4z" fill="none" stroke="#fff" stroke-width="2.5"/><rect x="150" y="105" width="40" height="40" rx="8" fill="#8fa3b8"/></svg>`,
- problem:`<svg viewBox="0 0 240 190" width="220" aria-hidden="true"><circle cx="110" cy="85" r="75" fill="color-mix(in srgb,#c8162c 12%,var(--panel))"/><circle cx="110" cy="85" r="52" fill="color-mix(in srgb,#c8162c 22%,var(--panel))"/><circle cx="110" cy="85" r="34" fill="var(--panel)" stroke="#c8162c" stroke-width="2"/><polygon points="${hexp(110,85,13)}" fill="none" stroke="var(--text)" stroke-width="2.5"/><g fill="var(--panel)" stroke="#c8162c" stroke-width="2"><circle cx="64" cy="42" r="14"/><circle cx="160" cy="45" r="14"/></g><circle cx="72" cy="128" r="14" fill="#6b6c7b"/><circle cx="158" cy="132" r="26" fill="#c8162c"/><circle cx="158" cy="132" r="13" fill="none" stroke="#fff" stroke-width="5"/><path d="M149 141l18-18" stroke="#fff" stroke-width="5"/></svg>`,
- service:`<svg viewBox="0 0 240 190" width="220" aria-hidden="true"><circle cx="120" cy="95" r="72" fill="color-mix(in srgb,#6a6fd0 14%,var(--panel))" opacity=".75"/><g stroke="#6a6fd0" stroke-width="2"><path d="M120 95L40 95M120 95L190 45M120 95L198 95M120 95L190 145"/></g><g fill="var(--panel)" stroke="#6a6fd0" stroke-width="2"><circle cx="40" cy="95" r="14"/><circle cx="190" cy="45" r="14"/><circle cx="198" cy="95" r="12"/><circle cx="190" cy="145" r="14"/></g><circle cx="120" cy="95" r="30" fill="var(--panel)" stroke="#1a62d6" stroke-width="3"/><polygon points="${hexp(120,95,12)}" fill="none" stroke="#1a62d6" stroke-width="2.5"/></svg>`,
- k8s:`<svg viewBox="0 0 240 190" width="220" aria-hidden="true"><polygon points="${hexp(120,95,46)}" fill="#2f5bd8"/><circle cx="120" cy="95" r="20" fill="none" stroke="#fff" stroke-width="3"/>${SPOKES}<g fill="#3c6cf0"><polygon points="${hexp(50,50,16)}"/><polygon points="${hexp(190,58,16)}"/><polygon points="${hexp(48,140,15)}"/><polygon points="${hexp(190,142,17)}"/></g></svg>`
-};
 const SSV={
- home:{name:'Home'},
  grail:{name:'Smartscape on Grail',desc:'Browse entities and relationships across your environment.',art:'grail',types:[['ACTIVEGATE',1],['AWS_APPRUNNER_AUTOSCALING',2],['AWS_ATHENA_WORKGROUP',5],['AWS_AUTOSCALING_AUTOSCALINGGROUP',10],['AWS_BACKUP_BACKUPVAULT',1],['AWS_CASSANDRA_KEYSPACE',14],['AWS_CLOUDFORMATION_STACK',21],['AWS_EC2_INSTANCE',31],['AZURE_VM',18],['HOST',46],['KUBERNETES_CLUSTER',3],['KUBERNETES_POD',60],['SERVICE',35],['PROCESS_GROUP_INSTANCE',52]]},
  infra:{name:'Infrastructure overview',desc:'See which components are running and how they connect.',art:'infra',types:[['HOST',46],['PROCESS_GROUP_INSTANCE',52],['CONTAINER_GROUP_INSTANCE',40],['NETWORK_INTERFACE',18],['DISK',12],['ACTIVEGATE',2]]},
  problem:{name:'Problem graph',desc:'See what a problem affects and how far it spreads.',art:'problem',types:[['SERVICE',35],['HOST',20],['KUBERNETES_POD',25],['PROCESS_GROUP_INSTANCE',20],['DATABASE',6]]},
@@ -1535,30 +1539,27 @@ function ssPos(g,layout){
 }
 let ssS={view:'',layout:'force',hide:false,find:'',types:new Set(),aff:false};
 function ssPicker(id){
-  const name=id==='home'?'Overview':SSV[id].name,chev=svgI(ICO.chev,'style="width:14px;height:14px"');
+  const name=SSV[id].name,chev=svgI(ICO.chev,'style="width:14px;height:14px"');
   return `<div class="pop"><button class="pickbtn" data-pop="ssviewmenu" aria-haspopup="menu" aria-expanded="false" title="Smartscape view">${svgI('<circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.3 11l7.4-4M8.3 13l7.4 4"/>','style="width:16px;height:16px"')}${esc(name)}${chev}</button>
-   <div class="menu" id="ssviewmenu" hidden role="menu"><h5>View</h5><a class="mi" role="menuitemradio" aria-checked="${id==='home'}" href="#/smartscape/home"><i></i>Overview</a>${SS_ORDER.map(v=>`<a class="mi" role="menuitemradio" aria-checked="${id===v}" href="#/smartscape/${v}"><i></i>${esc(SSV[v].name)}</a>`).join('')}</div></div>`;
+   <div class="menu" id="ssviewmenu" hidden role="menu"><h5>View</h5>${SS_ORDER.map(v=>`<a class="mi" role="menuitemradio" aria-checked="${id===v}" href="#/smartscape/${v}"><i></i>${esc(SSV[v].name)}</a>`).join('')}</div></div>`;
 }
 function renderSmartscape(host){
   const id=cur.tab.id;
-  if(ssS.view!==id)ssS={view:id,layout:'force',hide:false,find:'',types:new Set(),aff:false};
+  if(ssS.view!==id){ssS={view:id,layout:'force',hide:false,find:'',types:new Set(),aff:false};delete VP.ssg;delete VP.pgs}
   const nav='';
-  if(id==='home'){
-    host.innerHTML=`<div class="ss-wrap solo"><div class="ss-main"><div class="ss-land"><div class="ss-h"><small>Smartscape</small><h2>Make sense of your digital systems’ topology and dependencies</h2></div><div class="ss-grid">${SS_ORDER.map((v,i)=>`<div class="ss-card ${i===0?'wide':''}"><div class="art">${ART[SSV[v].art]||GEN(SSV[v].color)}</div><div class="txt"><p>${esc(SSV[v].desc)}</p><button class="btn" data-ssgo="${v}">${v==='grail'?'Explore Smartscape on Grail':'Open '+esc(SSV[v].name.replace(/^./,c=>c.toLowerCase()).replace(/^kubernetes/i,'Kubernetes').replace(/^aws/i,'AWS').replace(/^azure/i,'Azure').replace(/^ai observability/i,'AI Observability'))}</button></div></div>`).join('')}</div></div></div></div>`;
-    return;
-  }
   if(id==='problem'){renderProblemGraph(host,nav);return}
   const v=SSV[id],g=ssBase(id),counts={};
   g.nodes.forEach(n=>{counts[n.type]=(counts[n.type]||0)+1});
   const affN=g.nodes.filter(n=>n.aff).length;
   host.innerHTML=`<div class="ss-wrap">${nav}<div class="ss-main"><div class="ss-canvas"><svg id="ssg" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${esc(v.name)} graph"></svg></div>
    <div class="ss-float">${ssPicker(cur.tab.id)}${scopeBar('',true)}</div>
+   <div class="ss-nav2"><div class="ss-zoom" role="group" aria-label="Zoom"><button class="btn" data-vz="in" aria-label="Zoom in" title="Zoom in">+</button><button class="btn" data-vz="out" aria-label="Zoom out" title="Zoom out">−</button><button class="btn" data-vz="fit" aria-label="Fit to screen" title="Fit to screen">${svgI('<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>','style="width:16px;height:16px"')}</button></div><svg class="ss-mm" id="ssg-mm" viewBox="0 0 1000 700" role="img" aria-label="Mini map"></svg></div>
    <div class="ss-panels">
     <details class="ss-panel" open><summary class="ss-ph"><span>${esc(v.name)}</span>${svgI(ICO.chev,'style="width:14px;height:14px"')}</summary><div class="ss-pb"><p>${esc(v.desc)}</p><div class="sec">Graph layout</div>
       <div class="ss-lay" role="group" aria-label="Graph layout">${['force','vertical','horizontal'].map(l=>`<button data-layout="${l}" aria-pressed="${ssS.layout===l}">${l[0].toUpperCase()+l.slice(1)}</button>`).join('')}</div>
       <label class="tgl"><input type="checkbox" id="sshide" ${ssS.hide?'checked':''}> Hide unconnected nodes</label></div></details>
     <details class="ss-panel" open><summary class="ss-ph"><span>Nodes</span><b id="ssn"></b></summary><div class="ss-pb">
-      <label class="find"><svg class="i fill" viewBox="0 0 20 20" aria-hidden="true"><path d="M11.525 12.855a6 6 0 1 1 1.4-1.429l3.816 3.817a1 1 0 0 1-1.415 1.414zM12.498 8a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0"/></svg><input id="ssfind" placeholder="Find nodes by name or ID" value="${esc(ssS.find)}" autocomplete="off" aria-label="Find nodes by name or ID"><kbd>${/Mac/.test(navigator.platform)?'⌘ F':'Ctrl F'}</kbd></label>
+      <label class="find"><svg class="i fill" viewBox="0 0 20 20" aria-hidden="true"><path d="M11.525 12.855a6 6 0 1 1 1.4-1.429l3.816 3.817a1 1 0 0 1-1.415 1.414zM12.498 8a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0"/></svg><input id="ssfind" placeholder="Find nodes by name or ID" value="${esc(ssS.find)}" autocomplete="off" aria-label="Find nodes by name or ID"><button class="btn ghost clr" id="ssclear" aria-label="Clear search">×</button><kbd>${/Mac/.test(navigator.platform)?'⌘ F':'Ctrl F'}</kbd></label>
       <div class="sec">Node status</div>
       <button class="ss-row" data-ssaff aria-pressed="${ssS.aff}"><span class="dot t-r" style="background:none;border:2px solid var(--r);width:14px;height:14px"></span><span class="nm">Affected by problem</span><em>${affN}</em></button>
       <div class="sec">Node types</div>
@@ -1570,12 +1571,13 @@ function renderSmartscape(host){
 function ssDraw(){
   const g=ssBase(cur.tab.id),S=ssS,pos=ssPos(g,S.layout),q=S.find.trim().toLowerCase();
   const dim=n=>(q&&!(n.name.includes(q)||n.id.toLowerCase().includes(q)))||(S.types.size&&!S.types.has(n.type))||(S.aff&&!n.aff);
-  const vis=new Set(g.nodes.map((_,i)=>i).filter(i=>!(S.hide&&g.nodes[i].iso)&&(G.seg==='all'||g.nodes[i].seg===G.seg)));
-  const lines=g.edges.filter(([a,b])=>vis.has(a)&&vis.has(b)).map(([a,b])=>`<line x1="${pos[a][0].toFixed(1)}" y1="${pos[a][1].toFixed(1)}" x2="${pos[b][0].toFixed(1)}" y2="${pos[b][1].toFixed(1)}" stroke="var(--edge)" stroke-width=".8" opacity="${dim(g.nodes[a])&&dim(g.nodes[b])?.1:.8}"/>`).join('');
+  const vis=new Set(g.nodes.map((_,i)=>i).filter(i=>!(S.hide&&g.nodes[i].iso)&&(G.seg==='all'||g.nodes[i].seg===G.seg)&&!dim(g.nodes[i])));
+  const lines=g.edges.filter(([a,b])=>vis.has(a)&&vis.has(b)).map(([a,b])=>`<line x1="${pos[a][0].toFixed(1)}" y1="${pos[a][1].toFixed(1)}" x2="${pos[b][0].toFixed(1)}" y2="${pos[b][1].toFixed(1)}" stroke="var(--edge)" stroke-width=".8" opacity=".8"/>`).join('');
   const dots=[...vis].map(i=>{const n=g.nodes[i],c=n.aff?'#c8162c':tcol(n.type);
-    return `<g class="gn" data-i="${i}" opacity="${dim(n)?.15:1}"><circle cx="${pos[i][0].toFixed(1)}" cy="${pos[i][1].toFixed(1)}" r="${n.hub?8:n.aff?6.5:5}" fill="var(${n.aff?'--aff-bg':'--panel'})" stroke="${c}" stroke-width="${n.aff?2.4:1.6}"/>${n.hub?`<circle cx="${pos[i][0].toFixed(1)}" cy="${pos[i][1].toFixed(1)}" r="2.5" fill="${c}"/>`:''}<title>${esc(n.name)} (${esc(n.type)})</title></g>`}).join('');
+    return `<g class="gn" data-i="${i}"><circle cx="${pos[i][0].toFixed(1)}" cy="${pos[i][1].toFixed(1)}" r="${n.hub?8:n.aff?6.5:5}" fill="var(${n.aff?'--aff-bg':'--panel'})" stroke="${c}" stroke-width="${n.aff?2.4:1.6}"/>${n.hub?`<circle cx="${pos[i][0].toFixed(1)}" cy="${pos[i][1].toFixed(1)}" r="2.5" fill="${c}"/>`:''}<title>${esc(n.name)} (${esc(n.type)})</title></g>`}).join('');
   $('#ssg').innerHTML=lines+dots;
   $('#ssn').textContent=vis.size.toLocaleString();
+  vpMini('ssg');
 }
 function showNode(i){
   const n=ssBase(cur.tab.id).nodes[i];
@@ -1634,15 +1636,15 @@ function problemHeader(){
   const mx=Math.max(1,...bars.map(b=>b.n)),f=focusProb(),hide=ui&&(ui.s.hideHead??innerWidth<1400);
   const avail=open.filter(p=>p.category==='Availability').length;
   const slo=s=>{const st=sloState(s);
-    return `<div class="slo"><div class="slo-t"><span>${esc(s.name)}</span><span class="tag t-${st[1]}">${st[0]}</span></div><div class="slo-m"><span>${s.cur}% <span class="muted">target ${s.target}%</span></span><span class="muted">burn rate ${s.burn}×</span></div><div class="meter"><i style="width:${Math.max(0,Math.min(100,s.budget))}%;background:var(--${st[1]})"></i></div><small class="muted">${sloBudgetTxt(s)}</small></div>`};
-  return `<details class="ph-wrap" ${hide?'':'open'}><summary>Overview · ${open.length} open problems${avail?`, ${avail} availability`:''}</summary>
+    return `<div class="slo"><div class="slo-t"><span>${esc(s.name)}</span><span class="slo-s" style="color:var(--${st[1]})">${st[0]}</span></div><div class="meter" title="${esc(sloBudgetTxt(s))}"><i style="width:${Math.max(0,Math.min(100,s.budget))}%;background:var(--${st[1]})"></i></div><small class="muted">${s.cur}% of ${s.target}% · ${s.burn}× burn</small></div>`};
+  return `<details class="ph-wrap" ${hide?'':'open'}><summary>Overview<span class="muted">${open.length} open${avail?`, ${avail} availability`:''}</span>${svgI(ICO.chev,'style="width:14px;height:14px"')}</summary>
   <section class="ph" aria-label="Problem overview">
-   <div class="ph-card"><h3>Impact</h3><div class="ph-stats"><div><b style="color:var(--r)">${open.length}</b><span>Open</span></div><div><b>${ents}</b><span>Affected entities</span></div><div><b>${(2.4+open.length%7*.2).toFixed(1)} min</b><span>Time to detect</span></div><div><b>${38+open.length%9*3} min</b><span>Time to resolve</span></div></div>
-    <div class="ph-chart" role="img" aria-label="Problems started per hour over the last 24 hours">${bars.map(b=>`<i style="height:${b.n/mx*100}%"><b style="height:${b.n?b.o/b.n*100:0}%"></b></i>`).join('')}</div><small class="muted">Problems started per hour, last 24 hours. Red is still open.</small></div>
-   <div class="ph-card"><h3>SLO error budget <span class="tag t-${sloSummary().tone}">${sloSummary().text} ${sloSummary().label}</span></h3>${[...SLOS].sort((a,b)=>a.budget-b.budget).slice(0,3).map(slo).join('')}<p style="margin:8px 0 0"><button class="btn" data-pgo="slos">Open SLOs</button></p></div>
-   <div class="ph-card">${f?`<h3>Focus problem</h3><div class="pf-t"><span class="mono">${esc(f.id)}</span> <b>${esc(f.name)}</b></div><div class="muted">${esc(f.entity)} · ${esc(f.category)} · started ${fmtAgo(f.started)} · impact on ${esc(f.impact.toLowerCase())}${acked.has(f.id)?' · <span class="tag t-g">Acknowledged by you</span>':''}</div>
-    <div class="pf-acts"><button class="btn primary" data-pa="investigate">Investigate</button><button class="btn" data-pa="ack">${acked.has(f.id)?'Acknowledged ✓':'Acknowledge'}</button><button class="btn" data-pa="rca">Root-cause graph</button>
-     <div class="pop"><button class="btn" data-pop="pamenu" aria-haspopup="menu" aria-expanded="false">More ${svgI(ICO.chev,'style="width:14px;height:14px"')}</button><div class="menu" id="pamenu" hidden role="menu">${[['assign','Assign…'],['runbook','Runbook'],['ticket','Create ticket'],['notify','Notify on-call'],['silence','Silence for 1 h']].map(([k,l])=>`<button class="mi" role="menuitem" data-pa="${k}">${l}</button>`).join('')}</div></div>
+   <div class="ph-card"><h3>Impact</h3><div class="ph-stats"><div><b style="color:var(--r)">${open.length}</b><span>Open</span></div><div><b>${ents}</b><span>Entities</span></div><div><b>${(2.4+open.length%7*.2).toFixed(1)} min</b><span>To detect</span></div><div><b>${38+open.length%9*3} min</b><span>To resolve</span></div></div>
+    <div class="ph-chart" role="img" aria-label="Problems started per hour over the last 24 hours">${bars.map(b=>`<i style="height:${b.n/mx*100}%"><b style="height:${b.n?b.o/b.n*100:0}%"></b></i>`).join('')}</div><small class="muted">Started per hour, last 24 h</small></div>
+   <div class="ph-card"><h3>SLO error budget<span class="muted">${sloSummary().text} ${sloSummary().label}</span></h3>${[...SLOS].sort((a,b)=>a.budget-b.budget).slice(0,3).map(slo).join('')}<p style="margin:8px 0 0"><button class="btn" data-pgo="slos">Open SLOs</button></p></div>
+   <div class="ph-card">${f?`<h3>Focus problem</h3><div class="pf-t"><span class="mono muted">${esc(f.id)}</span> <span class="pf-n">${esc(f.name)}</span></div><div class="muted">${esc(f.entity)} · ${esc(f.category)} · ${fmtAgo(f.started)}${acked.has(f.id)?' · <span class="tag t-g">Acknowledged by you</span>':''}</div>
+    <div class="pf-acts"><button class="btn primary" data-pa="investigate">Investigate</button><button class="btn" data-pa="ack">${acked.has(f.id)?'Acknowledged ✓':'Acknowledge'}</button>
+     <div class="pop"><button class="btn" data-pop="pamenu" aria-haspopup="menu" aria-expanded="false">More ${svgI(ICO.chev,'style="width:14px;height:14px"')}</button><div class="menu" id="pamenu" hidden role="menu">${[['rca','Root-cause graph'],['assign','Assign…'],['runbook','Runbook'],['ticket','Create ticket'],['notify','Notify on-call'],['silence','Silence for 1 h']].map(([k,l])=>`<button class="mi" role="menuitem" data-pa="${k}">${l}</button>`).join('')}</div></div>
     </div>`:'<h3>No open problems</h3><p class="muted">Nothing needs triage in this segment. Widen the segment or timeframe to see more.</p>'}</div>
   </section></details>`;
 }
@@ -1683,6 +1685,7 @@ function renderProblemGraph(host,nav){
   const g=pgBuild(p);
   host.innerHTML=`<div class="ss-wrap">${nav}<div class="ss-main"><div class="ss-canvas"><svg id="pgs" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Entities affected by ${esc(p.id)}"></svg></div>
    <div class="ss-float">${ssPicker(cur.tab.id)}${scopeBar('',true)}</div>
+   <div class="ss-nav2"><div class="ss-zoom" role="group" aria-label="Zoom"><button class="btn" data-vz="in" aria-label="Zoom in" title="Zoom in">+</button><button class="btn" data-vz="out" aria-label="Zoom out" title="Zoom out">−</button><button class="btn" data-vz="fit" aria-label="Fit to screen" title="Fit to screen">${svgI('<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>','style="width:16px;height:16px"')}</button></div><svg class="ss-mm" id="pgs-mm" viewBox="0 0 1000 700" role="img" aria-label="Mini map"></svg></div>
    <div class="ss-panels">
     <div class="ss-panel"><div class="ss-ph"><span>Problem graph</span></div><div class="ss-pb"><p>See what a problem affects and how far it spreads.</p>
      <div class="sec">Problem</div><select class="pg-sel" id="ppick" aria-label="Choose problem">${open.map(x=>`<option value="${x.id}" ${x.id===p.id?'selected':''}>${x.id} · ${esc(x.name)} on ${esc(x.entity)}</option>`).join('')}</select>
@@ -1713,6 +1716,7 @@ function pgDraw(g){
     return `<g class="${n.kind==='users'?'':'pn'}" data-name="${esc(n.name)}" ${n.kind==='users'?'':'tabindex="0" role="button"'}>${shape}<text x="${n.x}" y="${n.y+(n.kind==='users'?4:R+18)}" text-anchor="middle" font-size="12" fill="${n.kind==='users'?'var(--muted)':'var(--text)'}">${esc(n.name)}</text><title>${esc(n.name)}</title></g>`}).join('');
   const caps=[['Root cause',0],['Directly affected',1],['Impacted frontends',2],['Users',3]].filter(([,i])=>i<=pgDepth).map(([t,i])=>`<text x="${xs[i]}" y="630" text-anchor="middle" font-size="12" fill="var(--muted)">${t}</text>`).join('');
   $('#pgs').innerHTML=`<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#e08a94"/></marker></defs>${lines}${shapes}${caps}`;
+  vpMini('pgs');
 }
 
 /* ---------- assist ---------- */
@@ -1791,9 +1795,9 @@ function renderQuickStart(host){
   const sv=SERVICES.filter(s=>s.type==='Service'&&segOK(s));
   const slow=[...sv].sort((a,b)=>b.p50-a.p50)[0],fail=[...sv].sort((a,b)=>b.fail-a.fail)[0],busy=[...sv].sort((a,b)=>b.tput-a.tput)[0];
   const finds=[['Slowest service',`${slow?.p50} ms`,'median response time',slow?.name],['Highest failure rate',`${fail?.fail}%`,'of requests failed',fail?.name],['Busiest service',`${busy?.tput.toLocaleString()}/min`,'requests',busy?.name]].filter(f=>f[3]);
-  host.innerHTML=`
+  host.innerHTML=`${scopeBar('',true)}
   <section class="qs-card"><div class="qs-head"><h2>Add more data</h2><div class="qs-tech" aria-label="Supported technologies">${QS_TECH.map(([t,c,n])=>`<i style="background:${c}" title="${esc(n)}">${t}</i>`).join('')}</div></div></section>
-  <section class="qs-card"><div class="qs-head"><h2>Analyze data</h2>${scopeBar('',true)}</div>
+  <section class="qs-card"><div class="qs-head"><h2>Analyze data</h2></div>
    <div class="qs-topo">
     ${node('eks-playground-dev',k8s)}${node('gke-playground-dev',k8s)}
     <div class="qs-group"><div class="qs-gh"><b>${esc(gp.name)}</b><span class="muted">${svcs.length}</span></div><div class="qs-row">${svcs.map((s,i)=>(i?'<i class="qs-arrow"></i>':'')+node(s)).join('')}</div></div>
@@ -1838,6 +1842,7 @@ const DQL={
  'applications/services':Q('smartscapeNodes "SERVICE"',{srcBy:{k:'type',m:{Service:'SERVICE','Serverless function':'AWS_LAMBDA_FUNCTION',Endpoint:'SERVICE_ENDPOINT',Database:'DATABASE',Messaging:'MESSAGING_SERVICE'}},map:{health:['health.status',up],tech:['service.technology',v=>v]},search:'entity.name',tail:['fields entity.name, service.technology, health.status, failure_rate, response_time.p50','limit 100']}),
  'applications/errors':Q('fetch spans, ${WIN}',{pre:['request.is_failed == true'],map:{reason:['request.failure_reason',v=>v],reqType:['span.kind',lo],service:['service.name',v=>v]},search:'endpoint.name',tail:['summarize failures = count(), by:{endpoint.name, service.name, request.failure_reason}','sort failures desc','limit 50']}),
  'applications/response-time':Q('timeseries { p50 = percentile(dt.service.request.response_time, 50), p90 = percentile(dt.service.request.response_time, 90), p99 = percentile(dt.service.request.response_time, 99) }, by:{endpoint.name, service.name}, ${WIN}',{map:{reqType:['span.kind',lo],service:['service.name',v=>v]},search:'endpoint.name',tail:['sort arrayAvg(p90) desc','limit 50']}),
+ 'infrastructure/synthetic':Q('smartscapeNodes "SYNTHETIC_TEST"',{map:{type:['monitor.type',up],status:['monitor.status',up],freq:['frequency',v=>v],loc:['location',v=>v]},search:'entity.name',tail:['fields entity.name, monitor.type, monitor.status, availability, duration','limit 100']}),
  'infrastructure/slos':Q('fetch dt.system.slo_status',{map:{status:['status',up],service:['service.name',v=>v]},search:'slo.name',tail:['fields slo.name, service.name, target, current, error_budget, burn_rate, status','sort error_budget asc','limit 100']}),
  'applications/frontends':Q('smartscapeNodes "APPLICATION"',{map:{kind:['application.type',up],rum:['rum.enabled',bool]},search:'entity.name',tail:['fields entity.name, application.type, rum.enabled, apdex, load_time','limit 100']}),
  'applications/feature-flags':Q('fetch events, from:now()-24h',{pre:['event.type == "feature_flag.config"'],map:{type:['flag.type',up],status:['flag.status',up],creator:['flag.creator',v=>v],stale:['flag.staleness',up],env:['flag.environments',v=>v]},search:'flag.name',tail:['fields flag.name, flag.key, flag.type, flag.status, flag.environments, flag.tags, evaluations','sort timestamp desc','limit 100']}),
@@ -1886,12 +1891,11 @@ const SSDQL={
 };
 let dqlMeta={out:'table',live:false};
 const segApplies=()=>G.seg!=='all'&&cur.app.scoped!==false&&cur.tab.scoped!==false&&!cur.tab.noSeg;
-const hasDql=()=>{const a=cur.app.id,t=cur.tab.id;return a==='smartscape'?(t!=='home'&&!!(SSDQL[t]||t==='problem')):!!DQL[`${a}/${t}`]};
+const hasDql=()=>{const a=cur.app.id,t=cur.tab.id;return a==='smartscape'?!!(SSDQL[t]||t==='problem'):!!DQL[`${a}/${t}`]};
 function dqlFor(){
   const a=cur.app.id,t=cur.tab.id;
   dqlMeta={out:'table',live:false};
   if(a==='smartscape'){
-    if(t==='home')return null;
     if(t==='problem'){const p=PROB.find(x=>x.id===probSel);return `fetch dt.davis.problems\n| filter display_id == "${p?p.id:'P-2400'}"\n| fields display_id, event.name, root_cause_entity_id, affected_entity_ids\n| expand affected_entity_ids\n| lookup [smartscapeNodes "*"], sourceField:affected_entity_ids, lookupField:id, fields:{name, type}`}
     return SSDQL[t]||null;
   }
@@ -2011,7 +2015,7 @@ function xpAnswer(q,c=assistCtx){
 }
 /* ---------- explain: every other view ---------- */
 let viewXp=false;
-const XV_NOEXPLAIN=['smartscape/home'];
+const XV_NOEXPLAIN=[];
 const hasExplain=()=>!XV_NOEXPLAIN.includes(`${cur.app.id}/${cur.tab.id}`)&&!cur.tab.userDoc;
 const goSpec=s=>{const [a,t,q]=s.split('/');go(a,t,{q:q||'',f:{}})};
 const stepGo=(label,spec)=>[label,()=>goSpec(spec)];
@@ -2025,6 +2029,7 @@ const XV={
  'applications/services':{what:'This view lists services, serverless functions, endpoints, databases and messaging.',watch:'A service with a high failure rate or slow median response is the first thing to check.',rel:['Failing services are listed with their causes under Errors.','applications/errors'],steps:[['Open Errors','applications/errors'],['Open the dependency graph','smartscape/service'],['Check traces','telemetry/traces']]},
  'applications/errors':{what:'This view groups failed requests by endpoint, service and failure reason.',watch:'One dominant reason usually points to a single fix.',rel:['Traces show where a failing request spends its time.','telemetry/traces'],steps:[['Open traces','telemetry/traces'],['Check error logs','telemetry/logs'],['Open the problem list','issues/problems']]},
  'applications/response-time':{what:'This view ranks endpoints by median, p90 and p99 response time.',watch:'A p99 far above p50 means a few requests are very slow.',rel:['Traces show the slowest requests end to end.','telemetry/traces'],steps:[['Open traces','telemetry/traces'],['Open Errors','applications/errors'],['See service dependencies','smartscape/service']]},
+ 'infrastructure/synthetic':{what:'This view lists synthetic monitors with their availability and run duration.',watch:'Failing monitors in one location suggest a network issue, failing everywhere suggests an outage.',rel:['Failing monitors feed the SLOs.','infrastructure/slos'],steps:[['Open SLOs','infrastructure/slos'],['Open problems','issues/problems'],['Review fleet health','admin/fleet']]},
  'infrastructure/slos':{what:'This view lists service level objectives with their target, current value, remaining error budget and burn rate.',watch:'A burn rate above 1.5× uses up the error budget before the window ends. Breaching SLOs raise problems.',rel:['Breaching SLOs appear in the Problems overview.','issues/problems'],steps:[['Open problems','issues/problems'],['Check the services','applications/services'],['Open guardians','automate/guardians']]},
  'applications/frontends':{what:'This view lists web and mobile frontends with Apdex, load time and real user monitoring status.',watch:'Frontends without real user monitoring are blind spots.',rel:['Frontends without monitoring appear as coverage gaps.','admin/coverage'],steps:[['Show coverage gaps','admin/coverage'],['Check JavaScript errors','telemetry/logs'],['Open services','applications/services']]},
  'issues/problems':{what:'This view lists the problems that were detected, with the affected entity and impact.',watch:'Start with the oldest open problem, and check whether several problems share one root cause.',rel:['Open problems raise the red badge in the menu.','issues/problems'],steps:[['Open the problem graph','smartscape/problem'],['Check SLOs','infrastructure/slos'],['Open investigations','issues/investigations']]},
@@ -2178,11 +2183,12 @@ const SXI={chip:'<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v
 function sxDraw(){
   const k=sxStats(),host=$('#sxk');if(!host)return;
   host.innerHTML=[['chip',k.total,'Techniques tracked','',''],['shield',k.covPct+'%',`${k.achPct}% achievable if enabled`,'Active coverage','Covered'],['toggle',k.ready,'rules ready to enable','Quick wins','Potential'],['gap',k.gaps,'no rule available','Coverage gaps','Gaps']].map(([ic,v,l1,l2,mode])=>`<button class="sx-kpi" ${mode?`data-sxm="${mode}"`:'data-sxm="All"'}>${svgI(SXI[ic])}<span><b>${v}</b><small>${esc(l1)}${l2?`<br>${esc(l2)}`:''}</small></span></button>`).join('');
-  const m=$('#sxm'),sl=m?m.scrollLeft:0,st=m?m.scrollTop:0;
-  m.innerHTML=`<div class="sx-in" style="zoom:${sxZoom}">${k.tac.map(({x,c,p,n})=>{const pc=Math.round(c/n*100);
-    return `<div class="sx-col"><div class="sx-th"><b>${esc(x.name)}</b><div class="sx-bar"><i style="width:${pc}%"></i><u style="width:${Math.round(p/n*100)}%"></u></div><span>${c} / ${n} · ${pc}%${p?` · +${p}`:''}</span></div>${x.techs.map(t=>{const key=`${x.id}:${t.id}`,s=SX.state[key],cl=sxCls(key);
-      return `<button class="sx-c ${cl} ${key===sxSel?'sel':''} ${sxMatch(key,t)?'':'dim'}" data-sxt="${key}" title="${esc(t.name)} (${t.id})"><span class="sx-n"><b>${esc(t.name)}</b><small>${t.id}</small></span>${cl==='cov'?`<span class="sx-bd act">${s.act.length}</span>${s.pot.length?`<span class="sx-bd pot">+${s.pot.length}</span>`:''}`:cl==='pot'?`<span class="sx-bd pot">${s.pot.length}</span>`:''}</button>`}).join('')}</div>`}).join('')}</div>`;
+  const m=$('#sxm'),sl=m?m.scrollLeft:0,st=m?m.scrollTop:0,flt=sxQ.trim()||sxMode!=='All';
+  m.innerHTML=`<div class="sx-in" style="zoom:${sxZoom}">${k.tac.filter(({x})=>!flt||x.techs.some(t=>sxMatch(`${x.id}:${t.id}`,t))).map(({x,c,p,n})=>{const pc=Math.round(c/n*100);
+    return `<div class="sx-col"><div class="sx-th"><b>${esc(x.name)}</b><div class="sx-bar"><i style="width:${pc}%"></i><u style="width:${Math.round(p/n*100)}%"></u></div><span>${c} / ${n} · ${pc}%${p?` · +${p}`:''}</span></div>${x.techs.filter(t=>sxMatch(`${x.id}:${t.id}`,t)).map(t=>{const key=`${x.id}:${t.id}`,s=SX.state[key],cl=sxCls(key);
+      return `<button class="sx-c ${cl} ${key===sxSel?'sel':''}" data-sxt="${key}" title="${esc(t.name)} (${t.id})"><span class="sx-n"><b>${esc(t.name)}</b><small>${t.id}</small></span>${cl==='cov'?`<span class="sx-bd act">${s.act.length}</span>${s.pot.length?`<span class="sx-bd pot">+${s.pot.length}</span>`:''}`:cl==='pot'?`<span class="sx-bd pot">${s.pot.length}</span>`:''}</button>`}).join('')}</div>`}).join('')}</div>`;
   m.scrollLeft=sl;m.scrollTop=st;
+  const nm=k.tac.reduce((a,{x})=>a+x.techs.filter(t=>sxMatch(`${x.id}:${t.id}`,t)).length,0);$('#sxrc').textContent=`${nm} of ${k.total} techniques`;
   $$('[data-sxmode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sxmode===sxMode)));
   sxPanel();
 }
@@ -2207,11 +2213,11 @@ function sxDet(name,enabled){
 }
 function renderSecurity(host){
   host.innerHTML=`${scopeBar('',true)}<div class="sx"><div class="sx-head"><h2>MITRE ATT&amp;CK coverage</h2><span class="muted">Your SIEM detection rules mapped to the MITRE ATT&amp;CK matrix.</span></div><div class="sx-kpis" id="sxk"></div>
-   <div class="sx-tool"><label class="find"><svg class="i fill" viewBox="0 0 20 20" aria-hidden="true"><path d="M11.525 12.855a6 6 0 1 1 1.4-1.429l3.816 3.817a1 1 0 0 1-1.415 1.414zM12.498 8a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0"/></svg><input id="sxq" placeholder="Search techniques" value="${esc(sxQ)}" autocomplete="off" aria-label="Search techniques"><button class="btn ghost" id="sxclear" aria-label="Clear search">×</button></label>
+   <div class="sx-tool"><label class="find"><svg class="i fill" viewBox="0 0 20 20" aria-hidden="true"><path d="M11.525 12.855a6 6 0 1 1 1.4-1.429l3.816 3.817a1 1 0 0 1-1.415 1.414zM12.498 8a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0"/></svg><input id="sxq" placeholder="Search techniques" value="${esc(sxQ)}" autocomplete="off" aria-label="Search techniques"><button class="btn ghost clr" id="sxclear" aria-label="Clear search">×</button></label>
     <div class="seg" role="group" aria-label="Show">${['All','Covered','Potential','Gaps'].map(m=>`<button data-sxmode="${m}" data-sxm="${m}" aria-pressed="${m===sxMode}">${m}</button>`).join('')}</div>
     <div class="sx-zoom" role="group" aria-label="Zoom"><button class="btn ghost" data-sxz="in" aria-label="Zoom in" title="Zoom in">+</button><button class="btn ghost" data-sxz="out" aria-label="Zoom out" title="Zoom out">−</button><button class="btn ghost" data-sxz="fit" aria-label="Fit to width" title="Fit to width">${svgI('<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>','style="width:16px;height:16px"')}</button><button class="btn ghost" data-sxz="reset" aria-label="Reset zoom" title="Reset zoom">${svgI(ICO.refresh,'style="width:16px;height:16px"')}</button></div>
     <span class="grow"></span><span class="sx-leg"><i class="cov"></i>Covered<i class="pot"></i>Potential<i class="nc"></i>Not covered</span></div>
-   <p class="muted sx-hint">Drag the matrix to navigate hidden areas.<span>MITRE ATT&amp;CK version: 18.1</span></p>
+   <p class="muted sx-hint"><span><span id="sxrc"></span> · Drag the matrix to navigate hidden areas.</span><span>MITRE ATT&amp;CK version: 18.1</span></p>
    <div class="sx-main ${sxSel?'open':''}" id="sxmain"><div class="sx-matrix" id="sxm" tabindex="0" aria-label="MITRE ATT&CK matrix"></div><aside class="sx-panel" id="sxp" aria-label="Technique details"></aside></div></div>`;
   sxDraw();
 }
@@ -2418,11 +2424,12 @@ function detDrawCols(){
 function detDrawList(){
   const el=$('#dtlist');if(!el)return;
   const q=detQ.trim().toLowerCase(),vis=DETS.filter(d=>!q||d.title.toLowerCase().includes(q));
+  const dr=$('#dtrc');if(dr)dr.textContent=`${vis.length} ${vis.length===1?'result':'results'}`;
   el.innerHTML=vis.length?`<table><thead><tr><th>Enabled</th><th>Title</th>${detCols.includes('every')?'<th>Run every</th>':''}${detCols.includes('window')?'<th>Analysis window</th>':''}<th></th></tr></thead><tbody>${vis.map(d=>`<tr data-dtrow="${d.id}" class="${d.id===detSel?'sel':''}" tabindex="0"><td>${detSw(d.enabled,d.id)}</td><td class="name">${esc(d.title)}</td>${detCols.includes('every')?`<td>${esc(d.every)}</td>`:''}${detCols.includes('window')?`<td>${esc(d.window)}</td>`:''}<td class="num"><div class="pop"><button class="btn ghost" data-pop="dtm-${d.id}" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for ${esc(d.title)}">⋮</button><div class="menu right" id="dtm-${d.id}" hidden><button class="mi" data-dtact="edit" data-id="${d.id}">Edit</button><button class="mi" data-dtact="dup" data-id="${d.id}">Duplicate</button><button class="mi" data-dtact="del" data-id="${d.id}">Delete</button></div></div></td></tr>`).join('')}</tbody></table>`:'<div class="none">No detections match. <button class="btn" id="dtqclear2">Clear search</button></div>';
 }
 function renderDetectors(host){
-  host.innerHTML=`${scopeBar('',true,'<button class="btn primary" data-dtnew>Create detection</button>')}<div class="dt-wrap"><section class="dt-left"><h2>Detections</h2><p class="muted">Monitor and define rules for automated Detections.</p>
-   <div class="dt-tool"><label class="find">${'<svg class="i fill" viewBox="0 0 20 20" aria-hidden="true"><path d="M11.525 12.855a6 6 0 1 1 1.4-1.429l3.816 3.817a1 1 0 0 1-1.415 1.414zM12.498 8a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0"/></svg>'}<input id="dtq" placeholder="Search by keyword" value="${esc(detQ)}" autocomplete="off" aria-label="Search detections"><button class="btn ghost" id="dtqclear" aria-label="Clear search">×</button></label>
+  host.innerHTML=`${scopeBar('',true,'<button class="btn primary" data-dtnew>Create detection</button>')}<div class="dt-wrap"><section class="dt-left"><h2>Detections</h2><p class="muted">Monitor and define rules for automated detections. <span id="dtrc"></span></p>
+   <div class="dt-tool"><label class="find">${'<svg class="i fill" viewBox="0 0 20 20" aria-hidden="true"><path d="M11.525 12.855a6 6 0 1 1 1.4-1.429l3.816 3.817a1 1 0 0 1-1.415 1.414zM12.498 8a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0"/></svg>'}<input id="dtq" placeholder="Search by keyword" value="${esc(detQ)}" autocomplete="off" aria-label="Search detections"><button class="btn ghost clr" id="dtqclear" aria-label="Clear search">×</button></label>
     <button class="btn ghost" id="dtrefresh" aria-label="Refresh" title="Refresh">${svgI(ICO.refresh,'style="width:16px;height:16px"')}</button>
     <div class="pop"><button class="btn ghost" data-pop="dtcols" id="dtcolbtn" aria-haspopup="menu" aria-expanded="false"></button><div class="menu right" id="dtcols" hidden></div></div></div>
    <div class="dt-list" id="dtlist"></div></section><section class="dt-right" id="dtform"></section></div>`;
@@ -2653,6 +2660,46 @@ function pick_(i){
   go(i.app,i.tab,i.q!==undefined?{q:i.q,f:{},mode:i.mode}:{});
 }
 
+/* ---------- smartscape viewport: zoom, pan, mini map ---------- */
+const VP={};let vpMoved=false,vpDrag=null;
+const vpGet=id=>VP[id]||(VP[id]={x:0,y:0,w:1000,h:700});
+function vpApply(id){
+  const v=vpGet(id),svg=$('#'+id);if(!svg)return;
+  svg.setAttribute('viewBox',`${v.x.toFixed(1)} ${v.y.toFixed(1)} ${v.w.toFixed(1)} ${v.h.toFixed(1)}`);
+  const r=$('#'+id+'-mmv');if(r){r.setAttribute('x',v.x);r.setAttribute('y',v.y);r.setAttribute('width',v.w);r.setAttribute('height',v.h)}
+}
+function vpMini(id){
+  const svg=$('#'+id),mm=$('#'+id+'-mm');if(!svg||!mm)return;
+  mm.innerHTML=svg.innerHTML.replace(/<text[\s\S]*?<\/text>/g,'').replace(/<title>[\s\S]*?<\/title>/g,'')+'<rect id="'+id+'-mmv" class="ss-mmv"/>';
+  vpApply(id);
+}
+function vpClamp(v){v.x=Math.max(-300,Math.min(1300-v.w,v.x));v.y=Math.max(-210,Math.min(910-v.h,v.y))}
+function vpZoom(id,f,cx,cy){
+  const v=vpGet(id),nw=Math.min(1000,Math.max(100,v.w/f)),nh=nw*.7,k=nw/v.w;
+  v.x=cx-(cx-v.x)*k;v.y=cy-(cy-v.y)*k;v.w=nw;v.h=nh;vpClamp(v);vpApply(id);
+}
+const vpPt=(svg,e)=>{const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())};
+const vpOf=el=>el&&el.closest&&el.closest('#ssg,#pgs');
+document.addEventListener('wheel',e=>{const svg=vpOf(e.target);if(!svg)return;e.preventDefault();const p=vpPt(svg,e);vpZoom(svg.id,e.deltaY<0?1.15:1/1.15,p.x,p.y)},{passive:false});
+document.addEventListener('pointerdown',e=>{
+  const mm=e.target.closest&&e.target.closest('.ss-mm');
+  if(mm){const id=mm.id.replace('-mm',''),p=vpPt(mm,e),v=vpGet(id);v.x=p.x-v.w/2;v.y=p.y-v.h/2;vpClamp(v);vpApply(id);vpDrag={mini:true,id,svg:mm};mm.setPointerCapture&&mm.setPointerCapture(e.pointerId);return}
+  const svg=vpOf(e.target);if(!svg||e.button)return;
+  const v=vpGet(svg.id);vpDrag={id:svg.id,svg,sx:e.clientX,sy:e.clientY,x:v.x,y:v.y,moved:false};
+});
+document.addEventListener('pointermove',e=>{
+  if(!vpDrag)return;const v=vpGet(vpDrag.id);
+  if(vpDrag.mini){const p=vpPt(vpDrag.svg,e);v.x=p.x-v.w/2;v.y=p.y-v.h/2;vpClamp(v);vpApply(vpDrag.id);return}
+  const dx=e.clientX-vpDrag.sx,dy=e.clientY-vpDrag.sy;
+  if(!vpDrag.moved&&Math.abs(dx)+Math.abs(dy)<5)return;
+  vpDrag.moved=true;vpDrag.svg.classList.add('grab');
+  const sc=vpDrag.svg.getScreenCTM().a;v.x=vpDrag.x-dx/sc;v.y=vpDrag.y-dy/sc;vpClamp(v);vpApply(vpDrag.id);
+});
+document.addEventListener('pointerup',()=>{
+  if(!vpDrag)return;
+  if(vpDrag.moved){vpMoved=true;setTimeout(()=>{vpMoved=false},0)}
+  vpDrag.svg.classList&&vpDrag.svg.classList.remove('grab');vpDrag=null;
+});
 /* ---------- events ---------- */
 document.addEventListener('click',e=>{
   const T=e.target;
@@ -2723,12 +2770,14 @@ document.addEventListener('click',e=>{
       if(T.closest('[data-flagcopy]')){copyText(flagDql(f),'DQL copied');return}
     }
   }
+  const vz=T.closest('[data-vz]');if(vz){const id=cur.tab.id==='problem'?'pgs':'ssg',a=vz.dataset.vz;if(a==='fit'){delete VP[id];vpApply(id)}else{const v=vpGet(id);vpZoom(id,a==='in'?1.3:1/1.3,v.x+v.w/2,v.y+v.h/2)}return}
   const sxt=T.closest('[data-sxt]');if(sxt){if(sxDragMoved){sxDragMoved=false;return}sxSel=sxt.dataset.sxt;sxDraw();return}
   const sxm=T.closest('[data-sxm]');if(sxm){sxMode=sxm.dataset.sxm;sxDraw();return}
   const sxz=T.closest('[data-sxz]');if(sxz){const a=sxz.dataset.sxz,L=[.5,.65,.8,1,1.15,1.3];let i=L.indexOf(sxZoom);if(i<0)i=3;
     if(a==='in')sxZoom=L[Math.min(i+1,L.length-1)];else if(a==='out')sxZoom=L[Math.max(i-1,0)];else if(a==='reset'){sxZoom=1;$('#sxm').scrollLeft=0}
     else{const m=$('#sxm'),inn=m.querySelector('.sx-in');inn.style.zoom=1;sxZoom=Math.max(.5,Math.min(1.3,+(m.clientWidth/inn.scrollWidth).toFixed(2)))}
     sxDraw();return}
+  if(T.closest('#ssclear')){ssS.find='';$('#ssfind').value='';ssDraw();return}
   if(T.closest('#sxclear')){sxQ='';$('#sxq').value='';sxDraw();return}
   if(T.closest('[data-sxclose]')){sxSel=null;sxDraw();return}
   const sxr=T.closest('[data-sxr]');if(sxr){const s=SX.state[sxSel],name=s.pot.splice(+sxr.dataset.sxr,1)[0];s.act.push(name);sxDet(name,true);toast(`Enabled: ${name}`);sxDraw();return}
@@ -2745,11 +2794,10 @@ document.addEventListener('click',e=>{
   if(T.closest('#rclose')){closeRecents();return}
   const pin=T.closest('[data-pin]');if(pin){const e=HIST.find(x=>x.id===+pin.dataset.pin);e.pinned=!e.pinned;drawRecents();renderRail();return}
   const hb=T.closest('[data-h]');if(hb){openHist(HIST.find(x=>x.id===+hb.dataset.h));return}
-  const sgo=T.closest('[data-ssgo]');if(sgo){go('smartscape',sgo.dataset.ssgo);return}
   const lay=T.closest('[data-layout]');if(lay){ssS.layout=lay.dataset.layout;$$('[data-layout]').forEach(b=>b.setAttribute('aria-pressed',String(b===lay)));ssDraw();return}
   const sty=T.closest('[data-sstype]');if(sty){const t=sty.dataset.sstype;ssS.types.has(t)?ssS.types.delete(t):ssS.types.add(t);sty.setAttribute('aria-pressed',String(ssS.types.has(t)));ssDraw();return}
   const saf=T.closest('[data-ssaff]');if(saf){ssS.aff=!ssS.aff;saf.setAttribute('aria-pressed',String(ssS.aff));ssDraw();return}
-  const gnode=T.closest('.gn');if(gnode){showNode(+gnode.dataset.i);return}
+  const gnode=T.closest('.gn');if(gnode){if(vpMoved)return;showNode(+gnode.dataset.i);return}
   if(T.closest('#assistbtn')){assistOpen?closeAssist():openAssist();return}
   if(T.closest('#amode')){assistMode=assistMode==='dock'?'overlay':'dock';try{localStorage.setItem('dtproto_assist_mode',assistMode)}catch(e){}applyAssistMode();return}
   if(T.closest('#aclose')){closeAssist();return}
@@ -2759,7 +2807,7 @@ document.addEventListener('click',e=>{
   const pgo=T.closest('[data-pgo]');if(pgo){const k=pgo.dataset.pgo,p=PROB.find(x=>x.id===probSel)||focusProb();
     if(k==='explain'){openExplain(p.id)}else if(k==='open')go('issues','problems',{q:p.id,f:{}});else if(k==='logs')go('telemetry','logs',{q:pgBuild(p).root,f:{}});else if(k==='workflows')go('automate','workflows',{q:'remediate',f:{}});else if(k==='slos')go('infrastructure','slos',{q:'',f:{status:['Breaching']}});else if(k==='guardians')go('automate','guardians',{q:'',f:{}});return}
   const pd=T.closest('[data-pdepth]');if(pd){pgDepth=+pd.dataset.pdepth;$$('[data-pdepth]').forEach(b=>b.setAttribute('aria-pressed',String(b===pd)));pgDraw();return}
-  const pn=T.closest('.pn');if(pn){goEntity(pn.dataset.name);return}
+  const pn=T.closest('.pn');if(pn){if(vpMoved)return;goEntity(pn.dataset.name);return}
   const qn=T.closest('[data-qsn],[data-qsl]');if(qn){go('applications','services',{q:'',f:{}});return}
   const qst=T.closest('[data-qsstep]');if(qst){const opts=['all',...QS_GROUPS[qsG].svcs],i=opts.indexOf(qsSvc);qsSvc=opts[(i+ +qst.dataset.qsstep+opts.length)%opts.length];renderQuickStart($('#body'));return}
   if(T.closest('#gs')){openPal();return}
@@ -2771,6 +2819,7 @@ document.addEventListener('click',e=>{
   const dt=T.closest('[data-toast]');if(dt){toast(`${dt.dataset.toast}`);return}
   if(!ui)return;
   const {s,tab,def}=ui;
+  if(T.closest('#qclear')){s.q='';const q=$('#q');q.value='';updateAll();q.focus();return}
   const vw=T.closest('[data-view]');if(vw){const k=vw.dataset.view,v=k[0]==='p'?tab.views[+k.slice(1)]:userViews[vkey()][+k.slice(1)];$$('.menu').forEach(m=>{m.hidden=true});applyView(v);toast(`View: ${v.name}`);return}
   const vd=T.closest('[data-vdel]');if(vd){userViews[vkey()].splice(+vd.dataset.vdel,1);saveUV();drawViewMenu();return}
   if(T.closest('[data-vsave]')){const n=$('#vname').value.trim();if(!n){toast('Name the view first');$('#vname').focus();return}saveView(n);toast(`Saved view “${n}”`);drawViewMenu();return}
@@ -2859,7 +2908,7 @@ document.addEventListener('click',()=>setTimeout(syncExpanded,0));
 document.addEventListener('keydown',()=>setTimeout(syncExpanded,0));
 window.addEventListener('hashchange',render);
 setInterval(()=>{if(ui&&ui.tab.liveCapable&&ui.s.live&&!document.hidden&&!$('#drawer.open')&&!$('#grid:hover')){LOGS.unshift(mkLog(Date.now()));if(LOGS.length>500)LOGS.pop();updateGrid()}},1300);
-APPS.find(x=>x.id==='smartscape').tabs=[['home','Home'],...SS_ORDER.map(v=>[v,SSV[v].name])].map(([id,name])=>({id,name,app:'smartscape',kind:'Apps & tabs',flush:true,noSeg:id==='problem',render:renderSmartscape}));
+APPS.find(x=>x.id==='smartscape').tabs=[...SS_ORDER.map(v=>[v,SSV[v].name])].map(([id,name])=>({id,name,app:'smartscape',kind:'Apps & tabs',flush:true,noSeg:id==='problem',render:renderSmartscape}));
 $('#asug').innerHTML=ASSIST_SUGG.map(t=>`<button data-as="${esc(t)}">${esc(t)}</button>`).join('');
 renderUserMenu();
 applyAssistMode();
