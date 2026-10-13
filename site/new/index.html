@@ -1976,7 +1976,7 @@ function render(){
   if(isMobile()&&!MOB_OK.includes(app.id+'/'+tab.id))host.innerHTML=mobNote(tab);else if(tab.render)tab.render(host);else renderTable(tab,host);
   document.title=`${tab.name} · ${app.name} – Dynatrace prototype`;
 }
-const APPGRP={home:'p',security:'p',documents:'b',automate:'b',admin:'b',smartscape:'y',infrastructure:'y',applications:'y',experience:'y',telemetry:'y',quickstart:'y'};
+const APPGRP={home:'p',security:'p',smartscape:'p',documents:'b',automate:'b',admin:'b',infrastructure:'y',applications:'y',experience:'y',telemetry:'y',quickstart:'y'};
 const grp=id=>APPGRP[id]||'g';
 let HL=false;try{HL=localStorage.getItem('dtproto_hl')==='1'}catch(e){}
 document.documentElement.dataset.hlg=HL?'on':'off';
@@ -2746,7 +2746,17 @@ function renderAround(host){
     ${p?`<div class="xp-cause"><span class="muted">Root cause</span><b>${esc(p.cause)}</b></div>`:''}
     <div class="sec">Next steps</div><div style="display:flex;flex-wrap:wrap;gap:6px"><button class="btn primary" data-ago="open">Open ${AR_LABEL[k]}</button>${k==='service'||k==='workload'?'<button class="btn" data-ago="logs">Show logs</button>':''}<button class="btn" data-ago="all">Show whole environment</button></div></div></div>
    </div></div></div>`;
-  ssWheelBind();arDraw();
+  const fresh=!VP.pgs;ssWheelBind();arDraw();
+  if(fresh)arFit();
+  if(arRO)arRO.disconnect();if(window.ResizeObserver){arRO=new ResizeObserver(()=>{const v=VP.pgs;if(v&&arLast&&v.x===arLast.x&&v.y===arLast.y&&v.w===arLast.w)arFit()});arRO.observe($('#pgs'))}
+}
+/* fit the graph into the space right of the panel; refit on resize until the user pans or zooms */
+let arRO=null,arLast=null;
+function arFit(){
+  const cv=$('#pgs'),pn=$('.ss-panels');if(!cv||!pn)return;
+  const W=cv.clientWidth,H=cv.clientHeight,c=cv.getBoundingClientRect(),left=Math.max(0,pn.getBoundingClientRect().right-c.left+16);if(!W||!H)return;
+  const s=Math.max(.2,Math.min((W-left-16)/700,H/640));
+  VP.pgs=arLast={x:270-left/s,y:340-H/s/2,w:W/s,h:H/s};arLast=Object.assign({},VP.pgs);vpApply('pgs');
 }
 function arDraw(){
   const n=ssFocus,L=arLanes(n),cx=610,cy=300,nodes=[],edges=[],xl=350,xr=870;
@@ -4199,7 +4209,7 @@ document.addEventListener('click',e=>{
       if(T.closest('[data-flagcopy]')){copyText(flagDql(f),'DQL copied');return}
     }
   }
-  const vz=T.closest('[data-vz]');if(vz){const id=cur.tab.id==='problem'?'pgs':'ssg',a=vz.dataset.vz;if(a==='fit'){delete VP[id];vpApply(id)}else{const v=vpGet(id);vpZoom(id,a==='in'?1.3:1/1.3,v.x+v.w/2,v.y+v.h/2)}return}
+  const vz=T.closest('[data-vz]');if(vz){const id=cur.tab.id==='problem'||cur.tab.id==='around'?'pgs':'ssg',a=vz.dataset.vz;if(a==='fit'){if(cur.tab.id==='around'){arFit();return}delete VP[id];vpApply(id)}else{const v=vpGet(id);vpZoom(id,a==='in'?1.3:1/1.3,v.x+v.w/2,v.y+v.h/2)}return}
   const sxt=T.closest('[data-sxt]');if(sxt){if(sxDragMoved){sxDragMoved=false;return}sxSel=sxt.dataset.sxt;sxDraw();return}
   const sxm=T.closest('[data-sxm]');if(sxm){sxMode=sxm.dataset.sxm;sxDraw();return}
   const sxz=T.closest('[data-sxz]');if(sxz){const a=sxz.dataset.sxz,L=[.5,.65,.8,1,1.15,1.3];let i=L.indexOf(sxZoom);if(i<0)i=3;
