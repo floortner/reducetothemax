@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dynatrace – Option B prototype</title>
+<title>Dynatrace prototype</title>
 <script>
 (function(){
  var mq=window.matchMedia('(prefers-color-scheme: dark)'),r=document.documentElement;
@@ -119,9 +119,10 @@ td.mono,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:
 .empty h3{margin:0 0 6px;font-size:16px}
 .empty p{margin:0 0 16px;color:var(--muted);max-width:46ch}
 .none{padding:36px;text-align:center;color:var(--muted)}
-.kpis{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;min-width:130px}
-.kpi b{display:block;font-size:20px;font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:12px}
+.sbfill{flex:1}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:130px}
+.kpi b{display:block;font-size:28px;font-weight:600;line-height:1.15;color:var(--c,var(--text))}
 .kpi span{color:var(--muted)}
 
 /* home */
@@ -129,7 +130,7 @@ td.mono,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:
 .tile{all:unset;box-sizing:border-box;cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:block}
 .tile:hover{border-color:var(--line2)}
 .tile:focus-visible{outline:2px solid var(--accent)}
-.tile b{display:block;font-size:30px;font-weight:600;color:var(--c,var(--text));margin:2px 0}
+.tile b{display:block;font-size:28px;font-weight:600;line-height:1.15;color:var(--c,var(--text));margin:2px 0}
 .cols2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 0}
 .card h2{font-size:14px;margin:0;padding:10px 16px}
@@ -219,7 +220,6 @@ tbody tr:hover{background:var(--hover)}
 .tabs .n{font-size:11px;font-weight:700;border-radius:9px;padding:1px 7px;background:var(--tint);color:var(--muted)}
 .tabs .n.r{background:var(--r);color:#fff}
 .tabs .n.sq{border-radius:3px}
-.rail .pip.sq{border-radius:3px}
 .tabs .n.a{background:color-mix(in srgb,var(--a) 22%,var(--panel));color:var(--a)}
 .gsearch{width:300px;display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--line2);border-radius:6px;padding:6px 10px;color:var(--muted);text-align:left}
 .gsearch:hover{border-color:var(--accent)}
@@ -255,7 +255,7 @@ tbody tr:hover{background:var(--hover)}
 .ss-card .art svg{max-width:100%;height:auto}
 .ss-note{color:var(--muted);margin:10px 0 0}
 .body.flush{padding:0;overflow:hidden}
-.ss-wrap{display:grid;grid-template-columns:240px 1fr;height:100%;min-height:0}
+.ss-wrap{display:grid;grid-template-columns:1fr;height:100%;min-height:0}
 .ss-nav{background:var(--panel);border-right:1px solid var(--line);padding:12px 8px;overflow:auto}
 .ss-nav h5{margin:14px 10px 6px;font-size:12px;color:var(--muted);font-weight:500;display:flex;align-items:center;gap:8px}
 .ss-nav h5::after{content:"";flex:1;height:1px;background:var(--line)}
@@ -289,6 +289,8 @@ tbody tr:hover{background:var(--hover)}
 .tgl{display:flex;align-items:center;gap:8px;margin-top:12px}
 .ss-float{position:absolute;top:12px;right:12px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px;box-shadow:0 2px 10px rgba(30,30,50,.08);z-index:5}
 .ss-float .scopebar{margin:0;flex-wrap:nowrap}
+.ss-float{display:flex;align-items:center;gap:8px}
+.menu a.mi{text-decoration:none;color:inherit}
 .rail .sep{height:1px;background:var(--line);margin:8px 4px}
 .rail .tail{margin-left:auto}
 .slim .tail{display:none}
@@ -530,12 +532,12 @@ pre.dql .num{color:var(--a);font-style:normal}
 :root{--sxcov:#e4f4ea;--sxcovd:#1a8f4c;--sxpot:#fff3d1;--sxpotd:#f2c14e;--sxpotb:#f6c64f}
 html[data-theme=dark],html[data-theme=midnight],html[data-theme=terminal],html[data-theme=bluebox]{--sxcov:color-mix(in srgb,#3fb950 16%,var(--panel));--sxcovd:#2ea043;--sxpot:color-mix(in srgb,#d29922 16%,var(--panel));--sxpotd:#9e6a03;--sxpotb:#d29922}
 .sx-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
-.sx-kpi{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;background:var(--panel2);border:1px solid var(--line);border-radius:var(--rad);padding:14px 16px}
+.sx-kpi{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:var(--rad);padding:14px 16px}
 .sx-kpi:hover{border-color:var(--ctl)}
 .sx-kpi:focus-visible{outline:2px solid var(--accent)}
 .sx-kpi svg{width:26px;height:26px;color:var(--muted);flex:none}
-.sx-kpi b{display:block;font-size:20px;line-height:1.1}
-.sx-kpi small{color:var(--muted);font-size:12px}
+.sx-kpi b{display:block;font-size:28px;font-weight:600;line-height:1.15}
+.sx-kpi small{color:var(--muted);font-size:13px}
 .sx-tool{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
 .sx-tool .find{min-width:260px}
 .sx-zoom{display:flex;gap:2px}
@@ -655,6 +657,7 @@ html[data-theme=dark],html[data-theme=midnight],html[data-theme=terminal],html[d
 .addpop .menu .mi small{grid-column:2;margin:0;font-size:12px}
 .menu .mtext:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
 .menu .mi small{margin-left:auto;color:var(--muted)}
+.menu a.mi{text-decoration:none;color:inherit}
 .add-n{margin:6px 8px 2px;font-size:12px}
 .tabs a .aicon{margin-right:6px}
 .udoc-top{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
@@ -895,6 +898,7 @@ const SERVICES=[
   ...['postgres orders','postgres catalog','redis sessions','mongo reviews'].map(n=>({name:n,type:'Database',tech:'SQL/NoSQL'})),
   ...['kafka orders-topic','sqs notifications','rabbit emails'].map(n=>({name:n,type:'Messaging',tech:'Queue'}))
 ].map(x=>{const h=wpick(HEALTH,HW);return{...x,health:h,fail:+(h==='Critical'?ri(8,30):h==='Warning'?ri(2,8):rnd()*1.5).toFixed(1),p50:ri(8,420),tput:ri(20,9000),seg:pick(SEGS)}});
+SVC.slice(12).forEach((n,i)=>{const h=k=>{const x=Math.sin((i+1)*127.1+k*311.7)*43758.5453;return x-Math.floor(x)};const hl=h(1)<.7?'Healthy':h(1)<.88?'Warning':'Critical';SERVICES.splice(12+i,0,{name:n,type:'Service',tech:['Java','Node.js','.NET','Python','Go'][Math.floor(h(2)*5)],health:hl,fail:+(hl==='Critical'?8+h(3)*20:hl==='Warning'?2+h(3)*5:h(3)*1.5).toFixed(1),p50:Math.round(8+h(4)*400),tput:Math.round(20+h(5)*8000),seg:SEGS[Math.floor(h(6)*SEGS.length)]})});
 const REASONS=['HTTP 500','HTTP 503','Timeout','Connection refused','Unhandled exception','Validation error'];
 const RT=['Requests','Outbound calls','DB queries','Messaging'];
 const ENDPOINTS=['POST /api/checkout','GET /api/cart','GET /api/catalog','POST /api/payment','GET /api/search','POST /api/login','GET /api/orders','PUT /api/profile'];
@@ -1057,7 +1061,7 @@ const FLAGS=[
  ['Rate limiter v3','Ops','Live','api-gateway','ops, back-end'],['Read replicas for catalog','Ops','Complete','catalog-service','ops, db'],
  ['Loyalty points banner','Experiment','Archived','loyalty-app','mobile, experiment'],['Guest checkout','Release','Archived','checkout-service','checkout'],
  ['Image CDN switch','Ops','Archived','marketing-site','web, ops'],['Passkey login','Release','Live','login-service','security, web'],
- ['Order tracking map','Release','Development','tracking-service','mobile'],['Promo code stacking','Experiment','Complete','pricing-service','checkout'],
+ ['Order tracking map','Release','Development','shipping-service','mobile'],['Promo code stacking','Experiment','Complete','pricing-service','checkout'],
  ['Slow query logging','Ops','Live','catalog-service','ops, db'],['Partner API v2','Permission','Development','partner-console','partner'],
  ['Push notification digest','Release','Live','notification-service','mobile'],['Express shipping option','Experiment','Development','shipping-service','checkout, experiment'],
  ['Invoice PDF redesign','Release','Archived','billing-service','back-end'],['Saved addresses','Release','Live','profile-service','web, mobile']
@@ -1077,41 +1081,48 @@ const saveFlags=()=>{try{localStorage.setItem('dtproto_flags',JSON.stringify({de
   const next=FLAGS.filter(f=>!FLAG_DEL.includes(f.key));
   (o.fl||[]).forEach(x=>{if(x.at)x.mod=Math.max(0,Math.floor((Date.now()-x.at)/60000));const i=next.findIndex(f=>f.key===x.key);if(i>=0)next[i]=x;else next.unshift(x)});
   FLAGS.splice(0,FLAGS.length,...next)}catch(e){}})();
+const SLOS=[
+ ['Checkout availability','checkout-service',99.9,99.94,62,.8],['Payment latency p95 under 300 ms','payment-service',99,98.7,-30,2.4],['Search errors under 1%','search-service',99.5,99.7,81,.6],
+ ['Login availability','login-service',99.95,99.96,74,.5],['Catalog response time p90 under 400 ms','catalog-service',99,99.1,12,1.9],['Order processing success','order-service',99.5,99.62,55,.9],
+ ['Cart availability','cart-service',99.9,99.93,40,1.1],['Notification delivery under 5 min','notification-service',99,99.3,31,1.6],['Shipping quote availability','shipping-service',99.5,99.8,83,.4],['Profile API errors under 1%','profile-service',99.5,99.7,69,.7]
+].map(([name,service,target,cur,budget,burn])=>({name,service,target,cur,budget,burn,window:'30 days',status:budget<0?'Breaching':burn>1.5?'At risk':'On track'}));
 const APPS=[
  {id:'home',name:'Home',icon:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',tabs:[
    {id:'overview',name:'Overview',kind:'Apps & tabs',render:renderHome},
-   {id:'business',name:'Business',kind:'Apps & tabs',noSeg:true,render:renderBusiness}]},
- {id:'infrastructure',name:'Infrastructure',icon:'<rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/>',badge:()=>cnt(SYNTH,r=>r.status==='Failing'),tabs:[
+   {id:'business',name:'Business',kind:'Apps & tabs',noSeg:true,timed:true,render:renderBusiness}]},
+ {id:'infrastructure',name:'Infrastructure',icon:'<rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/>',tabs:[
    {id:'hosts',name:'Hosts',kind:'Entities',noun:'hosts and processes',cols:entityCols,rows:HOSTS_ONLY,facets:[{k:'type',label:'Type'},{k:'health',label:'Health'},{k:'cloud',label:'Cloud'},{k:'os',label:'OS'}],
-     related:[{label:'Show logs',app:'telemetry',tab:'logs'},{label:'Show problems',app:'issues',tab:'problems',key:'name'}]},
+     related:[{label:'Show problems',app:'issues',tab:'problems',key:'name'},{label:'Open in Smartscape',app:'smartscape',tab:'infra',all:true}]},
    {id:'network',name:'Network',kind:'Entities',noun:'network entities',rows:NETDEV,cols:[C('name','Name','name'),C('type','Type'),C('health','Health','health'),C('vendor','Vendor'),C('traffic','Traffic (Mbit/s)','int',{num:1}),C('util','Utilization','pct',{num:1}),C('errors','Errors/s','int',{num:1}),C('site','Site')],
      facets:[{k:'type',label:'Type'},{k:'health',label:'Health'},{k:'vendor',label:'Vendor'},{k:'site',label:'Site'}],
      related:[{label:'Show problems',app:'issues',tab:'problems',key:'name'}]},
-   {id:'clouds',name:'Clouds',kind:'Entities',rows:[],cols:[],facets:[],empty:{title:'No cloud resources yet',body:'Connect an AWS, Azure or GCP account to see VMs, serverless functions, containers and databases here.',cta:'Create connection',go:'admin/settings/Cloud accounts'}},
+   {id:'clouds',name:'Clouds',kind:'Entities',rows:[],cols:[],facets:[],empty:{title:'No cloud resources yet',body:'Connect an AWS, Azure or GCP account to see VMs, serverless functions, containers and databases here.',cta:'Connect cloud account',go:'admin/settings/Cloud accounts'}},
    {id:'kubernetes',name:'Kubernetes',kind:'Entities',noun:'Kubernetes entities',rows:K8S,cols:[C('name','Name','name'),C('type','Type'),C('health','Health','health'),C('cluster','Cluster'),C('cpu','CPU','pct',{num:1}),C('mem','Memory','pct',{num:1}),C('pods','Pods','int',{num:1})],
      facets:[{k:'type',label:'Type'},{k:'health',label:'Health'},{k:'cluster',label:'Cluster'}],
-     related:[{label:'Show logs',app:'telemetry',tab:'logs'}]},
-   {id:'slos',name:'SLOs',kind:'Entities',noun:'monitors',rows:SYNTH,cols:[C('name','Monitor','name'),C('type','Type'),C('status','Status','badge'),C('avail','Availability','pct1',{num:1}),C('dur','Duration','ms',{num:1}),C('freq','Frequency'),C('loc','Location')],facets:[{k:'type',label:'Type'},{k:'status',label:'Status'},{k:'freq',label:'Frequency'},{k:'loc',label:'Location'}],
-     badge:{fn:()=>cnt(SYNTH,r=>r.status==='Failing'),tone:'r',square:true}},
-   {id:'alert-templates',name:'Alert templates',kind:'Entities',noun:'templates',rows:ALERT_T,scoped:false,noDrawer:true,cols:[C('name','Template','name'),C('applies','Applies to'),C('metric','Metric'),C('action','','action')],facets:[{k:'applies',label:'Applies to'}]}]},
+     related:[{label:'Open in Smartscape',app:'smartscape',tab:'k8s',all:true}]},
+   {id:'slos',name:'SLOs',kind:'Entities',noun:'SLOs',rows:SLOS,scoped:false,sort:{k:'budget',dir:1},search:['name','service'],badge:{fn:()=>SLOS.filter(s=>s.budget<0).length,tone:'r',square:true},
+     cols:[C('name','SLO','name'),C('service','Service'),C('target','Target','pct2',{num:1}),C('cur','Current','pct2',{num:1}),C('budget','Error budget','slobudget',{num:1}),C('burn','Burn rate','burn',{num:1}),C('status','Status','badge')],
+     facets:[{k:'status',label:'Status'},{k:'service',label:'Service'}],drawerHtml:sloDrawer,
+     related:[{label:'Show service',app:'applications',tab:'services',key:'service'},{label:'Show problems',app:'issues',tab:'problems',key:'service'},{label:'Open guardians',app:'automate',tab:'guardians'}]},
+   {id:'alert-templates',name:'Alert templates',kind:'Entities',noun:'templates',rows:ALERT_T,scoped:false,cols:[C('name','Template','name'),C('applies','Applies to'),C('metric','Metric'),C('action','','action')],facets:[{k:'applies',label:'Applies to'}]}]},
  {id:'applications',name:'Applications',icon:'<rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/>',tabs:[
-   {id:'services',name:'Services',kind:'Entities',noun:'services',rows:SERVICES,cols:[C('name','Name','name'),C('type','Type'),C('health','Health','health'),C('fail','Failure rate','failpct',{num:1}),C('p50','Median response','ms',{num:1}),C('tput','Requests/min','int',{num:1}),C('tech','Technology')],
+   {id:'services',name:'Services',kind:'Entities',noun:'services',rows:SERVICES,cols:[C('name','Name','name'),C('type','Type'),C('health','Health','health'),C('fail','Error rate','failpct',{num:1}),C('p50','Median response','ms',{num:1}),C('tput','Requests/min','int',{num:1}),C('tech','Technology')],
      facets:[{k:'type',label:'Type'},{k:'health',label:'Health'},{k:'tech',label:'Technology'}],
-     related:[{label:'Show traces',app:'telemetry',tab:'traces'},{label:'Show logs',app:'telemetry',tab:'logs'},{label:'Show problems',app:'issues',tab:'problems',key:'name'}]},
-   {id:'errors',name:'Errors',kind:'Entities',noun:'failing requests',rows:FAILS,sort:{k:'failures',dir:-1},search:['name','service','reason'],cols:[C('name','Endpoint','name'),C('service','Service'),C('reason','Failure reason'),C('reqType','Request type'),C('failures','Errors','int',{num:1}),C('rate','Rate','failpct',{num:1})],facets:[{k:'reason',label:'Failure reason'},{k:'reqType',label:'Request type'},{k:'service',label:'Service'}]},
-   {id:'response-time',name:'Response time',kind:'Entities',noun:'slow requests',rows:RESP,sort:{k:'p90',dir:-1},search:['name','service'],cols:[C('name','Endpoint','name'),C('service','Service'),C('reqType','Request type'),C('p50','p50','ms',{num:1}),C('p90','p90','ms',{num:1}),C('p99','p99','ms',{num:1})],facets:[{k:'reqType',label:'Request type'},{k:'service',label:'Service'}]},
-   {id:'frontends',name:'Frontends',kind:'Entities',noun:'frontends',rows:FRONT,cols:[C('name','Frontend','name'),C('kind','Kind'),C('rum','Real user monitoring','badge'),C('apdex','Apdex','num2',{num:1}),C('load','Load time','ms',{num:1}),C('actions','User actions','int',{num:1})],facets:[{k:'kind',label:'Kind'},{k:'rum',label:'Real user monitoring'}]},
-   {id:'feature-flags',name:'Feature Flags',kind:'Entities',noun:'feature flags',rows:FLAGS,scoped:false,noDrawer:true,render:renderFlags,create:'Create feature flag',sort:{k:'mod',dir:1},search:['name','key','tags','desc'],
-     board:{k:'status',order:['Development','Live','Complete','Archived']},onRow:r=>{flagOpen=r.key;flagSub='overview';flagEditSum=false;render()},
+     related:[{label:'Show traces',app:'telemetry',tab:'traces'},{label:'Show logs',app:'telemetry',tab:'logs'},{label:'Show problems',app:'issues',tab:'problems',key:'name'},{label:'Show feature flags',app:'applications',tab:'feature-flags',flagsvc:true}]},
+   {id:'errors',related:[{label:'Show service',app:'applications',tab:'services',key:'service'},{label:'Show traces',app:'telemetry',tab:'traces',key:'service'},{label:'Show logs',app:'telemetry',tab:'logs',key:'service'}],name:'Errors',kind:'Entities',noun:'failing requests',rows:FAILS,sort:{k:'failures',dir:-1},search:['name','service','reason'],cols:[C('name','Endpoint','name'),C('service','Service'),C('reason','Failure reason'),C('reqType','Request type'),C('failures','Errors','int',{num:1}),C('rate','Rate','failpct',{num:1})],facets:[{k:'reason',label:'Failure reason'},{k:'reqType',label:'Request type'},{k:'service',label:'Service'}]},
+   {id:'response-time',related:[{label:'Show service',app:'applications',tab:'services',key:'service'},{label:'Show traces',app:'telemetry',tab:'traces',key:'service'}],name:'Response time',kind:'Entities',noun:'slow requests',rows:RESP,sort:{k:'p90',dir:-1},search:['name','service'],cols:[C('name','Endpoint','name'),C('service','Service'),C('reqType','Request type'),C('p50','p50','ms',{num:1}),C('p90','p90','ms',{num:1}),C('p99','p99','ms',{num:1})],facets:[{k:'reqType',label:'Request type'},{k:'service',label:'Service'}]},
+   {id:'frontends',related:[{label:'Show user sessions',app:'telemetry',tab:'user-sessions',key:'name'},{label:'Show errors',app:'applications',tab:'errors',all:true}],name:'Frontends',kind:'Entities',noun:'frontends',rows:FRONT,cols:[C('name','Frontend','name'),C('kind','Kind'),C('rum','Real user monitoring','badge'),C('apdex','Apdex','num2',{num:1}),C('load','Load time','ms',{num:1}),C('actions','User actions','int',{num:1})],facets:[{k:'kind',label:'Kind'},{k:'rum',label:'Real user monitoring'}]},
+   {id:'feature-flags',name:'Feature flags',kind:'Entities',noun:'feature flags',rows:FLAGS,scoped:false,noDrawer:true,render:renderFlags,create:'Create feature flag',sort:{k:'mod',dir:1},search:['name','key','tags','desc','svc'],
+     board:{k:'status',order:['Development','Live','Complete','Archived']},onRow:r=>{flagSub='overview';flagEditSum=false;go('applications','feature-flags',{id:r.key})},
      cols:[C('name','Feature','flagname'),C('type','Type'),C('status','Status','badge'),C('env','Environments'),C('tags','Tags','tags'),C('stale','Staleness','badge'),C('evals','Evaluations (24 h)','int',{num:1}),C('creator','Creator'),C('mod','Last updated','ago')],
      facets:[{k:'creator',label:'Creator'},{k:'status',label:'Status'},{k:'type',label:'Type'},{k:'stale',label:'Staleness'},{k:'env',label:'Environments'}]},
-   {id:'alert-templates',name:'Alert templates',kind:'Entities',noun:'templates',rows:APP_ALERT_T,scoped:false,noDrawer:true,cols:[C('name','Template','name'),C('applies','Applies to'),C('metric','Metric'),C('action','','action')],facets:[{k:'applies',label:'Applies to'}]}]},
+   {id:'alert-templates',name:'Alert templates',kind:'Entities',noun:'templates',rows:APP_ALERT_T,scoped:false,cols:[C('name','Template','name'),C('applies','Applies to'),C('metric','Metric'),C('action','','action')],facets:[{k:'applies',label:'Applies to'}]}]},
 {id:'smartscape',name:'Smartscape',hideTabs:true,defaultTab:'grail',icon:'<circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.3 11l7.4-4M8.3 13l7.4 4"/>',tabs:[]},
  {id:'telemetry',name:'Telemetry',icon:'<path d="M3 12h4l3-8 4 16 3-8h4"/>',tabs:[
-   {id:'logs',name:'Logs',kind:'Telemetry',noIndex:true,liveCapable:true,noun:'log lines',rows:LOGS,tk:'ago',search:['name','source','ns'],cols:[C('time','Time','mono'),C('level','Level','badge'),C('source','Source'),C('ns','Namespace'),C('name','Message')],facets:[{k:'level',label:'Level'},{k:'source',label:'Source'},{k:'ns',label:'Namespace'},{k:'cluster',label:'Cluster'}]},
+   {id:'logs',related:[{label:'Show service',app:'applications',tab:'services',key:'source'},{label:'Show traces',app:'telemetry',tab:'traces',key:'source'}],name:'Logs',kind:'Telemetry',noIndex:true,liveCapable:true,noun:'log lines',rows:LOGS,tk:'ago',search:['name','source','ns'],cols:[C('time','Time','mono'),C('level','Level','badge'),C('source','Source'),C('ns','Namespace'),C('name','Message')],facets:[{k:'level',label:'Level'},{k:'source',label:'Source'},{k:'ns',label:'Namespace'},{k:'cluster',label:'Cluster'}]},
    {id:'metrics',name:'Metrics',kind:'Telemetry',noun:'metrics',rows:METRICS,scoped:false,search:['name','desc','domain'],cols:[C('name','Metric','mono'),C('desc','Description'),C('domain','Domain'),C('type','Type'),C('unit','Unit'),C('last','Last value','',{num:1}),C('source','Source'),C('action','','action',{text:'Explore'})],facets:[{k:'domain',label:'Domain'},{k:'type',label:'Type'},{k:'unit',label:'Unit'},{k:'source',label:'Source'}]},
-   {id:'traces',name:'Traces',kind:'Telemetry',noun:'traces',rows:TRACES,tk:'ago',search:['name','id','service'],cols:[C('id','Trace ID','mono'),C('name','Root request','name'),C('service','Service'),C('dur','Duration','ms',{num:1}),C('spans','Spans','int',{num:1}),C('status','Status','badge')],facets:[{k:'status',label:'Status'},{k:'service',label:'Service'}]},
-   {id:'user-sessions',name:'User Sessions',kind:'Telemetry',noun:'user sessions',rows:USESS,tk:'started',sort:{k:'started',dir:1},search:['name','user','frontend'],
+   {id:'traces',related:[{label:'Show service',app:'applications',tab:'services',key:'service'},{label:'Show logs',app:'telemetry',tab:'logs',key:'service'}],name:'Traces',kind:'Telemetry',noun:'traces',rows:TRACES,tk:'ago',search:['name','id','service'],cols:[C('id','Trace ID','mono'),C('name','Root request','name'),C('service','Service'),C('dur','Duration','ms',{num:1}),C('spans','Spans','int',{num:1}),C('status','Status','badge')],facets:[{k:'status',label:'Status'},{k:'service',label:'Service'}]},
+   {id:'user-sessions',name:'User sessions',kind:'Telemetry',noun:'user sessions',rows:USESS,tk:'started',sort:{k:'started',dir:1},search:['name','user','frontend'],
      cols:[C('name','Session','mono'),C('user','User'),C('frontend','Frontend'),C('country','Country'),C('device','Browser or OS'),C('dur','Duration','secs',{num:1}),C('actions','Actions','int',{num:1}),C('errors','Errors','int',{num:1}),C('sat','Experience','badge'),C('started','Started','ago')],
      facets:[{k:'frontend',label:'Frontend'},{k:'country',label:'Country'},{k:'device',label:'Browser or OS'},{k:'sat',label:'Experience'}],
      related:[{label:'Show frontend',app:'applications',tab:'frontends',key:'frontend'}]},
@@ -1120,52 +1131,52 @@ const APPS=[
      kpis:rows=>{const n=Math.max(rows.length,1),avg=k=>Math.round(rows.reduce((a,r)=>a+r[k],0)/n);return[['Conversations',rows.length],['Eval pass rate',Math.round(rows.filter(r=>r.quality==='Good').length/n*100)+'%'],['Groundedness',avg('grounded')+'%'],['Hallucinations',rows.filter(r=>r.flag==='Hallucination').length],['Avg latency',(avg('latency')/1000).toFixed(1)+' s'],['Cost','$'+rows.reduce((a,r)=>a+r.cost,0).toFixed(2)]]},
      cols:[C('name','Conversation','mono'),C('app','Application'),C('model','Model'),C('turns','Turns','int',{num:1}),C('latency','Latency','ms',{num:1}),C('cost','Cost','usd',{num:1}),C('grounded','Groundedness','pct1',{num:1}),C('relevance','Relevance','pct1',{num:1}),C('quality','Quality','badge'),C('flag','Flag','badge'),C('started','Started','ago')],
      facets:[{k:'app',label:'Application'},{k:'model',label:'Model'},{k:'quality',label:'Quality'},{k:'flag',label:'Flag'}],
-     related:[{label:'Open traces',app:'telemetry',tab:'traces',key:'app'},{label:'Show service',app:'applications',tab:'services',key:'app'}]}]},
+     related:[{label:'Open in Smartscape',app:'smartscape',tab:'ai',all:true}]}]},
  {id:'issues',name:'Problems',icon:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 8v5M12 16h.01"/>',badge:()=>openProb(),tabs:[
    {id:'problems',name:'Problems',kind:'Issues',noun:'problems',rows:PROB,init:{f:{status:['Open']}},sort:{k:'started',dir:1},search:['name','id','entity'],header:problemHeader,tk:'started',tkOpen:(r,to)=>r.status==='Open'&&r.started>=to,badge:{fn:openProb,tone:'r'},
      cols:[C('id','ID','mono'),C('name','Problem','name'),C('status','Status','badge'),C('category','Category'),C('entity','Affected entity'),C('impact','Impact'),C('started','Started','ago')],
      facets:[{k:'status',label:'Status'},{k:'category',label:'Category'},{k:'impact',label:'Impact'}],
      views:[{name:'Open problems',f:{status:['Open']}},{name:'Open availability problems',f:{status:['Open'],category:['Availability']}},{name:'All problems',f:{}}],
-     related:[{label:'Explain',explain:true,key:'id'},{label:'Investigate',investigate:true,key:'id'},{label:'Root-cause graph',app:'smartscape',tab:'problem',key:'id'},{label:'Show affected entity',app:'applications',tab:'services',key:'entity'},{label:'Show logs',app:'telemetry',tab:'logs',key:'entity'}]},
-   {id:'investigations',name:'Investigations',kind:'Issues',noun:'investigations',rows:INVS,scoped:false,noDrawer:true,sort:{k:'created',dir:1},search:['name','id'],render:renderInvestigations,cta:'New investigation',onRow:r=>{invOpen=r.id;render()},
+     related:[{label:'Investigate',investigate:true,key:'id'},{label:'Root-cause graph',app:'smartscape',tab:'problem',key:'id'},{label:'Show affected entity',entity:true,key:'entity'},{label:'Show logs',logs:true,key:'entity'}]},
+   {id:'investigations',name:'Investigations',kind:'Issues',noun:'investigations',rows:INVS,scoped:false,noDrawer:true,sort:{k:'created',dir:1},search:['name','id'],render:renderInvestigations,cta:'New investigation',onRow:r=>go('issues','investigations',{id:r.id}),
      cols:[C('name','Investigation','invname'),C('status','Status','badge'),C('verdict','Root cause','badge'),C('trigger','Trigger'),C('sharing','Sharing'),C('created','Created','ago')],
      facets:[{k:'status',label:'Status'},{k:'verdict',label:'Root cause'},{k:'trigger',label:'Trigger'},{k:'sharing',label:'Sharing'}]},
-   {id:'recommendations',name:'Recommendations',kind:'Issues',noun:'recommendations',rows:RECS,noDrawer:true,scoped:false,badge:{fn:()=>RECS.filter(r=>r.priority==='High').length,tone:'a'},
+   {id:'recommendations',name:'Recommendations',kind:'Issues',noun:'recommendations',rows:RECS,scoped:false,badge:{fn:()=>RECS.filter(r=>r.priority==='High').length,tone:'a'},
      cols:[C('name','Recommendation','name'),C('source','Source'),C('priority','Priority','badge'),C('category','Category'),C('action','','action')],facets:[{k:'source',label:'Source'},{k:'priority',label:'Priority'},{k:'category',label:'Category'}]}]},
- {id:'security',name:'Security',scoped:false,icon:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',badge:()=>cnt(VULNS,r=>r.severity==='Critical'&&r.status==='Open'),tabs:[
-   {id:'vulnerabilities',name:'Vulnerabilities',kind:'Issues',scoped:true,noun:'vulnerabilities',badge:{fn:()=>cnt(VULNS,r=>r.severity==='Critical'&&r.status==='Open'),tone:'r',square:true},
+ {id:'security',name:'Security',scoped:false,icon:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',tabs:[
+   {id:'vulnerabilities',related:[{label:'Show affected services',app:'applications',tab:'services',key:'entity'},{label:'Open SIEM',app:'security',tab:'siem',all:true}],name:'Vulnerabilities',kind:'Issues',scoped:true,noun:'vulnerabilities',badge:{fn:()=>cnt(VULNS,r=>r.severity==='Critical'&&r.status==='Open'),tone:'r',square:true},
      modes:[
       {label:'Prioritization',rows:VULNS,sort:{k:'score',dir:-1},search:['name','id'],cols:[C('id','ID','mono'),C('name','Vulnerability','name'),C('score','Security score','num1',{num:1}),C('severity','Severity','badge'),C('vtype','Type'),C('entities','Affected entities','int',{num:1}),C('status','Status','badge')],facets:[{k:'severity',label:'Severity'},{k:'status',label:'Status'},{k:'vtype',label:'Type'}]},
       {label:'Findings',rows:FINDS,search:['name','id','entity'],cols:[C('id','ID','mono'),C('name','Finding','name'),C('entity','Entity'),C('severity','Severity','badge'),C('vtype','Type'),C('status','Status','badge'),C('opened','Open since','ago')],facets:[{k:'severity',label:'Severity'},{k:'status',label:'Status'},{k:'vtype',label:'Type'}]}],
      views:[{name:'Critical and open',f:{severity:['Critical'],status:['Open']}},{name:'All',f:{}}]},
    {id:'siem',name:'SIEM',kind:'Apps & tabs',noSeg:true,render:renderSecurity},
-   {id:'user-audits',name:'User Audits',kind:'Telemetry',noun:'audit events',rows:USERAUD,scoped:false,tk:'ago',sort:{k:'ago',dir:1},search:['name','user','ip'],
+   {id:'user-audits',related:[{label:'Show user sessions',app:'telemetry',tab:'user-sessions',key:'user'},{label:'Open detections',app:'security',tab:'detectors',all:true}],name:'User audits',kind:'Telemetry',noun:'audit events',rows:USERAUD,scoped:false,tk:'ago',sort:{k:'ago',dir:1},search:['name','user','ip'],
      cols:[C('ago','Time','ago'),C('user','User'),C('name','Event','name'),C('action','Action'),C('result','Result','badge'),C('risk','Risk','badge'),C('method','Method'),C('ip','Source IP','mono'),C('loc','Location')],
      facets:[{k:'action',label:'Action'},{k:'result',label:'Result'},{k:'risk',label:'Risk'},{k:'method',label:'Method'},{k:'user',label:'User'}]},
-   {id:'detectors',name:'Detectors',kind:'Apps & tabs',noSeg:true,render:renderDetectors},
-   {id:'alert-templates',name:'Alert templates',kind:'Entities',noun:'templates',rows:SEC_ALERT_T,scoped:false,noDrawer:true,cols:[C('name','Template','name'),C('applies','Applies to'),C('metric','Metric'),C('action','','action')],facets:[{k:'applies',label:'Applies to'}]}]},
+   {id:'detectors',name:'Detections',kind:'Apps & tabs',noSeg:true,render:renderDetectors},
+   {id:'alert-templates',name:'Alert templates',kind:'Entities',noun:'templates',rows:SEC_ALERT_T,scoped:false,cols:[C('name','Template','name'),C('applies','Applies to'),C('metric','Metric'),C('action','','action')],facets:[{k:'applies',label:'Applies to'}]}]},
  {id:'documents',name:'Documents',scoped:false,icon:'<path d="M4 4h12a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3z"/><path d="M4 17a3 3 0 0 1 3-3h12"/>',tabs:[
-   {id:'dashboards',name:'Dashboards',kind:'Documents',noun:'dashboards',rows:DASH,scoped:false,scopes:DOC_SCOPES,onRow:r=>docRow(r),cols:docCols,facets:[]},
-   {id:'notebooks',name:'Notebooks',kind:'Documents',noun:'notebooks',rows:NOTES,scoped:false,scopes:DOC_SCOPES,onRow:r=>docRow(r),cols:docCols,facets:[]},
-   {id:'pages',name:'Pages',kind:'Documents',noun:'pages',rows:PAGES,scoped:false,scopes:DOC_SCOPES,onRow:r=>docRow(r),cols:docCols,facets:[]},
-   {id:'launchpads',name:'Launchpads',kind:'Documents',noun:'launchpads',rows:LAUNCH,scoped:false,scopes:DOC_SCOPES,onRow:r=>docRow(r),cols:docCols,facets:[]}]},
+   {id:'dashboards',mk:['doc:dashboard','Create dashboard'],name:'Dashboards',kind:'Documents',noun:'dashboards',rows:DASH,scoped:false,scopes:DOC_SCOPES,onRow:r=>docRow(r),cols:docCols,facets:[]},
+   {id:'notebooks',mk:['doc:notebook','Create notebook'],name:'Notebooks',kind:'Documents',noun:'notebooks',rows:NOTES,scoped:false,scopes:DOC_SCOPES,onRow:r=>docRow(r),cols:docCols,facets:[]},
+   {id:'pages',mk:['doc:page','Create page'],name:'Pages',kind:'Documents',noun:'pages',rows:PAGES,scoped:false,scopes:DOC_SCOPES,onRow:r=>docRow(r),cols:docCols,facets:[]},
+   {id:'launchpads',mk:['doc:launchpad','Create launchpad'],name:'Launchpads',kind:'Documents',noun:'launchpads',rows:LAUNCH,scoped:false,scopes:DOC_SCOPES,onRow:r=>docRow(r),cols:docCols,facets:[]}]},
  {id:'automate',name:'Automate',scoped:false,icon:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',tabs:[
-   {id:'workflows',name:'Workflows',kind:'Automation',noun:'workflows',rows:WF,scoped:false,scopes:['All','Mine','Trash'],badge:{fn:()=>WF.filter(r=>r.status==='Failed to trigger'&&!r.trash).length,tone:'r'},
+   {id:'workflows',related:[{label:'Show executions',app:'automate',tab:'executions',key:'name'}],mk:['wf','Create workflow'],name:'Workflows',kind:'Automation',noun:'workflows',rows:WF,scoped:false,scopes:['All','Mine','Trash'],badge:{fn:()=>WF.filter(r=>r.status==='Failed to trigger'&&!r.trash).length,tone:'r'},
      cols:[C('name','Workflow','name'),C('trigger','Trigger'),C('status','Status','badge'),C('owner','Owner'),C('last','Last run','ago'),C('success','Success rate','pct1',{num:1})],facets:[{k:'trigger',label:'Trigger'},{k:'status',label:'Status'},{k:'owner',label:'Owner'}]},
-   {id:'executions',name:'Executions',kind:'Automation',noun:'executions',rows:EXECS,scoped:false,tk:'started',search:['name','id'],cols:[C('id','Run','mono'),C('name','Workflow','name'),C('trigger','Trigger'),C('state','State','badge'),C('started','Started','ago'),C('dur','Duration','secs',{num:1})],facets:[{k:'state',label:'State'},{k:'trigger',label:'Trigger'}]},
-   {id:'guardians',name:'Guardians',kind:'Automation',noun:'guardians',rows:GUARD,scoped:false,badge:{fn:()=>GUARD.filter(r=>r.status==='Fail').length,tone:'r'},cols:[C('name','Guardian','name'),C('status','Status','badge'),C('obj','Objectives'),C('app','Application'),C('tag','Tag'),C('last','Last validation','ago')],facets:[{k:'status',label:'Status'},{k:'tag',label:'Tag'}]}]},
+   {id:'executions',related:[{label:'Show workflow',app:'automate',tab:'workflows',key:'name'}],name:'Executions',kind:'Automation',noun:'executions',rows:EXECS,scoped:false,tk:'started',search:['name','id'],cols:[C('id','Run','mono'),C('name','Workflow','name'),C('trigger','Trigger'),C('state','State','badge'),C('started','Started','ago'),C('dur','Duration','secs',{num:1})],facets:[{k:'state',label:'State'},{k:'trigger',label:'Trigger'}]},
+   {id:'guardians',related:[{label:'Show SLOs',app:'infrastructure',tab:'slos',all:true}],name:'Guardians',kind:'Automation',noun:'guardians',rows:GUARD,scoped:false,badge:{fn:()=>GUARD.filter(r=>r.status==='Fail').length,tone:'r'},cols:[C('name','Guardian','name'),C('status','Status','badge'),C('obj','Objectives'),C('app','Application'),C('tag','Tag'),C('last','Last validation','ago')],facets:[{k:'status',label:'Status'},{k:'tag',label:'Tag'}]}]},
  {id:'admin',name:'Admin',scoped:false,icon:'<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>',tabs:[
-   {id:'coverage',name:'Coverage',kind:'Admin',noun:'coverage items',rows:COV,scoped:false,init:{f:{status:['Gap']}},
+   {id:'coverage',related:[{label:'Show fleet',app:'admin',tab:'fleet',all:true}],name:'Coverage',kind:'Admin',noun:'coverage items',rows:COV,scoped:false,init:{f:{status:['Gap']}},
      kpis:rows=>{const h=rows.filter(r=>r.area==='Hosts');return[['Host coverage',Math.round(h.filter(r=>r.status==='Monitored').length/h.length*100)+'%'],['Gaps',rows.filter(r=>r.status==='Gap').length],['Cloud accounts to connect',rows.filter(r=>r.area==='Cloud accounts').length]]},
      cols:[C('name','Name','name'),C('area','Area'),C('status','Status','badge'),C('reason','Reason'),C('action','','action')],facets:[{k:'area',label:'Area'},{k:'status',label:'Status'}]},
-   {id:'fleet',name:'Fleet',kind:'Admin',noun:'fleet components',rows:FLEET,scoped:false,cols:[C('name','Name','name'),C('type','Type'),C('ver','Version'),C('health','Health','health'),C('assigned','Assigned','int',{num:1})],facets:[{k:'type',label:'Type'},{k:'health',label:'Health'}]},
+   {id:'fleet',related:[{label:'Show coverage',app:'admin',tab:'coverage',all:true}],name:'Fleet',kind:'Admin',noun:'fleet components',rows:FLEET,scoped:false,cols:[C('name','Name','name'),C('type','Type'),C('ver','Version'),C('health','Health','health'),C('assigned','Assigned','int',{num:1})],facets:[{k:'type',label:'Type'},{k:'health',label:'Health'}]},
    {id:'apps',name:'Hub',kind:'Admin',scoped:false,
      modes:[
       {label:'Installed',noun:'installed apps',rows:APPS_INST,cols:[C('name','App','name'),C('type','Type'),C('ver','Version'),C('upd','Last update','ago'),C('status','Status','badge')],facets:[{k:'status',label:'Status'}]},
       {label:'Discover',noun:'apps and extensions',rows:HUB,sort:{k:'pop',dir:-1},cols:[C('name','Name','name'),C('type','Type'),C('category','Category'),C('pop','Installs','int',{num:1}),C('action','','action',{text:'Install'})],facets:[{k:'category',label:'Category'},{k:'type',label:'Type'}]}]},
    {id:'access',name:'Access requests',kind:'Admin',noun:'access requests',rows:ACCESS,scoped:false,noDrawer:true,init:{f:{status:['Pending']}},search:['name','requester'],badge:{fn:()=>ACCESS.filter(r=>r.status==='Pending').length,tone:'a'},
      cols:[C('name','Request','name'),C('requester','Requester'),C('access','Access'),C('scope','Scope'),C('requested','Requested','ago'),C('status','Status','badge'),C('action','','approve')],facets:[{k:'status',label:'Status'},{k:'access',label:'Access'},{k:'scope',label:'Scope'}]},
-   {id:'settings',name:'Settings',kind:'Admin',noun:'settings',rows:SETTINGS,noDrawer:true,scoped:false,search:['name','section','desc'],cols:[C('name','Setting','name'),C('section','Section'),C('scope','Scope'),C('desc','Description')],facets:[{k:'section',label:'Section'},{k:'scope',label:'Scope'}]}]}
+   {id:'settings',name:'Settings',kind:'Admin',noun:'settings',rows:SETTINGS,scoped:false,search:['name','section','desc'],cols:[C('name','Setting','name'),C('section','Section'),C('scope','Scope'),C('desc','Description')],facets:[{k:'section',label:'Section'},{k:'scope',label:'Scope'}]}]}
 ];
 APPS.push({id:'quickstart',name:'QuickStart',hideTabs:true,icon:'<path d="M12 3c4 1 7 5 6 11l-4 3-5-5z"/><path d="M8 12l-3 1-1 4 4-1M13 17l-1 3 4-1"/><circle cx="14.5" cy="9.5" r="1.3"/>',tabs:[{id:'landing',name:'QuickStart',kind:'Apps & tabs',timed:true,render:renderQuickStart}]});
 APPS.forEach(a=>a.tabs.forEach(t=>{t.app=a.id}));
@@ -1197,7 +1208,7 @@ function filtered(def,s,except,ignoreScope){
 }
 
 /* ---------- formatting ---------- */
-const TONE={Healthy:'g',Success:'g',Pass:'g','Up to date':'g',Monitored:'g',Enabled:'g',Active:'g',OK:'g',Warning:'a',Medium:'a','Update available':'a',Paused:'a',Running:'b',Muted:'n',Closed:'n',Disabled:'n',Resolved:'n',Low:'n',DEBUG:'n',INFO:'n',Critical:'r',Failing:'r',Error:'r',ERROR:'r',Fail:'r',High:'r',Gap:'r','Failed to trigger':'r',Open:'r',WARN:'a',Pending:'a',Approved:'g',Denied:'n',Satisfied:'g',Tolerating:'a',Frustrated:'r',Investigating:'b',Completed:'g',Cancelled:'n',Confirmed:'g',Likely:'b',Inconclusive:'a',Good:'g','Needs review':'a',Poor:'r',Hallucination:'r','PII leak':'r',Toxicity:'r','Prompt injection':'a',Refusal:'n',Failed:'r',Development:'b',Live:'g',Complete:'n',Archived:'n',Released:'a',Unused:'a',Unknown:'n','Not stale':'n'};
+const TONE={Healthy:'g',Success:'g',Pass:'g','Up to date':'g',Monitored:'g',Enabled:'g',Active:'g',OK:'g',Warning:'a',Medium:'a','Update available':'a',Paused:'a',Running:'b',Muted:'n',Closed:'n',Disabled:'n',Resolved:'n',Low:'n',DEBUG:'n',INFO:'n',Critical:'r',Failing:'r',Error:'r',ERROR:'r',Fail:'r',High:'r',Gap:'r','Failed to trigger':'r',Open:'r',WARN:'a',Pending:'a',Approved:'g',Denied:'n',Satisfied:'g',Tolerating:'a',Frustrated:'r',Investigating:'b',Completed:'g',Cancelled:'n',Confirmed:'g',Likely:'b',Inconclusive:'a',Good:'g','Needs review':'a',Poor:'r',Hallucination:'r','PII leak':'r',Toxicity:'r','Prompt injection':'a',Refusal:'n',Failed:'r','Breaching':'r','At risk':'a','On track':'g',Development:'b',Live:'g',Complete:'n',Archived:'n',Released:'a',Unused:'a',Unknown:'n','Not stale':'n'};
 const fmtVal=(c,r)=>{const v=r[c.k];switch(c.type){
   case'health':return `<span class="dot t-${TONE[v]||'n'}"></span>${esc(v)}`;
   case'badge':return `<span class="tag t-${TONE[v]||'n'}">${esc(v)}</span>`;
@@ -1207,6 +1218,9 @@ const fmtVal=(c,r)=>{const v=r[c.k];switch(c.type){
   case'usd':return `$${Number(v).toFixed(3)}`;
   case'docname':return `<span class="dn">${iconImg(DOCKEY[cur.tab.id]||'dashboards-document-type',20)}${esc(v)}</span>`;
   case'pct':return `<span class="bar ${v>85?'hot':''}"><i style="width:${v}%"></i></span>${v}%`;
+  case'pct2':return `${v}%`;
+  case'slobudget':return v<0?`<span style="color:var(--r)">Used up (${v}%)</span>`:`${v}% left`;
+  case'burn':return `${v}×`;
   case'pct1':return v.toFixed?v.toFixed(v%1?1:0)+'%':v;
   case'failpct':return `<span style="color:${v>5?'var(--r)':v>1.5?'var(--a)':'inherit'}">${v}%</span>`;
   case'ms':return `${Number(v).toLocaleString()} ms`;
@@ -1228,35 +1242,36 @@ function go(app,tab,o={}){
   if(o.q!==undefined)s.q=o.q;
   if(o.mode!==undefined)s.mode=o.mode;
   if(o.q!==undefined||o.f)s.scope='All';
-  const h=`#/${app}/${tab}`;
+  const h=`#/${app}/${tab}${o.id?'/'+encodeURIComponent(o.id):''}`;
   if(location.hash===h)render();else location.hash=h;
 }
 function render(){
-  const [,a,t]=location.hash.split('/');
+  const [,a,t,rid]=location.hash.split('/');
   const app=APPS.find(x=>x.id===a)||APPS[0];
   const tab=app.tabs.find(x=>x.id===t)||userTab(app,t)||app.tabs.find(x=>x.id===last[app.id])||userTab(app,last[app.id])||app.tabs.find(x=>x.id===app.defaultTab)||app.tabs[0];
   cur={app,tab}; last[app.id]=tab.id; ui=null; document.documentElement.dataset.app=app.id;
+  const did=rid?decodeURIComponent(rid):null;invOpen=tab.id==='investigations'?did:null;flagOpen=tab.id==='feature-flags'?did:null;
   track(); renderRail(); renderHead(); closeDrawer(); closeRecents(); if(assistOpen)$('#actx').textContent=actxText();
   const routeKey=app.id+'/'+tab.id; const host=$('#body'); if(routeKey!==lastRoute){host.scrollTop=0;lastRoute=routeKey;} host.onclick=null; host.classList.toggle('flush',!!cur.tab.flush);
   if(tab.render)tab.render(host);else renderTable(tab,host);
-  document.title=`${tab.name} · ${app.name} – Option B prototype`;
+  document.title=`${tab.name} · ${app.name} – Dynatrace prototype`;
 }
 function renderRail(){
   const ra=[...new Set(HIST.map(x=>x.app))].slice(0,3);
   const pins=HIST.filter(x=>x.pinned);
   const appLink=a=>{const n=a.badge?a.badge():0;const act=a.id===cur.app.id;
-    return `<a class="app" href="#/${a.id}/${last[a.id]||a.defaultTab||a.tabs[0].id}" ${act?'aria-current="page"':''} title="${esc(a.name)}">${appIcon(a,22)}<span class="lbl">${esc(a.name)}</span>${n?`<span class="pip${a.id==='security'||a.id==='infrastructure'?' sq':''}" aria-label="${n} open">${n}</span>`:''}</a>`};
+    return `<a class="app" href="#/${a.id}/${last[a.id]||a.defaultTab||a.tabs[0].id}" ${act?'aria-current="page"':''} title="${esc(a.name)}">${appIcon(a,22)}<span class="lbl">${esc(a.name)}</span>${n?`<span class="pip" aria-label="${n} open">${n}</span>`:''}</a>`};
   $('#rail').innerHTML=`<div class="brand"><div class="bmark">${brandMark()}</div><div class="bwide">${brandWide()}</div></div>
   ${appLink(APPS.find(a=>a.id==='home'))}
   <button class="app" data-search title="Search">${svgI(NAVI.search)}<span class="lbl">Search</span><kbd class="tail">${/Mac/.test(navigator.platform)?'⌘ K':'Ctrl K'}</kbd></button>
   <button class="app" id="assistbtn" aria-haspopup="dialog" aria-expanded="${assistOpen}" title="Assist">${svgI(NAVI.assist)}<span class="lbl">Assist</span><kbd class="tail">${/Mac/.test(navigator.platform)?'⌘ I':'Ctrl I'}</kbd></button>
   <button class="app" id="recbtn" aria-haspopup="dialog" aria-expanded="${recOpen}" title="Recents">${svgI(NAVI.recents)}<span class="lbl">Recents</span><span class="mini tail" aria-hidden="true">${ra.map(id=>`<i>${appIcon(appOf(id),14)}</i>`).join('')}</span></button>
   <div class="sep"></div>`+
-  ['issues','smartscape',...APPS.map(a=>a.id).filter(id=>!['home','issues','smartscape','documents','automate','admin','quickstart'].includes(id))].map(id=>appLink(APPS.find(a=>a.id===id))).join('')+`<div class="sep"></div>`+['documents','automate','admin','quickstart'].map(id=>appLink(APPS.find(a=>a.id===id))).join('')+
+  ['issues','smartscape','infrastructure','applications','security','telemetry',...APPS.map(a=>a.id).filter(id=>!['home','issues','smartscape','infrastructure','applications','security','telemetry','documents','automate','admin','quickstart'].includes(id))].map(id=>appLink(APPS.find(a=>a.id===id))).join('')+`<div class="sep"></div>`+['documents','automate','quickstart','admin'].map(id=>appLink(APPS.find(a=>a.id===id))).join('')+
   (pins.length?`<div class="sep"></div>`+pins.map(x=>`<button class="app" data-h="${x.id}" title="${esc(x.label)}"><svg class="i" viewBox="0 0 24 24">${ICO.pin}</svg><span class="lbl">${esc(x.label)}</span></button>`).join(''):'')+
   `<div class="grow"></div><div class="foot"><button class="app" id="collapse" title="Collapse navigation">${svgI(NAVI.collapse)}<span class="lbl">Collapse</span></button></div>`;
 }
-const BADGE_LABEL={access:'waiting for approval',problems:'open problems',vulnerabilities:'critical, open',recommendations:'high priority',workflows:'could not be triggered',guardians:'failing',slos:'failing monitors'};
+const BADGE_LABEL={access:'waiting for approval',problems:'open problems',vulnerabilities:'critical, open',recommendations:'high priority',workflows:'could not be triggered',guardians:'failing',slos:'breaching'};
 function renderHead(){
   $('#appid').innerHTML=`${appIcon(cur.app,24)}<span>${esc(cur.app.name)}</span>`;
   const vt=visibleTabs(cur.app),hasDocs=vt.some(t=>t.isDoc);
@@ -1279,7 +1294,7 @@ function renderTable(tab,host){
     `<div class="pop"><button class="pickbtn" data-pop="viewmenu" aria-haspopup="menu" aria-expanded="false">Views ${svgI(ICO.chev,'style="width:14px;height:14px"')}</button><div class="menu" id="viewmenu" hidden></div></div>`+
     (tab.modes?`<div class="seg" role="group" aria-label="View mode">${tab.modes.map((m,i)=>`<button data-mode="${i}" aria-pressed="${i===s.mode}">${esc(m.label)}</button>`).join('')}</div>`:'')+
     (tab.board?`<div class="seg" role="group" aria-label="Layout"><button data-flagview="list" aria-pressed="${s.view!=='board'}">List</button><button data-flagview="board" aria-pressed="${s.view==='board'}">Board</button></div>`:'')+
-    (tab.liveCapable?`<button class="btn" id="livebtn" aria-pressed="${s.live}" title="${s.live?'Stop live updates':'Stream new log lines as they arrive'}">${liveBtn(s)}</button>`:'')+(tab.cta?invNewBtn(tab):'')+(tab.create?flagNewBtn(tab):'');
+    (tab.liveCapable?`<button class="btn" id="livebtn" aria-pressed="${s.live}" title="${s.live?'Stop live updates':'Stream new log lines as they arrive'}">${liveBtn(s)}</button>`:'')+(tab.cta?invNewBtn(tab):'')+(tab.create?flagNewBtn(tab):'')+(tab.mk?`<button class="btn primary" data-mk="${tab.mk[0]}">${esc(tab.mk[1])}</button>`:'');
   host.innerHTML=`
    ${def.header?'<div id="phead"></div>':''}
    ${def.kpis?'<div class="kpis" id="kpis"></div>':''}
@@ -1355,7 +1370,7 @@ function renderHome(host){
     {l:'Critical vulnerabilities',v:crit,c:'var(--a)',s:'open, ranked by security score',g:['security','vulnerabilities',{severity:['Critical'],status:['Open']}]},
     {l:'Services in alert',v:unhealthy,c:'var(--a)',s:`of ${cnt(SERVICES,r=>r.type==='Service')} services`,g:['applications','services',{type:['Service'],health:['Warning','Critical']}]},
     {l:'Access requests',v:pending,c:'var(--a)',s:'waiting for your approval',g:['admin','access',{status:['Pending']}]},
-    {l:'SLO error budget',v:slo.text,c:`var(--${slo.tone})`,s:`${slo.label} · ${slo.worst.name}: ${sloBudgetTxt(slo.worst).toLowerCase()}`,g:['issues','problems',{status:['Open']}]},
+    {l:'SLO error budget',v:slo.text,c:`var(--${slo.tone})`,s:`${slo.label} · ${slo.worst.name}: ${sloBudgetTxt(slo.worst).toLowerCase()}`,g:['infrastructure','slos',{status:['Breaching']}]},
     {l:'Workflows failing',v:failing,c:'var(--r)',s:'could not be triggered',g:['automate','workflows',{status:['Failed to trigger']}]}];
   const fleetRecs=RECS.filter(r=>r.source==='Agents'||r.source==='ActiveGates'),otherRecs=RECS.filter(r=>r.priority==='High'&&!fleetRecs.includes(r)).slice(0,2),recList=[...fleetRecs,...otherRecs];
   const top=PROB.filter(r=>r.status==='Open'&&segOK(r)).sort((a,b)=>a.started-b.started).slice(0,5);
@@ -1375,7 +1390,7 @@ const ICONS={"clouds":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAY
 const APPKEY={security:'vulnerabilities',infrastructure:'infrastructure-and-operations',applications:'services',smartscape:'smartscape',telemetry:'logs',issues:'problems',documents:'dashboards',automate:'workflows',admin:'settings',quickstart:'quickstart'};
 const DOCKEY={dashboards:'dashboards-document-type',notebooks:'notebooks',pages:'notebooks',launchpads:'dynatrace-launcher'};
 const TABKEY={'security/detectors':'vulnerabilities','security/user-audits':'vulnerabilities','infrastructure/network':'infrastructure-and-operations','security/alert-templates':'vulnerabilities','telemetry/ai':'smartscape','security/siem':'vulnerabilities','infrastructure/hosts':'infrastructure-and-operations','infrastructure/kubernetes':'kubernetes','infrastructure/clouds':'clouds','infrastructure/alert-templates':'infrastructure-and-operations',
- 'applications/services':'services','applications/errors':'services','applications/response-time':'services','infrastructure/slos':'synthetic','applications/frontends':'experience-vitals','applications/alert-templates':'services',
+ 'applications/services':'services','applications/errors':'services','applications/response-time':'services','infrastructure/slos':'site-reliability-guardian','applications/frontends':'experience-vitals','applications/alert-templates':'services',
  'telemetry/metrics':'logs','telemetry/logs':'logs','telemetry/traces':'distributed-tracing','telemetry/user-sessions':'experience-vitals','telemetry/business-events':'explore-business-events',
  'issues/problems':'problems','security/vulnerabilities':'vulnerabilities','issues/investigations':'investigations','issues/recommendations':'problems',
  'documents/dashboards':'dashboards','documents/notebooks':'notebooks','documents/pages':'notebooks','documents/launchpads':'dynatrace-launcher',
@@ -1415,7 +1430,7 @@ function scopeBar(input='',compact=false,extra=''){
     <div class="menu right" id="tfmenu" hidden>${TFS.map(x=>`<button class="mi" role="option" data-tf="${x}" aria-checked="${x===G.tf}"><i></i>${x}</button>`).join('')}</div></div>
    <button class="pickbtn sq" data-shift="1" aria-label="Earlier timeframe">‹</button><button class="pickbtn sq" data-shift="-1" aria-label="Later timeframe" ${G.off?'':'disabled'}>›</button>${G.off?'<button class="pickbtn" data-now>Now</button>':''}
    <button class="pickbtn sq" id="refresh" aria-label="Refresh" title="Refresh">${svgI(ICO.refresh,'style="width:16px;height:16px"')}</button></div>`:'';
-  return `<div class="scopebar">${seg}${compact?'':(input||'<div style="flex:1"></div>')}${extra}${xBtn}${dqlBtn}${time}</div>`;
+  return `<div class="scopebar">${seg}${compact?'<div class="sbfill"></div>':(input||'<div class="sbfill"></div>')}${extra}${xBtn}${dqlBtn}${time}</div>`;
 }
 
 /* ---------- history / recents ---------- */
@@ -1519,10 +1534,15 @@ function ssPos(g,layout){
   return pos;
 }
 let ssS={view:'',layout:'force',hide:false,find:'',types:new Set(),aff:false};
+function ssPicker(id){
+  const name=id==='home'?'Overview':SSV[id].name,chev=svgI(ICO.chev,'style="width:14px;height:14px"');
+  return `<div class="pop"><button class="pickbtn" data-pop="ssviewmenu" aria-haspopup="menu" aria-expanded="false" title="Smartscape view">${svgI('<circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.3 11l7.4-4M8.3 13l7.4 4"/>','style="width:16px;height:16px"')}${esc(name)}${chev}</button>
+   <div class="menu" id="ssviewmenu" hidden role="menu"><h5>View</h5><a class="mi" role="menuitemradio" aria-checked="${id==='home'}" href="#/smartscape/home"><i></i>Overview</a>${SS_ORDER.map(v=>`<a class="mi" role="menuitemradio" aria-checked="${id===v}" href="#/smartscape/${v}"><i></i>${esc(SSV[v].name)}</a>`).join('')}</div></div>`;
+}
 function renderSmartscape(host){
   const id=cur.tab.id;
   if(ssS.view!==id)ssS={view:id,layout:'force',hide:false,find:'',types:new Set(),aff:false};
-  const nav=`<nav class="ss-nav" aria-label="Smartscape views"><a href="#/smartscape/home" ${id==='home'?'aria-current="page"':''}>${svgI(SSI.home)}Home</a><h5>Ready-made</h5>${SS_ORDER.map(v=>`<a href="#/smartscape/${v}" ${id===v?'aria-current="page"':''}>${iconImg(SSKEY[v],20)}${esc(SSV[v].name)}</a>`).join('')}</nav>`;
+  const nav='';
   if(id==='home'){
     host.innerHTML=`<div class="ss-wrap solo"><div class="ss-main"><div class="ss-land"><div class="ss-h"><small>Smartscape</small><h2>Make sense of your digital systems’ topology and dependencies</h2></div><div class="ss-grid">${SS_ORDER.map((v,i)=>`<div class="ss-card ${i===0?'wide':''}"><div class="art">${ART[SSV[v].art]||GEN(SSV[v].color)}</div><div class="txt"><p>${esc(SSV[v].desc)}</p><button class="btn" data-ssgo="${v}">${v==='grail'?'Explore Smartscape on Grail':'Open '+esc(SSV[v].name.replace(/^./,c=>c.toLowerCase()).replace(/^kubernetes/i,'Kubernetes').replace(/^aws/i,'AWS').replace(/^azure/i,'Azure').replace(/^ai observability/i,'AI Observability'))}</button></div></div>`).join('')}</div></div></div></div>`;
     return;
@@ -1532,7 +1552,7 @@ function renderSmartscape(host){
   g.nodes.forEach(n=>{counts[n.type]=(counts[n.type]||0)+1});
   const affN=g.nodes.filter(n=>n.aff).length;
   host.innerHTML=`<div class="ss-wrap">${nav}<div class="ss-main"><div class="ss-canvas"><svg id="ssg" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${esc(v.name)} graph"></svg></div>
-   ${scopeBar('',true)?`<div class="ss-float">${scopeBar('',true)}</div>`:''}
+   <div class="ss-float">${ssPicker(cur.tab.id)}${scopeBar('',true)}</div>
    <div class="ss-panels">
     <details class="ss-panel" open><summary class="ss-ph"><span>${esc(v.name)}</span>${svgI(ICO.chev,'style="width:14px;height:14px"')}</summary><div class="ss-pb"><p>${esc(v.desc)}</p><div class="sec">Graph layout</div>
       <div class="ss-lay" role="group" aria-label="Graph layout">${['force','vertical','horizontal'].map(l=>`<button data-layout="${l}" aria-pressed="${ssS.layout===l}">${l[0].toUpperCase()+l.slice(1)}</button>`).join('')}</div>
@@ -1594,10 +1614,6 @@ function saveView(name){
 }
 
 /* ---------- problem header ---------- */
-const SLOS=[
- {name:'Checkout availability',target:99.9,cur:99.94,budget:62,burn:.8},
- {name:'Payment latency p95 under 300 ms',target:99,cur:98.7,budget:-30,burn:2.4},
- {name:'Search errors under 1%',target:99.5,cur:99.7,budget:81,burn:.6}];
 const sloState=s=>s.budget<0?['Breaching','r']:s.burn>1.5?['At risk','a']:['On track','g'];
 const sloBudgetTxt=s=>s.budget<0?`Error budget used up (${s.budget}%)`:`${s.budget}% of error budget left`;
 function sloSummary(){
@@ -1623,10 +1639,10 @@ function problemHeader(){
   <section class="ph" aria-label="Problem overview">
    <div class="ph-card"><h3>Impact</h3><div class="ph-stats"><div><b style="color:var(--r)">${open.length}</b><span>Open</span></div><div><b>${ents}</b><span>Affected entities</span></div><div><b>${(2.4+open.length%7*.2).toFixed(1)} min</b><span>Time to detect</span></div><div><b>${38+open.length%9*3} min</b><span>Time to resolve</span></div></div>
     <div class="ph-chart" role="img" aria-label="Problems started per hour over the last 24 hours">${bars.map(b=>`<i style="height:${b.n/mx*100}%"><b style="height:${b.n?b.o/b.n*100:0}%"></b></i>`).join('')}</div><small class="muted">Problems started per hour, last 24 hours. Red is still open.</small></div>
-   <div class="ph-card"><h3>SLO error budget <span class="tag t-${sloSummary().tone}">${sloSummary().text} ${sloSummary().label}</span></h3>${SLOS.map(slo).join('')}<p style="margin:8px 0 0"><button class="btn" data-pgo="guardians">Open guardians</button></p></div>
+   <div class="ph-card"><h3>SLO error budget <span class="tag t-${sloSummary().tone}">${sloSummary().text} ${sloSummary().label}</span></h3>${[...SLOS].sort((a,b)=>a.budget-b.budget).slice(0,3).map(slo).join('')}<p style="margin:8px 0 0"><button class="btn" data-pgo="slos">Open SLOs</button></p></div>
    <div class="ph-card">${f?`<h3>Focus problem</h3><div class="pf-t"><span class="mono">${esc(f.id)}</span> <b>${esc(f.name)}</b></div><div class="muted">${esc(f.entity)} · ${esc(f.category)} · started ${fmtAgo(f.started)} · impact on ${esc(f.impact.toLowerCase())}${acked.has(f.id)?' · <span class="tag t-g">Acknowledged by you</span>':''}</div>
-    <div class="pf-acts"><button class="btn primary" data-pa="explain">${svgI(SPARK,'style="width:15px;height:15px"')}Explain</button><button class="btn" data-pa="ack">${acked.has(f.id)?'Acknowledged ✓':'Acknowledge'}</button><button class="btn" data-pa="rca">Root-cause graph</button>
-     <div class="pop"><button class="btn" data-pop="pamenu" aria-haspopup="menu" aria-expanded="false">More ${svgI(ICO.chev,'style="width:14px;height:14px"')}</button><div class="menu" id="pamenu" hidden role="menu">${[['assign','Assign…'],['investigate','Start investigation'],['logs','Logs'],['traces','Traces'],['release','Release checks'],['runbook','Runbook'],['remediate','Remediation workflow'],['notebook','Investigate in notebook'],['ticket','Create ticket'],['notify','Notify on-call'],['silence','Silence for 1 h']].map(([k,l])=>`<button class="mi" role="menuitem" data-pa="${k}">${l}</button>`).join('')}</div></div>
+    <div class="pf-acts"><button class="btn primary" data-pa="investigate">Investigate</button><button class="btn" data-pa="ack">${acked.has(f.id)?'Acknowledged ✓':'Acknowledge'}</button><button class="btn" data-pa="rca">Root-cause graph</button>
+     <div class="pop"><button class="btn" data-pop="pamenu" aria-haspopup="menu" aria-expanded="false">More ${svgI(ICO.chev,'style="width:14px;height:14px"')}</button><div class="menu" id="pamenu" hidden role="menu">${[['assign','Assign…'],['runbook','Runbook'],['ticket','Create ticket'],['notify','Notify on-call'],['silence','Silence for 1 h']].map(([k,l])=>`<button class="mi" role="menuitem" data-pa="${k}">${l}</button>`).join('')}</div></div>
     </div>`:'<h3>No open problems</h3><p class="muted">Nothing needs triage in this segment. Widen the segment or timeframe to see more.</p>'}</div>
   </section></details>`;
 }
@@ -1666,13 +1682,13 @@ function renderProblemGraph(host,nav){
   const p=PROB.find(x=>x.id===probSel)||open[0]||PROB[0];probSel=p.id;
   const g=pgBuild(p);
   host.innerHTML=`<div class="ss-wrap">${nav}<div class="ss-main"><div class="ss-canvas"><svg id="pgs" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Entities affected by ${esc(p.id)}"></svg></div>
-   ${scopeBar('',true)?`<div class="ss-float">${scopeBar('',true)}</div>`:''}
+   <div class="ss-float">${ssPicker(cur.tab.id)}${scopeBar('',true)}</div>
    <div class="ss-panels">
     <div class="ss-panel"><div class="ss-ph"><span>Problem graph</span></div><div class="ss-pb"><p>See what a problem affects and how far it spreads.</p>
      <div class="sec">Problem</div><select class="pg-sel" id="ppick" aria-label="Choose problem">${open.map(x=>`<option value="${x.id}" ${x.id===p.id?'selected':''}>${x.id} · ${esc(x.name)} on ${esc(x.entity)}</option>`).join('')}</select>
      <div class="pg-meta"><span class="muted">Category</span><span>${esc(p.category)}</span><span class="muted">Started</span><span>${fmtAgo(p.started)}</span><span class="muted">Root cause</span><span class="mono">${esc(g.root)}</span><span class="muted">Affected</span><span>${1+g.l1.length+g.l2.length} entities, about ${g.users.toLocaleString()} users</span></div>
      <div class="sec">Spread</div><div class="ss-lay" role="group" aria-label="Propagation depth">${[1,2,3].map(d=>`<button data-pdepth="${d}" aria-pressed="${pgDepth===d}">${d} ${d===1?'hop':'hops'}</button>`).join('')}</div>
-     <div class="sec">Next steps</div><div style="display:flex;flex-wrap:wrap;gap:6px"><button class="btn primary" data-pgo="explain">Explain</button><button class="btn" data-pgo="open">Open problem</button><button class="btn" data-pgo="logs">Logs for root cause</button><button class="btn" data-pgo="workflows">Remediation workflow</button></div></div></div>
+     <div class="sec">Next steps</div><div style="display:flex;flex-wrap:wrap;gap:6px"><button class="btn primary" data-pgo="open">Open problem</button><button class="btn" data-pgo="logs">Logs for root cause</button><button class="btn" data-pgo="workflows">Remediation workflow</button></div></div></div>
    </div></div></div>`;
   pgDraw(g);
 }
@@ -1727,10 +1743,10 @@ function assistMsg(role,text,actions=[]){
 }
 function assistAnswer(q){
   const t=q.toLowerCase(),open=PROB.filter(p=>p.status==='Open'&&segOK(p)).sort((a,b)=>a.started-b.started);
-  if(/root|cause/.test(t)&&open[0]){const p=open[0];return{text:`Top problem: ${p.id}, ${p.name} on ${p.entity}, started ${fmtAgo(p.started)}. ${p.entity} sits upstream of other services, so it is the most likely root cause. Check the dependency graph first, then its logs.`,actions:[{label:'Open root-cause graph',app:'smartscape',tab:'problem',sel:p.id},{label:'Show logs',app:'telemetry',tab:'logs',q:p.entity,f:{}}]}}
+  if(/root|cause/.test(t)&&open[0]){const p=open[0],ex=explainBuild(p).t;return{text:`Top problem: ${p.id}, ${p.name} on ${p.entity}, started ${fmtAgo(p.started)}. ${ex.cause}. ${ex.why}`,actions:[{label:'Open root-cause graph',app:'smartscape',tab:'problem',sel:p.id},{label:'Show logs',app:'telemetry',tab:'logs',q:p.entity,f:{}}]}}
   if(/summar|problem|open/.test(t)){const c={};open.forEach(p=>{c[p.category]=(c[p.category]||0)+1});return{text:`${open.length} open problems across ${new Set(open.map(p=>p.entity)).size} entities.\n`+Object.entries(c).map(([k,n])=>`• ${k}: ${n}`).join('\n'),actions:[{label:'Show open problems',app:'issues',tab:'problems',f:{status:['Open']}}]}}
   if(/service|fail/.test(t)){const top=SERVICES.filter(s=>s.type==='Service'&&segOK(s)).sort((a,b)=>b.fail-a.fail).slice(0,3);return{text:'Highest failure rate:\n'+top.map(s=>`• ${s.name}: ${s.fail}% (${s.health})`).join('\n'),actions:[{label:'Open errors',app:'applications',tab:'errors',f:{}}]}}
-  if(/slo|budget/.test(t))return{text:SLOS.map(s=>`• ${s.name}: ${s.cur}% against a ${s.target}% target, ${s.budget<0?'error budget used up':s.budget+'% budget left'}, burn rate ${s.burn}×`).join('\n'),actions:[{label:'Open guardians',app:'automate',tab:'guardians',f:{}}]};
+  if(/slo|budget/.test(t))return{text:[...SLOS].sort((a,b)=>a.budget-b.budget).slice(0,3).map(s=>`• ${s.name}: ${s.cur}% against a ${s.target}% target, ${s.budget<0?'error budget used up':s.budget+'% budget left'}, burn rate ${s.burn}×`).join('\n'),actions:[{label:'Open SLOs',app:'infrastructure',tab:'slos',f:{}},{label:'Open guardians',app:'automate',tab:'guardians',f:{}}]};
   if(/postmortem|draft/.test(t))return{text:'Postmortem outline:\n1. Summary and impact\n2. Timeline: detection, triage, fix\n3. Root cause\n4. What went well and what did not\n5. Follow-up actions with owners',actions:[{label:'Find postmortem template',app:'documents',tab:'pages',q:'postmortem',f:{}}]};
   return{text:'In this prototype I can summarize problems, find a likely root cause, rank failing services, report SLO status and draft a postmortem outline.',actions:[]};
 }
@@ -1800,7 +1816,7 @@ function renderUserMenu(){
   const pref=document.documentElement.dataset.themePref||'light';
   $('#usermenu').innerHTML=`<div class="um-h"><span class="avatar big">F</span><div><b>Florian Ortner</b><small>Signed in to this prototype</small></div></div><div class="msep"></div><h5>Theme</h5>`+
    THEMES_UI.map(([id,n,sub,sw])=>`<button class="mi" role="menuitemradio" data-theme-opt="${id}" aria-checked="${pref===id}"><i class="rd"></i><span class="sw" aria-hidden="true">${sw.map(c=>`<i style="background:${c}"></i>`).join('')}</span>${esc(n)}${sub?`<small>${esc(sub)}</small>`:''}</button>`).join('')+
-   `<div class="msep"></div><button class="mi" data-notes>Design notes</button><button class="mi" data-toast="Sign out">Sign out</button>`;
+   `<div class="msep"></div><a class="mi" role="menuitem" href="https://github.com/floortner/reducetothemax" target="_blank" rel="noopener noreferrer">GitHub repository<small>floortner/reducetothemax</small></a><button class="mi" data-toast="Sign out">Sign out</button>`;
 }
 /* ---------- DQL / dtctl ---------- */
 const dur=m=>m<60?`${Math.round(m)}m`:m<1440?`${+(m/60).toFixed(1)}h`:`${+(m/1440).toFixed(1)}d`;
@@ -1822,7 +1838,7 @@ const DQL={
  'applications/services':Q('smartscapeNodes "SERVICE"',{srcBy:{k:'type',m:{Service:'SERVICE','Serverless function':'AWS_LAMBDA_FUNCTION',Endpoint:'SERVICE_ENDPOINT',Database:'DATABASE',Messaging:'MESSAGING_SERVICE'}},map:{health:['health.status',up],tech:['service.technology',v=>v]},search:'entity.name',tail:['fields entity.name, service.technology, health.status, failure_rate, response_time.p50','limit 100']}),
  'applications/errors':Q('fetch spans, ${WIN}',{pre:['request.is_failed == true'],map:{reason:['request.failure_reason',v=>v],reqType:['span.kind',lo],service:['service.name',v=>v]},search:'endpoint.name',tail:['summarize failures = count(), by:{endpoint.name, service.name, request.failure_reason}','sort failures desc','limit 50']}),
  'applications/response-time':Q('timeseries { p50 = percentile(dt.service.request.response_time, 50), p90 = percentile(dt.service.request.response_time, 90), p99 = percentile(dt.service.request.response_time, 99) }, by:{endpoint.name, service.name}, ${WIN}',{map:{reqType:['span.kind',lo],service:['service.name',v=>v]},search:'endpoint.name',tail:['sort arrayAvg(p90) desc','limit 50']}),
- 'infrastructure/slos':Q('smartscapeNodes "SYNTHETIC_TEST"',{map:{type:['monitor.type',up],status:['monitor.status',up],freq:['frequency',v=>v],loc:['location',v=>v]},search:'entity.name',tail:['fields entity.name, monitor.type, monitor.status, availability, duration','limit 100']}),
+ 'infrastructure/slos':Q('fetch dt.system.slo_status',{map:{status:['status',up],service:['service.name',v=>v]},search:'slo.name',tail:['fields slo.name, service.name, target, current, error_budget, burn_rate, status','sort error_budget asc','limit 100']}),
  'applications/frontends':Q('smartscapeNodes "APPLICATION"',{map:{kind:['application.type',up],rum:['rum.enabled',bool]},search:'entity.name',tail:['fields entity.name, application.type, rum.enabled, apdex, load_time','limit 100']}),
  'applications/feature-flags':Q('fetch events, from:now()-24h',{pre:['event.type == "feature_flag.config"'],map:{type:['flag.type',up],status:['flag.status',up],creator:['flag.creator',v=>v],stale:['flag.staleness',up],env:['flag.environments',v=>v]},search:'flag.name',tail:['fields flag.name, flag.key, flag.type, flag.status, flag.environments, flag.tags, evaluations','sort timestamp desc','limit 100']}),
  'applications/alert-templates':Q('fetch dt.system.alert_templates',{map:{applies:['applies_to',v=>v]},search:'name',tail:['fields name, applies_to, metric.key','sort name asc']}),
@@ -1934,13 +1950,13 @@ function explainX(p){
 }
 const XT={
  'Response time degradation':x=>({sum:`Response time on ${x.e} degraded. The median rose from ${x.a} ms to ${x.b} ms and the slowest 10% of requests now take ${x.c} ms. About ${x.pct}% of the added time is spent waiting on database calls, not in ${x.e} itself.`,cause:`${x.e} is blocked on slow downstream database calls`,why:`The added latency sits in outbound queries. CPU and memory on ${x.e} are normal.`,conf:'High',metric:`Median response time rose from ${x.a} ms to ${x.b} ms.`,steps:[['Check slow queries','logs'],['Scale out ${E}','scale'],['Open runbook','runbook']]}),
- 'Failure rate increase':x=>({sum:`${x.e} fails ${x.fail}% of requests, up from 0.4%. Most failures are HTTP 500 responses to calls from ${x.l1}. The increase began ${x.mins} minutes after release ${x.ver} went live.`,cause:`Release ${x.ver} of ${x.e} introduced a regression`,why:`Failures start right after the deployment and stay on ${x.e}. Neighbouring services remain healthy.`,conf:'High',metric:`Failure rate rose from 0.4% to ${x.fail}%.`,steps:[['Roll back ${E}','rollback'],['Open runbook','runbook'],['Create remediation workflow','workflow']]}),
+ 'Failure rate increase':x=>({sum:`${x.e} fails ${x.fail}% of requests, up from 0.4%. Most failures are HTTP 500 responses to calls from ${x.l1}. The increase began ${x.mins} minutes after release ${x.ver} went live.`,cause:`Release ${x.ver} of ${x.e} introduced a regression`,why:`Failures start right after the deployment and stay on ${x.e}. Neighbouring services remain healthy.`,conf:'High',metric:`Failure rate rose from 0.4% to ${x.fail}%.`,steps:[['Roll back ${E}','rollback'],['Open runbook','runbook'],['Open remediation workflows','workflow']]}),
  'Host CPU saturation':x=>({sum:`CPU on ${x.e} has been above ${x.cpu}% for ${x.mins} minutes. A single process accounts for most of it, and request volume is flat, so this is not a traffic spike.`,cause:`A runaway process on ${x.e}`,why:`CPU grew without extra load, which points to a busy loop or a stuck garbage-collection cycle.`,conf:'Medium',metric:`CPU usage reached ${x.cpu}% against a normal 35%.`,steps:[['Scale out ${E}','scale'],['Check process logs','logs'],['Open runbook','runbook']]}),
- 'Pod restart loop':x=>({sum:`A pod of ${x.e} restarted ${x.restarts} times in the last hour. Each restart follows an out-of-memory kill about ${x.mins} seconds after start, so the container limit is too low for the new release ${x.ver}.`,cause:`Memory limit too low for release ${x.ver}`,why:`Restarts began with the rollout and every one ends with an OOM kill.`,conf:'High',metric:`Container restarts rose from 0 to ${x.restarts}.`,steps:[['Roll back ${E}','rollback'],['Raise the memory limit','workflow'],['Open runbook','runbook']]}),
+ 'Pod restart loop':x=>({sum:`A pod of ${x.e} restarted ${x.restarts} times in the last hour. Each restart follows an out-of-memory kill about ${x.mins} seconds after start, so the container limit is too low for the new release ${x.ver}.`,cause:`Memory limit too low for release ${x.ver}`,why:`Restarts began with the rollout and every one ends with an OOM kill.`,conf:'High',metric:`Container restarts rose from 0 to ${x.restarts}.`,steps:[['Roll back ${E}','rollback'],['Raise the memory limit','request'],['Open runbook','runbook']]}),
  'Synthetic availability drop':x=>({sum:`Synthetic checks against ${x.e} fail from ${x.loc} of 4 locations. The checks started failing ${x.mins} minutes after release ${x.ver}, and real-user traffic shows the same errors, so this is a real outage and not a monitor issue.`,cause:`Release ${x.ver} of ${x.e} broke the checked endpoint`,why:`Failures are consistent across locations and match real-user errors.`,conf:'High',metric:`Availability fell from 100% to ${100-x.pct}%.`,steps:[['Roll back ${E}','rollback'],['Open runbook','runbook'],['Notify on-call','notify']]}),
- 'Memory leak suspected':x=>({sum:`Memory on ${x.e} climbs steadily and reached ${x.mem}%. It grows about 2% per hour regardless of load and drops only after a restart, which is typical for a leak.`,cause:`A memory leak in ${x.e}`,why:`Usage grows linearly and resets on restart. Traffic does not explain it.`,conf:'Medium',metric:`Memory usage grew from 48% to ${x.mem}% in 6 hours.`,steps:[['Restart ${E}','scale'],['Capture a memory profile','workflow'],['Open runbook','runbook']]}),
- 'Disk almost full':x=>({sum:`The disk on ${x.e} is ${x.disk}% full and filling about 1.5 GB per hour. Most of the growth is in the log directory, where rotation stopped after the last configuration change.`,cause:`Log rotation stopped on ${x.e}`,why:`Growth is concentrated in one directory and began with a configuration change.`,conf:'High',metric:`Disk usage rose from 62% to ${x.disk}%.`,steps:[['Run cleanup workflow','workflow'],['Check recent changes','logs'],['Open runbook','runbook']]}),
- 'Connection pool exhausted':x=>({sum:`${x.e} has run out of database connections. ${x.n} requests waited for a free connection, and response times rose with the queue. Connections are held longer since release ${x.ver}.`,cause:`Release ${x.ver} holds database connections too long`,why:`Pool usage hit its limit right after the deployment while request volume stayed flat.`,conf:'Medium',metric:`Pool usage reached 100% (limit 50).`,steps:[['Roll back ${E}','rollback'],['Raise the pool size','workflow'],['Open runbook','runbook']]})
+ 'Memory leak suspected':x=>({sum:`Memory on ${x.e} climbs steadily and reached ${x.mem}%. It grows about 2% per hour regardless of load and drops only after a restart, which is typical for a leak.`,cause:`A memory leak in ${x.e}`,why:`Usage grows linearly and resets on restart. Traffic does not explain it.`,conf:'Medium',metric:`Memory usage grew from 48% to ${x.mem}% in 6 hours.`,steps:[['Restart ${E}','restart'],['Capture a memory profile','request'],['Open runbook','runbook']]}),
+ 'Disk almost full':x=>({sum:`The disk on ${x.e} is ${x.disk}% full and filling about 1.5 GB per hour. Most of the growth is in the log directory, where rotation stopped after the last configuration change.`,cause:`Log rotation stopped on ${x.e}`,why:`Growth is concentrated in one directory and began with a configuration change.`,conf:'High',metric:`Disk usage rose from 62% to ${x.disk}%.`,steps:[['Run cleanup workflow','request'],['Check recent changes','logs'],['Open runbook','runbook']]}),
+ 'Connection pool exhausted':x=>({sum:`${x.e} has run out of database connections. ${x.n} requests waited for a free connection, and response times rose with the queue. Connections are held longer since release ${x.ver}.`,cause:`Release ${x.ver} holds database connections too long`,why:`Pool usage hit its limit right after the deployment while request volume stayed flat.`,conf:'Medium',metric:`Pool usage reached 100% (limit 50).`,steps:[['Roll back ${E}','rollback'],['Raise the pool size','request'],['Open runbook','runbook']]})
 };
 function explainBuild(p){
   const x=explainX(p),t=(XT[p.name]||XT['Failure rate increase'])(x);
@@ -1960,6 +1976,8 @@ const XP_ACT={
   workflow:()=>go('automate','workflows',{q:'remediate',f:{}}),
   rollback:c=>toast(`Rollback of ${c.p.entity} requested. It needs an approval.`),
   scale:c=>toast(`Scale-out of ${c.p.entity} requested`),
+  restart:c=>toast(`Restart of ${c.p.entity} requested`),
+  request:(c,l)=>toast(`${l} requested for ${c.p.entity}`),
   notify:c=>toast(`On-call notified about ${c.p.id}`)
 };
 const xpMsgs=[];let assistCtx=null;
@@ -1993,7 +2011,7 @@ function xpAnswer(q,c=assistCtx){
 }
 /* ---------- explain: every other view ---------- */
 let viewXp=false;
-const XV_NOEXPLAIN=['issues/problems','smartscape/home','smartscape/problem'];
+const XV_NOEXPLAIN=['smartscape/home'];
 const hasExplain=()=>!XV_NOEXPLAIN.includes(`${cur.app.id}/${cur.tab.id}`)&&!cur.tab.userDoc;
 const goSpec=s=>{const [a,t,q]=s.split('/');go(a,t,{q:q||'',f:{}})};
 const stepGo=(label,spec)=>[label,()=>goSpec(spec)];
@@ -2007,8 +2025,9 @@ const XV={
  'applications/services':{what:'This view lists services, serverless functions, endpoints, databases and messaging.',watch:'A service with a high failure rate or slow median response is the first thing to check.',rel:['Failing services are listed with their causes under Errors.','applications/errors'],steps:[['Open Errors','applications/errors'],['Open the dependency graph','smartscape/service'],['Check traces','telemetry/traces']]},
  'applications/errors':{what:'This view groups failed requests by endpoint, service and failure reason.',watch:'One dominant reason usually points to a single fix.',rel:['Traces show where a failing request spends its time.','telemetry/traces'],steps:[['Open traces','telemetry/traces'],['Check error logs','telemetry/logs'],['Open the problem list','issues/problems']]},
  'applications/response-time':{what:'This view ranks endpoints by median, p90 and p99 response time.',watch:'A p99 far above p50 means a few requests are very slow.',rel:['Traces show the slowest requests end to end.','telemetry/traces'],steps:[['Open traces','telemetry/traces'],['Open Errors','applications/errors'],['See service dependencies','smartscape/service']]},
- 'infrastructure/slos':{what:'This view lists synthetic monitors with their availability and run duration.',watch:'Failing monitors in one location suggest a network issue, failing everywhere suggests an outage.',rel:['Failing monitors raise availability problems.','issues/problems'],steps:[['Open problems','issues/problems'],['Check the affected service','applications/services'],['Review fleet health','admin/fleet']]},
+ 'infrastructure/slos':{what:'This view lists service level objectives with their target, current value, remaining error budget and burn rate.',watch:'A burn rate above 1.5× uses up the error budget before the window ends. Breaching SLOs raise problems.',rel:['Breaching SLOs appear in the Problems overview.','issues/problems'],steps:[['Open problems','issues/problems'],['Check the services','applications/services'],['Open guardians','automate/guardians']]},
  'applications/frontends':{what:'This view lists web and mobile frontends with Apdex, load time and real user monitoring status.',watch:'Frontends without real user monitoring are blind spots.',rel:['Frontends without monitoring appear as coverage gaps.','admin/coverage'],steps:[['Show coverage gaps','admin/coverage'],['Check JavaScript errors','telemetry/logs'],['Open services','applications/services']]},
+ 'issues/problems':{what:'This view lists the problems that were detected, with the affected entity and impact.',watch:'Start with the oldest open problem, and check whether several problems share one root cause.',rel:['Open problems raise the red badge in the menu.','issues/problems'],steps:[['Open the problem graph','smartscape/problem'],['Check SLOs','infrastructure/slos'],['Open investigations','issues/investigations']]},
  'applications/feature-flags':{what:'This view lists feature flags with their status, environments and how often they are evaluated.',watch:'A live flag whose variant raises the error rate of its service needs a smaller rollout. Stale flags can be removed from code.',rel:['Flag changes appear as events next to problems.','issues/problems'],steps:[['Open problems','issues/problems'],['Check the services','applications/services'],['Search evaluation logs','telemetry/logs']]},
  'applications/alert-templates':{what:'These templates create alerts for services, databases, synthetic monitors and frontends.',watch:'Pick templates for the signals your teams already act on.',rel:['Alerts you create here feed the Problem view.','issues/problems'],steps:[['Open services','applications/services'],['Open Errors','applications/errors'],['Review recommendations','issues/recommendations']]},
  'telemetry/metrics':{what:'This catalog lists every metric you can chart or alert on.',watch:'Custom and OpenTelemetry metrics grow quickly, so check ownership and cost.',rel:['Charts and alerts are built from these metrics. Start in a notebook.','documents/notebooks'],steps:[['Open a notebook','documents/notebooks'],['Check dashboards','documents/dashboards'],['See alert templates','applications/alert-templates']]},
@@ -2016,9 +2035,9 @@ const XV={
  'telemetry/traces':{what:'This view lists distributed traces, one row per request.',watch:'Long traces with many spans or an error status are worth opening first.',rel:['Failing traces roll up into Errors per endpoint.','applications/errors'],steps:[['Open Errors','applications/errors'],['Check logs','telemetry/logs'],['See response times','applications/response-time']]},
  'telemetry/user-sessions':{what:'This view lists real user sessions with their frontend, duration, actions and errors.',watch:'Frustrated sessions with many errors point to a broken user journey.',rel:['Session errors often come from failing services.','applications/errors'],steps:[['Open Frontends','applications/frontends'],['Open Errors','applications/errors'],['Check traces','telemetry/traces']]},
  'telemetry/business-events':{what:'This view counts business events such as orders and payments by type and provider.',watch:'A drop in a revenue event matters more than any technical metric.',rel:['Business impact appears on the Home Business tab.','home/business'],steps:[['Open Business','home/business'],['Check payment problems','issues/problems'],['Open a notebook','documents/notebooks']]},
- 'security/vulnerabilities':{what:'This view ranks vulnerabilities by security score and shows the findings per entity.',watch:'Open critical vulnerabilities in running services come first.',rel:['The affected services and libraries are connected in the security graph.','smartscape/security'],steps:[['Open the security graph','smartscape/security'],['Open investigations','issues/investigations'],['Review recommendations','issues/recommendations']]},
+ 'security/vulnerabilities':{what:'This view ranks vulnerabilities by security score and shows the findings per entity.',watch:'Open critical vulnerabilities in running services come first.',rel:['The affected services and libraries are connected in the security graph.','smartscape/security'],steps:[['Open the security graph','smartscape/security'],['Check detection coverage','security/siem'],['Open investigations','issues/investigations']]},
  'issues/investigations':{what:'This view lists investigations. Each one tests hypotheses against your data and says how confident it is.',watch:'Inconclusive results and long-running investigations need a human look.',rel:['Investigations start from problems.','issues/problems'],steps:[['Open problems','issues/problems'],['Check vulnerabilities','security/vulnerabilities'],['Open logs','telemetry/logs']]},
- 'security/detectors':{what:'Detectors are rules that run a DQL query on a schedule and turn matches into findings.',watch:'Disabled detectors leave blind spots.',steps:[['Open MITRE coverage','security/siem'],['Open User Audits','security/user-audits'],['Check logs','telemetry/logs']]},
+ 'security/detectors':{what:'Detections are rules that run a DQL query on a schedule and turn matches into findings.',watch:'Disabled detectors leave blind spots.',steps:[['Open MITRE coverage','security/siem'],['Open user audits','security/user-audits'],['Check logs','telemetry/logs']]},
  'security/user-audits':{what:'This view lists what users and service accounts did: logins, role changes, token creation, exports and setting changes.',watch:'High-risk actions and failed logins from new locations deserve a second look.',rel:['Role changes and access requests are managed in Admin.','admin/access'],steps:[['Open access requests','admin/access'],['Open MITRE coverage','security/siem'],['Check logs','telemetry/logs']]},
  'security/alert-templates':{what:'These templates create alerts for security findings such as vulnerabilities, suspicious logins and exposed resources.',watch:'Start with templates for your most critical assets.',rel:['Alerts you create here feed the Problems view.','issues/problems'],steps:[['Open vulnerabilities','security/vulnerabilities'],['Open MITRE coverage','security/siem'],['Review recommendations','issues/recommendations']]},
  'telemetry/ai':{what:'This view monitors AI conversations: who chatted with which model, how long it took, what it cost and how the answers scored in evals.',watch:'Low groundedness and hallucination flags mark answers users should not trust.',rel:['Slow or failing model calls show up as traces.','telemetry/traces'],steps:[['Open traces','telemetry/traces'],['Open services','applications/services'],['Check logs','telemetry/logs']]},
@@ -2079,6 +2098,9 @@ function explainTable(){
 }
 function explainCustom(){
   const key=`${cur.app.id}/${cur.tab.id}`;
+  if(key==='issues/problems'){const p=(ui&&ui.sel&&PROB.find(x=>x.id===ui.sel.id))||focusProb();if(p){probFocus=p.id;return explainBuild(p)}}
+  if(key==='smartscape/problem'){const p=PROB.find(x=>x.id===probSel)||focusProb();if(p)return explainBuild(p)}
+  if(key==='applications/feature-flags'&&flagOpen){const c=flagExplainCtx();if(c)return c}
   if(key==='security/siem')return sxExplain();
   if(key==='security/detectors')return detExplain();
   if(key==='issues/investigations'&&invOpen){const inv=INVS.find(x=>x.id===invOpen),p=inv&&PROB.find(x=>x.id===inv.pid);if(p)return{...explainBuild(p),sub:`${inv.id} · ${inv.name}`,ph:`Ask about ${inv.id}`}}
@@ -2088,7 +2110,7 @@ function explainCustom(){
       ev:[{ic:'impact',text:`${open.length} open problems, ${open.filter(p=>p.category==='Availability').length} of them availability problems.`,btn:'Open problems',fn:()=>go('issues','problems',{f:{status:['Open']}})},
           {ic:'change',text:`${crit} critical vulnerabilities are open.`,btn:'Open vulnerabilities',fn:()=>go('security','vulnerabilities',{f:{severity:['Critical'],status:['Open']}})},
           {ic:'logs',text:`${pend} access requests are waiting for approval.`,btn:'Review requests',fn:()=>go('admin','access',{f:{status:['Pending']}})},
-          {ic:'metric',text:`${SLOS.filter(s=>s.budget<0).length} of ${SLOS.length} SLOs are breaching. ${[...SLOS].sort((a,b)=>a.budget-b.budget)[0].name} has used up its error budget.`,btn:'Open overview',fn:()=>go('issues','problems',{f:{status:['Open']}})},
+          {ic:'metric',text:`${SLOS.filter(s=>s.budget<0).length} of ${SLOS.length} SLOs are breaching. ${[...SLOS].sort((a,b)=>a.budget-b.budget)[0].name} has used up its error budget.`,btn:'Open SLOs',fn:()=>go('infrastructure','slos',{f:{status:['Breaching']}})},
           {ic:'trace',text:`${fail} workflows could not be triggered.`,btn:'Open workflows',fn:()=>go('automate','workflows',{f:{status:['Failed to trigger']}})}],
       steps:[top?['Explain the oldest problem',()=>openExplain(top.id)]:['Open problems',()=>go('issues','problems',{f:{status:['Open']}})],['Review access requests',()=>go('admin','access',{f:{status:['Pending']}})],['Open recommendations',()=>go('issues','recommendations',{f:{}})]]};
     return{sub:'Overview',ph:'Ask about your environment',chips:['What needs attention first?','How many problems are open?','What changed today?'],t,answer:q=>{const l=q.toLowerCase();if(/first|urgent|priority/.test(l))return t.cause+'. '+t.why;if(/problem|open/.test(l))return `${open.length} problems are open. ${open.slice(0,3).map(p=>p.id+' on '+p.entity).join(', ')} are the oldest.`;if(/change|today/.test(l))return 'Two releases went live in the last 24 hours and one OneAgent module was updated.';return 'I can say what needs attention first, how many problems are open and what changed today.'}};
@@ -2177,6 +2199,12 @@ function sxPanel(){
    <h4>MITRE reference</h4><a class="link" href="https://attack.mitre.org/techniques/${t.id}/" target="_blank" rel="noopener noreferrer">https://attack.mitre.org/techniques/${t.id}/</a>
    <button class="btn sxp-view" data-sxview>${svgI('<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>','style="width:16px;height:16px"')}View rules</button>`;
 }
+function sxDet(name,enabled){
+  let d=DETS.find(x=>x.title===name);
+  if(!d){d={id:'d'+Date.now().toString(36)+Math.floor(Math.random()*1296).toString(36),title:name,desc:`Detects: ${name.replace(/^\[[^\]]+\]\s*/,'')}.`,every:'5 minutes',window:'7 minutes',shift:'0 seconds',runAs:(DETS[0]&&DETS[0].runAs)||'me (Florian Ortner)',starts:'Immediately',query:'fetch logs\n| filter loglevel == "ERROR"\n| limit 100',enabled};DETS.unshift(d);saveDets()}
+  else if(enabled&&!d.enabled){d.enabled=true;saveDets()}
+  return d;
+}
 function renderSecurity(host){
   host.innerHTML=`${scopeBar('',true)}<div class="sx"><div class="sx-head"><h2>MITRE ATT&amp;CK coverage</h2><span class="muted">Your SIEM detection rules mapped to the MITRE ATT&amp;CK matrix.</span></div><div class="sx-kpis" id="sxk"></div>
    <div class="sx-tool"><label class="find"><svg class="i fill" viewBox="0 0 20 20" aria-hidden="true"><path d="M11.525 12.855a6 6 0 1 1 1.4-1.429l3.816 3.817a1 1 0 0 1-1.415 1.414zM12.498 8a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0"/></svg><input id="sxq" placeholder="Search techniques" value="${esc(sxQ)}" autocomplete="off" aria-label="Search techniques"><button class="btn ghost" id="sxclear" aria-label="Clear search">×</button></label>
@@ -2216,7 +2244,7 @@ function startInvestigation(text,pid){
   if(!p){const m=text.match(/P-\d{4}/i);if(m)p=PROB.find(x=>x.id===m[0].toUpperCase())}
   if(!p){const w=text.toLowerCase().split(/\W+/).filter(s=>s.length>3);p=PROB.find(x=>w.some(s=>(x.entity+' '+x.name).toLowerCase().includes(s)))||PROB.filter(x=>x.status==='Open').sort((a,b)=>a.started-b.started)[0]||PROB[0]}
   const inv={id:'INV-'+hex(4).toUpperCase(),name:text&&!pid?text.charAt(0).toUpperCase()+text.slice(1,90):`${p.name} on ${p.entity}`,pid:p.id,status:'Investigating',verdict:'Pending',trigger:'Manual',sharing:'Only me',created:0};
-  INVS.unshift(inv);invOpen=inv.id;toast(`Investigation ${inv.id} started`);go('issues','investigations');
+  INVS.unshift(inv);toast(`Investigation ${inv.id} started`);go('issues','investigations',{id:inv.id});
   setTimeout(()=>{inv.status='Completed';inv.verdict=INV_VERDICT[Math.floor(rnd()*3)];toast(`Investigation ${inv.id} finished`);if(invOpen===inv.id&&cur&&cur.tab.id==='investigations')render()},5000);
 }
 function renderInvestigations(host){
@@ -2239,7 +2267,7 @@ function invReportHTML(inv){
   const sec=(title,badge,body,open)=>`<details class="inv-sec" ${open?'open':''}><summary>${title}${badge||''}</summary><div class="inv-body">${body}</div></details>`;
   return `<div class="inv-top"><div><div class="inv-crumb"><button class="link" data-invback>Investigations</button><span class="muted"> › </span><b>${esc(inv.name)}</b><span class="tag t-${TONE[inv.status]||'n'}">${esc(inv.status)}</span></div>
     <div class="inv-meta">Started ${fmtAgo(inv.created)} · by ${inv.trigger==='Automatic'?'Automatic':'you'} · <span class="mono">${esc(inv.id)}</span> · ${esc(p.id)} · ${esc(inv.sharing)}</div></div>
-    <div class="inv-act"><button class="btn" data-invchat>${svgI(SPARK,'style="width:15px;height:15px"')}Chat</button><button class="btn" data-invshare>Share</button></div></div>
+    <div class="inv-act"><button class="btn" data-invshare>Share</button></div></div>
    ${running?`<div class="inv-steps">${steps.map((s,i)=>`<span class="inv-st ${i<doneN?'done':i===doneN?'now':''}">${i<doneN?'✓ ':''}${s}</span>`).join('')}</div>`:''}
    <div class="inv-sum"><div><small>System status</small><b style="color:var(--${sys[1]})">${sys[0]}</b><span class="muted">${esc(sys[2])}</span></div>
     <div><small>Root cause</small><b style="color:var(--${INV_TONE[verdict]==='g'?'g':INV_TONE[verdict]==='b'?'b':'a'})">${esc(verdict)}</b><span class="muted">${esc(t.cause)}</span></div>
@@ -2296,8 +2324,8 @@ function addMenuHtml(a){
    Object.entries(DOC_TYPES).map(([k,[n,sub,,ic]])=>`<button class="mi" role="menuitem" data-adddoc="${k}">${iconImg(ic,18)}${n}<small>${esc(sub)}</small></button>`).join('')+
    `<p class="muted add-n">Add a document as a new tab</p>`;
 }
-function createDoc(type,name,tiles){
-  const a=cur.app,d={id:Date.now().toString(36)+Math.floor(rnd()*36).toString(36),app:a.id,type,name:(name||'').trim()||`Untitled ${DOC_TYPES[type][0].toLowerCase()}`,created:Date.now(),text:'',sections:[{q:'fetch logs\n| limit 10',res:''}],tiles:tiles||[],links:[]};
+function createDoc(type,name,tiles,appId){
+  const a=appId?appOf(appId):cur.app,d={id:Date.now().toString(36)+Math.floor(rnd()*36).toString(36),app:a.id,type,name:(name||'').trim()||`Untitled ${DOC_TYPES[type][0].toLowerCase()}`,created:Date.now(),text:'',sections:[{q:'fetch logs\n| limit 10',res:''}],tiles:tiles||[],links:[]};
   USER_DOCS.push(d);saveDocs();syncDocRows();idx=null;toast(`${DOC_TYPES[type][0]} created and saved`);go(a.id,'doc-'+d.id);
 }
 function deleteDoc(id){
@@ -2393,7 +2421,7 @@ function detDrawList(){
   el.innerHTML=vis.length?`<table><thead><tr><th>Enabled</th><th>Title</th>${detCols.includes('every')?'<th>Run every</th>':''}${detCols.includes('window')?'<th>Analysis window</th>':''}<th></th></tr></thead><tbody>${vis.map(d=>`<tr data-dtrow="${d.id}" class="${d.id===detSel?'sel':''}" tabindex="0"><td>${detSw(d.enabled,d.id)}</td><td class="name">${esc(d.title)}</td>${detCols.includes('every')?`<td>${esc(d.every)}</td>`:''}${detCols.includes('window')?`<td>${esc(d.window)}</td>`:''}<td class="num"><div class="pop"><button class="btn ghost" data-pop="dtm-${d.id}" aria-haspopup="menu" aria-expanded="false" aria-label="Actions for ${esc(d.title)}">⋮</button><div class="menu right" id="dtm-${d.id}" hidden><button class="mi" data-dtact="edit" data-id="${d.id}">Edit</button><button class="mi" data-dtact="dup" data-id="${d.id}">Duplicate</button><button class="mi" data-dtact="del" data-id="${d.id}">Delete</button></div></div></td></tr>`).join('')}</tbody></table>`:'<div class="none">No detections match. <button class="btn" id="dtqclear2">Clear search</button></div>';
 }
 function renderDetectors(host){
-  host.innerHTML=`${scopeBar('',true)}<div class="dt-wrap"><section class="dt-left"><h2>Detections</h2><p class="muted">Monitor and define rules for automated Detections.</p>
+  host.innerHTML=`${scopeBar('',true,'<button class="btn primary" data-dtnew>Create detection</button>')}<div class="dt-wrap"><section class="dt-left"><h2>Detections</h2><p class="muted">Monitor and define rules for automated Detections.</p>
    <div class="dt-tool"><label class="find">${'<svg class="i fill" viewBox="0 0 20 20" aria-hidden="true"><path d="M11.525 12.855a6 6 0 1 1 1.4-1.429l3.816 3.817a1 1 0 0 1-1.415 1.414zM12.498 8a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0"/></svg>'}<input id="dtq" placeholder="Search by keyword" value="${esc(detQ)}" autocomplete="off" aria-label="Search detections"><button class="btn ghost" id="dtqclear" aria-label="Clear search">×</button></label>
     <button class="btn ghost" id="dtrefresh" aria-label="Refresh" title="Refresh">${svgI(ICO.refresh,'style="width:16px;height:16px"')}</button>
     <div class="pop"><button class="btn ghost" data-pop="dtcols" id="dtcolbtn" aria-haspopup="menu" aria-expanded="false"></button><div class="menu right" id="dtcols" hidden></div></div></div>
@@ -2417,12 +2445,12 @@ function detExplain(){
   const en=DETS.filter(d=>d.enabled).length,dis=DETS.length-en,fast=DETS.filter(d=>d.enabled&&detMin(d.every)<=5).length;
   const t={label:'Key insight',sum:`${DETS.length} detections are defined and ${en} are enabled. ${dis?`${dis} ${dis===1?'is':'are'} disabled, which leaves a gap in coverage. `:''}${fast} of the enabled detections run every 5 minutes or faster, so most findings appear within minutes.`,cause:dis?`${dis} disabled ${dis===1?'detection leaves':'detections leave'} a blind spot`:'Every detection is enabled',why:'A disabled detection never raises a finding, even if the behavior it looks for happens.',
     ev:[{ic:'metric',text:`${en} of ${DETS.length} detections are enabled.`,btn:'',go:null},{ic:'trace',text:`${DETS.filter(d=>/kubernetes|container/i.test(d.title)).length} detections cover Kubernetes and container activity.`,btn:'Open MITRE coverage',fn:()=>go('security','siem')}],
-    steps:[['Create a detection',()=>{detSel=null;go('security','detectors')}],stepGo('Open MITRE coverage','security/siem'),stepGo('Open User Audits','security/user-audits')]};
+    steps:[['Create a detection',()=>{detSel=null;go('security','detectors')}],stepGo('Open MITRE coverage','security/siem'),stepGo('Open user audits','security/user-audits')]};
   return{sub:'Detectors',ph:'Ask about detections',chips:['Which detections are disabled?','What runs most often?'],t,answer:q=>{const l=q.toLowerCase();if(/disabl/.test(l))return dis?`Disabled: ${DETS.filter(d=>!d.enabled).map(d=>d.title).join(', ')}.`:'No detection is disabled.';if(/often|fast|frequent/.test(l))return `${fast} detections run every 5 minutes or faster.`;return 'I can list the disabled detections and how often they run.'}};
 }
 /* ---------- feature flags: UI ---------- */
 let flagOpen=null,flagSub='overview',flagEnvSel='All environments',flagDays=30,flagEditSum=false;
-const FL_SUBS=[['overview','Overview'],['manage','Manage feature'],['results','Data & results'],['audit','Audit log']];
+const FL_SUBS=[['overview','Overview'],['manage','Manage flag'],['results','Data & results'],['audit','Audit log']];
 const flagAgo=at=>fmtAgo(Math.max(0,Math.floor((Date.now()-at)/60000)));
 function flagAudit(f){
   if(f.audit)return f.audit;
@@ -2459,10 +2487,10 @@ function flagCreate(){
     envs:FL_ENVS.map(n=>({n,on:n==='Development',pct:100})),user:true});
   f.at=Date.now();f.audit=[{who:'You',what:'Created feature',env:'',at:Date.now()}];
   FLAGS.unshift(f);saveFlags();idx=null;$$('.menu').forEach(m=>{m.hidden=true});toast('Feature flag created and saved');
-  flagOpen=f.key;flagSub='overview';flagEditSum=false;render();
+  flagSub='overview';flagEditSum=false;go('applications','feature-flags',{id:f.key});
 }
 function flagDelete(f){
-  const i=FLAGS.indexOf(f);if(i<0)return;FLAGS.splice(i,1);if(!f.user)FLAG_DEL.push(f.key);saveFlags();idx=null;flagOpen=null;toast('Feature flag deleted');render();
+  const i=FLAGS.indexOf(f);if(i<0)return;FLAGS.splice(i,1);if(!f.user)FLAG_DEL.push(f.key);saveFlags();idx=null;toast('Feature flag deleted');go('applications','feature-flags');
 }
 function flagSeries(f,env,days){
   const envs=env==='All environments'?f.envs.filter(e=>e.on):f.envs.filter(e=>e.n===env&&e.on);
@@ -2485,10 +2513,12 @@ function flagImpact(f){
   return {rows:[['Control',f.vars[0].control,cE,cErr,cMs],['Variant',f.vars[0].variant,vE,vErr,vMs]],worse:vErr>cErr*1.25,cErr,vErr,cMs,vMs};
 }
 function flagDql(f){return `fetch logs, from:now()-24h\n| filter feature_flag.key == "${f.key}"\n| summarize evaluations = count(),\n    errors = countIf(loglevel == "ERROR"),\n    by:{feature_flag.variant}`}
+const FL_ALIAS={login:'auth',profile:'user-profile',reporting:'analytics','api-gateway':'gateway'};
+function flagTarget(f){const n0=f.svc.replace(/-service$/,''),n=FL_ALIAS[n0]||n0,[a,t]=entityTarget(n);return{app:a,tab:t,name:n}}
 function flagDetail(f){
   const A=flagAudit(f),head=`<div class="inv-top"><div><div class="inv-crumb"><button class="link" data-flagback>Feature flags</button><span class="muted"> › </span><b>${esc(f.name)}</b><span class="mono muted">${esc(f.key)}</span><span class="tag t-${TONE[f.status]||'n'}">${esc(f.status)}</span></div>
     <div class="inv-meta">Last modified ${flagAgo(A[0].at)} by ${esc(A[0].who)}</div></div>
-    <div class="inv-act"><button class="btn" data-flagexplain>${svgI(SPARK,'style="width:15px;height:15px"')}Explain</button><button class="btn" data-flagshare>Share</button></div></div>
+    <div class="inv-act"><button class="btn" data-flagshare>Share</button></div></div>
     <div class="fd-tabs" role="tablist">${FL_SUBS.map(([k,l])=>`<button role="tab" aria-selected="${k===flagSub}" data-flagsub="${k}">${l}</button>`).join('')}</div>`;
   return head+({overview:flagOverview,manage:flagManage,results:flagResults,audit:flagAuditTab}[flagSub])(f,A);
 }
@@ -2503,14 +2533,14 @@ function flagOverview(f,A){
     <p class="muted fd-cap">Evaluations of ${esc(f.key)} per day</p>${flagChart(f)}</section></div>
    <aside class="fd-side"><section class="fd-card"><h3>Feature details</h3><dl class="fd-kv">${kv('Description',esc(f.desc))}${kv('Status',`<span class="tag t-${TONE[f.status]||'n'}">${esc(f.status)}</span>`)}${kv('Type',esc(f.type))}${kv('Maintainer',esc(f.creator))}${kv('Environments',esc(f.env))}${kv('Staleness',`<span class="tag t-${TONE[f.stale]||'n'}">${esc(f.stale)}</span>`)}${kv('Tags',tags)}</dl></section>
     <section class="fd-card"><h3>Resources</h3>${f.res.map(([n,s])=>`<div class="fd-res"><span>${esc(n)}</span><span class="muted">${esc(s)}</span></div>`).join('')}</section>
-    <section class="fd-card"><h3>In Dynatrace</h3><div class="fd-links">${f.svc?`<button class="btn" data-flaggo2="applications/services/${esc(f.svc)}">Open ${esc(f.svc)}</button>`:''}<button class="btn" data-flaggo2="telemetry/logs/${esc(f.key)}">Show evaluation logs</button><button class="btn" data-flaggo2="issues/problems/${esc(f.svc||f.key)}">Show problems</button></div></section></aside></div>`;
+    <section class="fd-card"><h3>In Dynatrace</h3><div class="fd-links">${f.svc?`<button class="btn" data-flaggo2="${flagTarget(f).app}/${flagTarget(f).tab}/${esc(flagTarget(f).name)}">Open ${esc(flagTarget(f).name)}</button>`:''}<button class="btn" data-flaggo2="telemetry/logs/${esc(f.key)}">Show evaluation logs</button>${f.svc&&flagTarget(f).tab==='services'?`<button class="btn" data-flaggo2="issues/problems/${esc(flagTarget(f).name)}">Show problems</button>`:''}</div></section></aside></div>`;
 }
 function flagManage(f){
   return `<div class="fd-stack">
    <section class="fd-card"><h3>Status</h3><div class="fd-row"><select class="sel" id="flagstatus" aria-label="Status">${['Development','Live','Complete','Archived'].map(x=>`<option ${x===f.status?'selected':''}>${x}</option>`).join('')}</select><span class="muted">Live means the feature is rolling out to users. Complete means it is fully released and ready for clean-up.</span></div></section>
    <section class="fd-card"><h3>Variables</h3><table class="fd-t"><thead><tr><th>Key</th><th>Type</th><th>Control</th><th>Variant</th></tr></thead><tbody>${f.vars.map(v=>`<tr><td class="mono">${esc(v.key)}</td><td>${esc(v.type)}</td><td class="mono">${esc(v.control)}</td><td class="mono">${esc(v.variant)}</td></tr>`).join('')}</tbody></table></section>
    <section class="fd-card"><h3>Environments and targeting</h3>${f.envs.map((e,i)=>`<div class="fd-env"><button class="dt-sw ${e.on?'on':''}" role="switch" aria-checked="${e.on}" aria-label="${e.on?'Disable':'Enable'} in ${esc(e.n)}" data-flagenv="${i}"><i>${e.on?'✓':'×'}</i></button><b>${esc(e.n)}</b><span class="muted">${e.on?esc(f.audience):'Off for everyone'}</span><span class="grow"></span><label class="fd-pct">Rollout<input type="range" min="0" max="100" step="5" value="${e.pct}" data-flagpct="${i}" ${e.on?'':'disabled'} aria-label="Rollout in ${esc(e.n)}"><b>${e.on?e.pct:0}%</b></label></div>`).join('')}</section>
-   <section class="fd-card"><h3>Clean up</h3><div class="fd-row"><button class="btn" data-flagarchive ${f.status==='Archived'?'disabled':''}>Archive feature</button><button class="btn" data-flagdel>Delete feature</button><span class="muted">Archiving turns the feature off everywhere. Deleting removes it for good.</span></div></section></div>`;
+   <section class="fd-card"><h3>Clean up</h3><div class="fd-row"><button class="btn" data-flagarchive ${f.status==='Archived'?'disabled':''}>Archive flag</button><button class="btn" data-flagdel>Delete flag</button><span class="muted">Archiving turns the flag off everywhere. Deleting removes it for good.</span></div></section></div>`;
 }
 function flagResults(f){
   const im=flagImpact(f);
@@ -2525,15 +2555,16 @@ function flagAuditTab(f,A){
 function renderFlags(host){
   if(!flagOpen){renderTable(cur.tab,host);return}
   const f=FLAGS.find(x=>x.key===flagOpen);if(!f){flagOpen=null;renderTable(cur.tab,host);return}
-  host.innerHTML=flagDetail(f);
+  host.innerHTML=scopeBar('',true)+flagDetail(f);
 }
-function flagExplain(){
-  const f=FLAGS.find(x=>x.key===flagOpen);if(!f)return;const im=flagImpact(f),prod=f.envs[2];
+function flagExplain(){const c=flagExplainCtx();if(c)explainToAssist(c)}
+function flagExplainCtx(){
+  const f=FLAGS.find(x=>x.key===flagOpen);if(!f)return null;const im=flagImpact(f),prod=f.envs[2];
   const t={label:'Key insight',sum:`${f.name} is ${f.status.toLowerCase()} and enabled in ${f.env.toLowerCase()}. ${f.evals?`It was evaluated ${f.evals.toLocaleString()} times in the last 24 hours. ${im.worse?`The variant has a higher error rate than control (${im.vErr}% vs ${im.cErr}%).`:'The variant performs on par with control.'}`:'It has not been evaluated yet.'}`,
     cause:f.evals?(im.worse?'The variant increases errors':'The rollout looks safe'):'The feature is not in use yet',why:f.evals?`Production is at ${prod.on?prod.pct:0}% rollout. ${f.stale!=='Not stale'?`The feature is marked ${f.stale.toLowerCase()}, so it may be ready for clean-up.`:''}`:'Enable it in an environment and evaluate it from code.',
     ev:[{ic:'metric',text:`Error rate: ${im.vErr}% variant vs ${im.cErr}% control.`,btn:'Open results',fn:()=>{flagSub='results';render()}},{ic:'logs',text:'Evaluations are recorded as logs with the feature_flag.key attribute.',btn:'Show logs',fn:()=>go('telemetry','logs',{q:f.key,f:{}})}],
     steps:[im.worse?['Reduce the production rollout',()=>{flagSub='manage';render()}]:['Review the rollout',()=>{flagSub='manage';render()}],f.svc?['Open the linked service',()=>go('applications','services',{q:f.svc,f:{}})]:['Open services',()=>go('applications','services',{q:'',f:{}})],['Copy the evaluation query',()=>{flagSub='results';render()}]]};
-  explainToAssist({sub:f.name,ph:`Ask about ${f.key}`,chips:['Is it safe to roll out?','Why is it stale?'],t,answer:q=>/safe|roll/i.test(q)?(im.worse?'Not yet. The variant has more errors than control.':'Yes. Error rate and response time are on par with control.'):/stale|clean/i.test(q)?`Staleness is ${f.stale.toLowerCase()}.${f.stale==='Released'?' The feature is fully rolled out and can be removed from code.':''}`:'I can compare the variants and suggest a rollout step.'});
+  return({sub:f.name,ph:`Ask about ${f.key}`,chips:['Is it safe to roll out?','Why is it stale?'],t,answer:q=>/safe|roll/i.test(q)?(im.worse?'Not yet. The variant has more errors than control.':'Yes. Error rate and response time are on par with control.'):/stale|clean/i.test(q)?`Staleness is ${f.stale.toLowerCase()}.${f.stale==='Released'?' The feature is fully rolled out and can be removed from code.':''}`:'I can compare the variants and suggest a rollout step.'});
 }
 const BIZ_TPL=[
  ['Banking & Financial Services','Payments, logins and core banking at a glance.','<path d="M3 10l9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 20h18"/>',['Payment success rate','Transactions per hour','Login availability','Fraud alerts per hour','Core banking response time','Open problems']],
@@ -2543,9 +2574,24 @@ const BIZ_TPL=[
  ['Telecommunications','Network, activations and billing health.','<circle cx="12" cy="10" r="1.5"/><path d="M12 12v9M8 21h8M8.5 6.5a5 5 0 0 0 0 7M15.5 6.5a5 5 0 0 1 0 7M5.5 4a9 9 0 0 0 0 12M18.5 4a9 9 0 0 1 0 12"/>',['Network availability','Call setup success rate','Data throughput','Activations per hour','Billing response time','Open problems']],
  ['Travel & Leisure','Searches, bookings and payments across web and app.','<path d="M21 4L3 11l6 2.5L11.5 20l2.5-5 5.5-4z"/>',['Booking conversion rate','Searches per hour','Payment success rate','Availability API response time','Mobile app crash rate','Open problems']]
 ];
+const SLO_MON={checkout:'Checkout',payment:'Payment',search:'Search',login:'Login',catalog:'Homepage',order:'Checkout',cart:'Cart',notification:'API health',shipping:'API health',profile:'API health'};
+function sloDrawer(r){
+  const key=SLO_MON[r.service.split('-')[0]]||'API health',mons=SYNTH.filter(m=>m.name.startsWith(key)).slice(0,4),st=sloState(r);
+  return `<dl><dt>Service</dt><dd>${esc(r.service)}</dd><dt>Status</dt><dd><span class="tag t-${st[1]}">${st[0]}</span></dd><dt>Target</dt><dd>${r.target}% over ${r.window}</dd><dt>Current</dt><dd>${r.cur}%</dd><dt>Error budget</dt><dd>${sloBudgetTxt(r)}</dd><dt>Burn rate</dt><dd>${r.burn}×</dd></dl>
+  <h3 style="font-size:13px;margin:14px 0 6px">Source monitors</h3>${mons.map(m=>`<div class="row" style="display:flex;gap:8px;padding:5px 0;border-top:1px solid var(--line)"><span class="grow">${esc(m.name)}</span><span class="muted">${m.avail}%</span><span class="tag t-${TONE[m.status]||'n'}">${esc(m.status)}</span></div>`).join('')||'<p class="muted">No monitors linked.</p>'}`;
+}
+function entityTarget(name){
+  if(SERVICES.some(r=>r.name===name))return['applications','services'];
+  if(FRONT.some(r=>r.name===name))return['applications','frontends'];
+  if(HOSTS_ONLY.some(r=>r.name===name))return['infrastructure','hosts'];
+  if(K8S.some(r=>r.name===name))return['infrastructure','kubernetes'];
+  if(NETDEV.some(r=>r.name===name))return['infrastructure','network'];
+  return['applications','services'];
+}
+function goEntity(name){const [a,t]=entityTarget(name);go(a,t,{q:name,f:{}})}
 function renderBusiness(host){
   const bars=mk(24,i=>20+Math.round(hr(i,11)*80));
-  host.innerHTML=scopeBar()+`<div class="tiles">${[['Events','1.9M','last 2 hours'],['Users on the system','12,480','active in the last 2 hours'],['Orders per hour','4,820','+6% vs yesterday'],['Payment failures','1.4%','below 2% target']].map(([l,v,s])=>`<div class="tile static"><span class="muted">${l}</span><b>${v}</b><span class="muted">${s}</span></div>`).join('')}</div>
+  host.innerHTML=scopeBar()+`<div class="tiles">${[['Events','1.9M',tfLabel().toLowerCase()],['Users on the system','12,480','active in the '+tfLabel().toLowerCase()],['Orders per hour','4,820','+6% vs yesterday'],['Payment failures','1.4%','below 2% target']].map(([l,v,s])=>`<div class="tile static"><span class="muted">${l}</span><b>${v}</b><span class="muted">${s}</span></div>`).join('')}</div>
   <div class="card"><h2>Events per hour</h2><div class="bars" role="img" aria-label="Events per hour, last 24 hours">${bars.map((h,i)=>`<i style="height:${h}%" title="${qsClock(23-i)}: ${(h*3.2).toFixed(0)}K events"></i>`).join('')}</div></div>
   <section class="tpl-sec" aria-label="Dashboard templates"><div class="tpl-h"><h2>Dashboard templates</h2><span class="muted">Ready-made dashboards from Dynatrace. Pick your industry to add one to Home.</span></div>
    <div class="tpl-grid">${BIZ_TPL.map(([n,d,ic,t],i)=>`<div class="tpl"><div class="tpl-t"><span class="tpl-i">${svgI(ic,'style="width:20px;height:20px"')}</span><h3>${esc(n)}</h3></div><p class="muted">${esc(d)}</p>
@@ -2562,7 +2608,8 @@ function renderBusiness(host){
 const CHIPS=['All','Apps & tabs','Data','Documents','Automate & admin','Actions'];
 const CHIPKINDS={Data:['Entities','Telemetry','Issues'],'Automate & admin':['Automation','Admin']};
 const ALLKINDS=['Apps & tabs','Entities','Telemetry','Issues','Documents','Automation','Admin','Actions'];
-const ACTIONS=['Create dashboard','Create notebook','New workflow','New alert','Connect cloud account','Install app from Hub','New investigation','Create segment'].map(n=>({label:n,chip:'Actions',sub:'Action',action:true}));
+function createWorkflow(){WF.unshift({name:'Untitled workflow',trigger:'Manual',status:'Paused',owner:'You',last:1,success:100,mine:true,trash:false});idx=null;toast('Workflow created');go('automate','workflows',{q:'',f:{}})}
+const ACTIONS=[['Create dashboard',()=>createDoc('dashboard','',null,'documents')],['Create notebook',()=>createDoc('notebook','',null,'documents')],['Create workflow',createWorkflow],['Create alert from a template',()=>go('infrastructure','alert-templates')],['Connect cloud account',()=>go('admin','settings',{q:'Cloud',f:{}})],['Install app from Hub',()=>go('admin','apps',{mode:1})],['Start investigation',()=>startInvestigation('',null)]].map(([n,run])=>({label:n,chip:'Actions',sub:'Action',action:true,run}));
 let idx=null,pChip='All',pSel=0,pItems=[];
 function buildIdx(){
   idx=[];const seen=new Set();
@@ -2602,7 +2649,7 @@ function drawPal(){
 }
 function pick_(i){
   if(!i)return; closePal();
-  if(i.action){toast(`${i.label}`);return}
+  if(i.action){i.run?i.run():toast(`${i.label}`);return}
   go(i.app,i.tab,i.q!==undefined?{q:i.q,f:{},mode:i.mode}:{});
 }
 
@@ -2620,7 +2667,7 @@ document.addEventListener('click',e=>{
   const rgo=T.closest('[data-rmgo]');if(rgo){$('#rmmenu').hidden=true;deleteDoc(rgo.dataset.rmgo);return}
   if(T.closest('[data-vx]')){openViewExplain();return}
   const xe=T.closest('[data-xpe]');if(xe){const ctx=xpMsgs[+xe.closest('[data-xm]').dataset.xm],e=ctx.t.ev[+xe.dataset.xpe];if(e.fn){e.fn(ctx);return}if(e.go[1]==='problem'){probSel=ctx.p.id;go('smartscape','problem')}else go(e.go[0],e.go[1],{q:e.go[2]||'',f:{}});return}
-  const xs=T.closest('[data-xps]');if(xs){const ctx=xpMsgs[+xs.closest('[data-xm]').dataset.xm],st=ctx.t.steps[+xs.dataset.xps];typeof st[1]==='function'?st[1](ctx):XP_ACT[st[1]](ctx);return}
+  const xs=T.closest('[data-xps]');if(xs){const ctx=xpMsgs[+xs.closest('[data-xm]').dataset.xm],st=ctx.t.steps[+xs.dataset.xps];typeof st[1]==='function'?st[1](ctx):XP_ACT[st[1]](ctx,st[0]);return}
   const dv=T.closest('[data-dqlv]');if(dv){dqlView=dv.dataset.dqlv;drawDql();return}
   if(T.closest('[data-dqlcopy]')){copyText($('#dqlmenu pre.dql').textContent,dqlView==='dql'?'DQL copied':'dtctl command copied');return}
   if(T.closest('#dtqclear')||T.closest('#dtqclear2')){detQ='';const i=$('#dtq');if(i)i.value='';detDrawList();return}
@@ -2648,22 +2695,21 @@ document.addEventListener('click',e=>{
   const lpd=T.closest('[data-lpdel]');if(lpd){const d=curDoc();d.links.splice(+lpd.dataset.lpdel,1);saveDocs();renderUserDoc($('#body'));return}
   const lpl=T.closest('[data-lplink]');if(lpl){const [a,t]=lpl.dataset.lplink.split('/');go(a,t);return}
   const ivs=T.closest('[data-invstart]');if(ivs){startInvestigation(null,ivs.dataset.invstart);return}
-  const ivo=T.closest('[data-inv]');if(ivo){invOpen=ivo.dataset.inv;go('issues','investigations');return}
-  if(T.closest('[data-invall]')){invOpen=null;go('issues','investigations',{q:'',f:{}});return}
-  if(T.closest('[data-invback]')){invOpen=null;render();return}
-  if(T.closest('[data-invchat]')){const inv=INVS.find(x=>x.id===invOpen);if(inv&&invCtx)explainToAssist({...invCtx,sub:`${inv.id} · ${inv.name}`,ph:`Ask about ${inv.id}`});return}
-  if(T.closest('[data-invshare]')){toast('Link copied');return}
-  const iva=T.closest('[data-invact]');if(iva&&invCtx){const st=invCtx.t.steps[+iva.dataset.invact];XP_ACT[st[1]](invCtx);return}
+  const ivo=T.closest('[data-inv]');if(ivo){go('issues','investigations',{id:ivo.dataset.inv});return}
+  if(T.closest('[data-invall]')){go('issues','investigations',{q:'',f:{}});return}
+  if(T.closest('[data-invback]')){go('issues','investigations');return}
+  if(T.closest('[data-invshare]')){copyText(location.href,'Link copied');return}
+  const iva=T.closest('[data-invact]');if(iva&&invCtx){const st=invCtx.t.steps[+iva.dataset.invact];XP_ACT[st[1]](invCtx,st[0]);return}
   const ivp=T.closest('[data-invprob]');if(ivp){go('issues','problems',{q:ivp.dataset.invprob,f:{}});return}
   if(T.closest('[data-invgo]')){startInvestigation($('#invq2').value,null);return}
-  if(T.closest('[data-flagback]')){flagOpen=null;render();return}
+  if(T.closest('[data-flagback]')){go('applications','feature-flags');return}
   const fsub=T.closest('[data-flagsub]');if(fsub){flagSub=fsub.dataset.flagsub;flagEditSum=false;render();return}
   if(T.closest('[data-flaggo]')){flagCreate();return}
   if(flagOpen&&cur&&cur.tab.id==='feature-flags'){
     const f=FLAGS.find(x=>x.key===flagOpen);
     if(f){
       if(T.closest('[data-flagexplain]')){flagExplain();return}
-      if(T.closest('[data-flagshare]')){toast('Link copied');return}
+      if(T.closest('[data-flagshare]')){copyText(location.href,'Link copied');return}
       if(T.closest('[data-flagsumedit]')){flagEditSum=true;render();return}
       if(T.closest('[data-flagsumcancel]')){flagEditSum=false;render();return}
       if(T.closest('[data-flagsumsave]')){f.summary=$('#fsum').value;flagEditSum=false;flagTouch(f,'Updated summary');toast('Summary saved');render();return}
@@ -2672,7 +2718,7 @@ document.addEventListener('click',e=>{
       const fe=T.closest('[data-flagenv]');if(fe){const e=f.envs[+fe.dataset.flagenv];e.on=!e.on;if(e.on&&!e.pct)e.pct=100;
         if(e.on&&e.n==='Production'&&f.status==='Development'){f.status='Live';flagTouch(f,'Changed status to Live')}
         flagTouch(f,`${e.on?'Enabled':'Disabled'} feature`,e.n);toast(`${f.name} ${e.on?'enabled':'disabled'} in ${e.n}`);render();return}
-      if(T.closest('[data-flagarchive]')){f.status='Archived';f.envs.forEach(e=>e.on=false);flagTouch(f,'Changed status to Archived');toast('Feature archived');render();return}
+      if(T.closest('[data-flagarchive]')){f.status='Archived';f.envs.forEach(e=>e.on=false);flagTouch(f,'Changed status to Archived');toast('Feature flag archived');render();return}
       if(T.closest('[data-flagdel]')){flagDelete(f);return}
       if(T.closest('[data-flagcopy]')){copyText(flagDql(f),'DQL copied');return}
     }
@@ -2685,11 +2731,10 @@ document.addEventListener('click',e=>{
     sxDraw();return}
   if(T.closest('#sxclear')){sxQ='';$('#sxq').value='';sxDraw();return}
   if(T.closest('[data-sxclose]')){sxSel=null;sxDraw();return}
-  const sxr=T.closest('[data-sxr]');if(sxr){const s=SX.state[sxSel],name=s.pot.splice(+sxr.dataset.sxr,1)[0];s.act.push(name);toast(`Enabled: ${name}`);sxDraw();return}
-  if(T.closest('[data-sxview]')){go('security','detectors');return}
+  const sxr=T.closest('[data-sxr]');if(sxr){const s=SX.state[sxSel],name=s.pot.splice(+sxr.dataset.sxr,1)[0];s.act.push(name);sxDet(name,true);toast(`Enabled: ${name}`);sxDraw();return}
+  if(T.closest('[data-sxview]')){const s=SX.state[sxSel],ds=[...s.act,...s.pot].map(n=>sxDet(n,s.act.includes(n)));detQ='';detSel=ds[0]?ds[0].id:null;go('security','detectors');return}
   const dg=T.closest('[data-go]');if(dg){const [ga,gt,gq]=dg.dataset.go.split('/');go(ga,gt,{q:gq||'',f:{}});return}
   const tho=T.closest('[data-theme-opt]');if(tho){applyTheme(tho.dataset.themeOpt);renderRail();renderUserMenu();return}
-  if(T.closest('[data-notes]')){$$('.menu').forEach(m=>{m.hidden=true});showNotes();return}
   const sg=T.closest('[data-seg]');if(sg){G.seg=sg.dataset.seg;render();return}
   const tf=T.closest('[data-tf]');if(tf){G.tf=tf.dataset.tf;G.off=0;render();return}
   const sh=T.closest('[data-shift]');if(sh){if(sh.disabled)return;G.off=Math.max(0,G.off+ +sh.dataset.shift);render();return}
@@ -2712,15 +2757,14 @@ document.addEventListener('click',e=>{
   const aa=T.closest('[data-aa]');if(aa){const a=JSON.parse(aa.dataset.aa);if(a.sel)probSel=a.sel;go(a.app,a.tab,{q:a.q,f:a.f});return}
   const pa=T.closest('[data-pa]');if(pa){$$('.menu').forEach(m=>{m.hidden=true});problemAction(pa.dataset.pa);return}
   const pgo=T.closest('[data-pgo]');if(pgo){const k=pgo.dataset.pgo,p=PROB.find(x=>x.id===probSel)||focusProb();
-    if(k==='explain'){openExplain(p.id)}else if(k==='open')go('issues','problems',{q:p.id,f:{}});else if(k==='logs')go('telemetry','logs',{q:pgBuild(p).root,f:{}});else if(k==='workflows')go('automate','workflows',{q:'remediate',f:{}});else if(k==='guardians')go('automate','guardians',{q:'',f:{}});return}
+    if(k==='explain'){openExplain(p.id)}else if(k==='open')go('issues','problems',{q:p.id,f:{}});else if(k==='logs')go('telemetry','logs',{q:pgBuild(p).root,f:{}});else if(k==='workflows')go('automate','workflows',{q:'remediate',f:{}});else if(k==='slos')go('infrastructure','slos',{q:'',f:{status:['Breaching']}});else if(k==='guardians')go('automate','guardians',{q:'',f:{}});return}
   const pd=T.closest('[data-pdepth]');if(pd){pgDepth=+pd.dataset.pdepth;$$('[data-pdepth]').forEach(b=>b.setAttribute('aria-pressed',String(b===pd)));pgDraw();return}
-  const pn=T.closest('.pn');if(pn){go('applications','services',{q:pn.dataset.name,f:{}});return}
-  const qn=T.closest('[data-qsn],[data-qsl]');if(qn){go('applications','services',{q:qn.dataset.qsn||qn.dataset.qsl,f:{}});return}
+  const pn=T.closest('.pn');if(pn){goEntity(pn.dataset.name);return}
+  const qn=T.closest('[data-qsn],[data-qsl]');if(qn){go('applications','services',{q:'',f:{}});return}
   const qst=T.closest('[data-qsstep]');if(qst){const opts=['all',...QS_GROUPS[qsG].svcs],i=opts.indexOf(qsSvc);qsSvc=opts[(i+ +qst.dataset.qsstep+opts.length)%opts.length];renderQuickStart($('#body'));return}
   if(T.closest('#gs')){openPal();return}
   if(T.id==='scrim'){closePal();return}
   if(T.closest('#collapse')){const sl=$('#shell').classList.toggle('slim'),b=$('#collapse');b.title=sl?'Expand navigation':'Collapse navigation';b.setAttribute('aria-label',b.title);return}
-  if(T.closest('#notesbtn')){showNotes();return}
   if(T.closest('#dx')){closeDrawer();return}
   const ch=T.closest('#pc [data-chip]');if(ch){pChip=ch.dataset.chip;pSel=0;drawPal();$('#pq').focus();return}
   const it=T.closest('#pr .it');if(it){pick_(pItems[+it.dataset.k]);return}
@@ -2730,9 +2774,13 @@ document.addEventListener('click',e=>{
   const vw=T.closest('[data-view]');if(vw){const k=vw.dataset.view,v=k[0]==='p'?tab.views[+k.slice(1)]:userViews[vkey()][+k.slice(1)];$$('.menu').forEach(m=>{m.hidden=true});applyView(v);toast(`View: ${v.name}`);return}
   const vd=T.closest('[data-vdel]');if(vd){userViews[vkey()].splice(+vd.dataset.vdel,1);saveUV();drawViewMenu();return}
   if(T.closest('[data-vsave]')){const n=$('#vname').value.trim();if(!n){toast('Name the view first');$('#vname').focus();return}saveView(n);toast(`Saved view “${n}”`);drawViewMenu();return}
-  const rel=T.closest('[data-rel]');if(rel){const x=tab.related[+rel.dataset.rel];if(x.investigate){startInvestigation(null,ui.sel.id);return}if(x.explain){probFocus=ui.sel.id;closeDrawer();$('#phead').innerHTML=def.header();openExplain(probFocus);return}if(x.app==='smartscape')probSel=ui.sel.id;go(x.app,x.tab,{q:ui.sel[x.key||'name'],f:{}});return}
+  const rel=T.closest('[data-rel]');if(rel){const x=tab.related[+rel.dataset.rel];if(x.investigate){startInvestigation(null,ui.sel.id);return}if(x.explain){probFocus=ui.sel.id;closeDrawer();$('#phead').innerHTML=def.header();openExplain(probFocus);return}if(x.entity){goEntity(ui.sel.entity);return}if(x.flagsvc){go('applications','feature-flags',{q:Object.entries(FL_ALIAS).find(([k,v])=>v===ui.sel.name)?.[0]||ui.sel.name,f:{}});return}if(x.logs){go('telemetry','logs',{q:SERVICES.some(r=>r.name===ui.sel.entity)?ui.sel.entity:'',f:{}});return}if(x.app==='smartscape')probSel=ui.sel.id;go(x.app,x.tab,{q:x.all?'':String(ui.sel[x.key||'name']??''),f:{}});return}
   if(T.closest('#ftoggle')){s.panel=!s.panel;$('.split').classList.toggle('nopanel',!s.panel);$('#ftoggle').setAttribute('aria-pressed',s.panel);return}
   const fv=T.closest('[data-flagview]');if(fv){s.view=fv.dataset.flagview;renderTable(tab,$('#body'));return}
+  const mkb=T.closest('[data-mk]');if(mkb){const [k,v]=mkb.dataset.mk.split(':');
+    if(k==='doc')createDoc(v,'');
+    else{s.q='';s.f={};s.scope='All';createWorkflow()}
+    return}
   const md=T.closest('[data-mode]');if(md){s.mode=+md.dataset.mode;s.f={};s.sort=null;renderTable(tab,$('#body'));return}
   const sc=T.closest('[data-scope]');if(sc){s.scope=sc.dataset.scope;updateAll();return}
   const chip=T.closest('.chip[data-k]');if(chip){s.f[chip.dataset.k]?.delete(chip.dataset.v);updateAll();return}
@@ -2742,7 +2790,7 @@ document.addEventListener('click',e=>{
   if(T.closest('[data-more]')){s.limit=(s.limit||80)+80;updateGrid();return}
   const th=T.closest('th[data-sort]');if(th){const k=th.dataset.sort;const cs=s.sort||def.sort;const dir=cs&&cs.k===k?-cs.dir:1;s.sort={k,dir};updateGrid();return}
   const star=T.closest('[data-star]');if(star){const r=ui.rowsView[+star.dataset.star];r.fav=!r.fav;updateAll();return}
-  const act=T.closest('[data-act]');if(act){const r=ui.rowsView[+act.dataset.act];toast(`${act.textContent}: ${r.name}`);return}
+  const act=T.closest('[data-act]');if(act){const r=ui.rowsView[+act.dataset.act];toast(`${act.textContent} requested for ${r.name}`);return}
   const tr=T.closest('tbody tr,.kcard');if(tr){const r0=ui.rowsView[+tr.dataset.i];if(def.onRow&&def.onRow(r0)!==false)return;if(def.noDrawer)return;const r=r0;openDrawer(r);if(def.header&&r.id){probFocus=r.id;$('#phead').innerHTML=def.header()}}
 });
 document.addEventListener('change',e=>{
@@ -2806,16 +2854,6 @@ document.addEventListener('keydown',e=>{
   if(e.key==='['||e.key===']'){const ts=cur.app.tabs;const i=ts.indexOf(cur.tab);const n=ts[(i+(e.key===']'?1:ts.length-1))%ts.length];go(cur.app.id,n.id)}
   if(e.key==='Enter'&&document.activeElement.matches('tbody tr,th[data-sort]'))document.activeElement.click();
 });
-function showNotes(){
-  $('#drawer').innerHTML=`<button class="x" id="dx" aria-label="Close notes">×</button><h2>Design notes</h2><div class="notes">
-  <h3>Navigation</h3><ul><li>The user menu (top right) holds the theme switcher: System, Light, Dark, Midnight, Terminal and High contrast.</li><li>22 apps become 10, including QuickStart for first-run orientation. The rail opens the last tab you used in each app. Recents sits under Search and lists every screen you opened, grouped by when. Pin one to keep it in the rail.</li><li>Tabs are different lenses on the data. Lists that only differed by filter are now filters.</li><li>Tab counts show what needs attention, so you can scan without opening anything.</li></ul>
-  <h3>Scope</h3><ul><li>Segment and timeframe sit in the filter bar, as in the product, and apply to every entity view. Segment dims where it does not apply (Documents, Automate, Admin).</li></ul>
-  <h3>Search</h3><ul><li>Global search (Ctrl or ⌘ K) finds apps, tabs, entities, telemetry, issues, documents, settings and actions. Type chips narrow it, and a leading &gt; shows actions only.</li><li>Global search ignores scope, so a result in another segment is labeled. The local filter respects scope.</li></ul>
-  <h3>Filters</h3><ul><li>Every tab uses the same bar: text filter, facet panel with live counts, saved views you can create and delete, mode toggle and scope chips.</li><li>Applied filters show as removable chips and survive switching tabs.</li><li>Select a row to see details and jump to related data, such as logs for a host.</li></ul>
-  <h3>Shortcuts</h3><ul><li><kbd>Ctrl</kbd>/<kbd>⌘</kbd> <kbd>K</kbd> global search</li><li><kbd>/</kbd> filter this tab</li><li><kbd>[</kbd> <kbd>]</kbd> previous or next tab</li></ul>
-  <h3>About the data</h3><p>All values are mock and regenerate on reload. Time range changes nothing.</p></div>`;
-  $('#drawer').classList.add('open');
-}
 const syncExpanded=()=>$$('[data-pop]').forEach(b=>{const m=document.getElementById(b.dataset.pop);if(m)b.setAttribute('aria-expanded',String(!m.hidden))});
 document.addEventListener('click',()=>setTimeout(syncExpanded,0));
 document.addEventListener('keydown',()=>setTimeout(syncExpanded,0));
