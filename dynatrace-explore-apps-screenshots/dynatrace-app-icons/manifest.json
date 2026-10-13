@@ -1,0 +1,90 @@
+[
+  {
+    "name": "Dashboards",
+    "file": "dashboards.png"
+  },
+  {
+    "name": "Problems",
+    "file": "problems.png"
+  },
+  {
+    "name": "Smartscape",
+    "file": "smartscape.png"
+  },
+  {
+    "name": "Vulnerabilities",
+    "file": "vulnerabilities.svg"
+  },
+  {
+    "name": "Experience Vitals",
+    "file": "experience-vitals.png"
+  },
+  {
+    "name": "Services",
+    "file": "services.png"
+  },
+  {
+    "name": "Kubernetes",
+    "file": "kubernetes.png"
+  },
+  {
+    "name": "Clouds",
+    "file": "clouds.png"
+  },
+  {
+    "name": "Infrastructure & Operations",
+    "file": "infrastructure-and-operations.png"
+  },
+  {
+    "name": "Logs",
+    "file": "logs.png"
+  },
+  {
+    "name": "Distributed Tracing",
+    "file": "distributed-tracing.png"
+  },
+  {
+    "name": "Notebooks",
+    "file": "notebooks.png"
+  },
+  {
+    "name": "Workflows",
+    "file": "workflows.png"
+  },
+  {
+    "name": "Site Reliability Guardian",
+    "file": "site-reliability-guardian.png"
+  },
+  {
+    "name": "Investigations",
+    "file": "investigations.png"
+  },
+  {
+    "name": "Explore Business Events",
+    "file": "explore-business-events.png"
+  },
+  {
+    "name": "Settings",
+    "file": "settings.png"
+  },
+  {
+    "name": "QuickStart",
+    "file": "quickstart.png"
+  },
+  {
+    "name": "Fleet Management",
+    "file": "fleet-management.png"
+  },
+  {
+    "name": "Discovery & Coverage",
+    "file": "discovery-and-coverage.png"
+  },
+  {
+    "name": "Synthetic",
+    "file": "synthetic.png"
+  },
+  {
+    "name": "Hub",
+    "file": "hub.png"
+  }
+]
