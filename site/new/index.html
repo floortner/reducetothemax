@@ -836,6 +836,25 @@ pre.dql .cm{color:var(--muted)}
 .exdep circle{fill:var(--accent)}
 .exdep text{font-size:10px;fill:var(--accent);paint-order:stroke;stroke:var(--panel);stroke-width:3px}
 .exleg i.dep{background:none;border-left:2px dashed var(--accent);width:0;border-radius:0}
+.whyov{position:fixed;inset:0;z-index:60;background:rgba(5,6,10,.55);display:flex;align-items:flex-start;justify-content:center;padding:6vh 16px;overflow:auto}
+.whyov[hidden]{display:none}
+.why{width:min(780px,100%);background:var(--panel);color:var(--text);border:1px solid var(--line2);border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.45);outline:none}
+.why header{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;padding:22px 24px 14px;border-bottom:1px solid var(--line)}
+.why h2{margin:0 0 6px;font-size:22px}
+.why header p{margin:0;max-width:560px;line-height:1.5}
+.why-a{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.why-b{padding:6px 24px 8px}
+.why section{padding:16px 0;border-bottom:1px solid var(--line)}
+.why section:last-child{border-bottom:0}
+.why h3{display:flex;gap:10px;align-items:center;margin:0 0 8px;font-size:16px}
+.why-n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--panel2);color:var(--muted);font-size:12px;font-weight:600;flex-shrink:0}
+.why ul{margin:0;padding-left:52px;line-height:1.55}
+.why li{margin:3px 0}
+.why code{font:12.5px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--panel2);border:1px solid var(--line);padding:0 5px;border-radius:4px}
+.why-acts{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0 32px}
+.why footer{padding:12px 24px 18px;font-size:12.5px;border-top:1px solid var(--line)}
+@media (max-width:700px){.whyov{padding:0}.why{border-radius:0;min-height:100%;border:0}.why header{flex-direction:column}.why ul{padding-left:20px}.why-acts{margin-left:0}}
+@media print{body>*:not(#whyov){display:none!important}.whyov{position:static;background:none;padding:0;display:block}.why{box-shadow:none;border:0;width:auto}.why-a,.why-acts{display:none!important}}
 @media (max-width:900px){.gsearch{width:auto}.gsearch span,.gsearch kbd{display:none}}
 
 /* explorer layout */
@@ -3030,6 +3049,70 @@ const DD_TERMS=[
 const ddCard=()=>`<details class="qs-card dd" open><summary><h2>Coming from Datadog?</h2><span class="muted">Find what you know under its Dynatrace name. You can also type a Datadog term in search.</span></summary><div class="dd-g">${DD_TERMS.map(([d,t],i)=>`<button class="dd-r" data-dd="${i}" title="Open ${esc(t)}"><span class="dd-d">${esc(d)}</span><span class="dd-t">${esc(t)}</span><span class="dd-c" aria-hidden="true">›</span></button>`).join('')}</div></details>`;
 function ddOpen(i){const r=DD_TERMS[i][2];if(r==='assist'){openAssist();return}const [a,t]=r.split('/');go(a,t)}
 
+/* ---------- compared with datadog (user menu, shareable with ?read=datadog) ---------- */
+const WHY_INTRO='Why this prototype should feel familiar to Datadog users from the first minute, and where Dynatrace goes further. Written for DevOps and development teams. All data in the prototype is mock data.';
+const WHY=[
+ {h:'Familiar from the first minute',pts:[
+   'The explorer layout matches what Datadog users know: facets on the left, a chart on top, a table below and details on the right.',
+   'Every filter box takes Datadog search syntax: `service:payment status:error -ns:catalog`, wildcards, OR lists and ranges. Datadog keys are accepted and rewritten to Dynatrace field names, so people learn them by using them.',
+   'Services show their version, and deploy markers sit on the service chart, like deployment tracking in Datadog APM.',
+   'QuickStart maps 29 Datadog terms to their place in Dynatrace, and global search understands the same terms, for example `monitors` or `service map`.'],
+  acts:[['Try Datadog search in Logs',{go:'telemetry/logs',kvq:'service:payment status:(error OR warn)'}],['Open the Datadog glossary',{go:'quickstart/landing'}]]},
+ {h:'The root cause comes first',pts:[
+   'Every problem shows its root cause in the list and at the top of its details, with a confidence level and the reason. It is found automatically by Davis AI.',
+   'Investigations put system status, root cause, blast radius, customer impact and the evidence trail on one page.',
+   'Assist explains any view with evidence and suggested next steps, docked beside the data.',
+   'Datadog users usually start from a monitor alert and work toward the cause. Here they start from the cause.'],
+  acts:[['Open Problems',{go:'issues/problems'}],['Open Investigations',{go:'issues/investigations'}]]},
+ {h:'Topology that answers a question',pts:[
+   'Smartscape opens around the entity you came from: what calls it, what it calls and where it runs, with open problems marked. Select a neighbour to move there.',
+   'One model connects services, processes, hosts, Kubernetes and cloud resources. In Datadog these live on separate maps.',
+   'The whole environment stays one click away, with readable type names instead of internal IDs.'],
+  acts:[['Open Smartscape',{go:'smartscape/around'}]]},
+ {h:'Every screen is a query',pts:[
+   'Every view has a DQL button that shows the query behind it. It updates live as you filter, including Datadog-style searches.',
+   'The same query is one click away as a dtctl command for the terminal or a script.',
+   'Grail keeps logs, traces, metrics and events queryable together, without deciding up front what to index or rehydrate.'],
+  acts:[['Open Logs',{go:'telemetry/logs'}]]},
+ {h:'Freedom, power, automation',pts:[
+   'SLOs, workflows and templates show how to manage them as code: dtctl, API, Terraform and Monaco, ready to copy.',
+   'dtctl works like kubectl: get, diff and apply for workflows, SLOs, dashboards and settings, and it ships an agent skill for AI coding assistants.',
+   'Teams that manage Datadog monitors in Terraform find the same path here, linked from the object they are looking at.'],
+  acts:[['Open SLOs',{go:'applications/slos'}],['Open Workflows',{go:'automate/workflows'}]]},
+ {h:'Less to learn',pts:[
+   'Apps are grouped by job instead of by product, so the menu has 12 entries.',
+   'Every app reuses the same explorer, details panel and query button, so learning one view teaches the rest.',
+   'On a phone, on-call engineers get Problems, Services, Logs and Assist.']},
+ {h:'Still to do',pts:[
+   'A span waterfall and flame graph in trace details. It is the strongest screen in Datadog APM, and the first place Datadog users will compare.',
+   'One home for alert rules. Today they are spread across templates, guardians and SLOs.',
+   'More Grail moments: filter, group or chart by any field in one click, and log patterns.',
+   'Cost and usage transparency.']}
+];
+const WHY_FOOT='Prototype of the Dynatrace navigation. Product behavior shown here is illustrative.';
+function openWhy(){
+  let ov=$('#whyov');if(!ov){ov=document.createElement('div');ov.id='whyov';ov.className='whyov';document.body.append(ov)}
+  ov.innerHTML=`<div class="why" role="dialog" aria-modal="true" aria-labelledby="whyh" tabindex="-1"><header><div><h2 id="whyh">Compared with Datadog</h2><p class="muted">${esc(WHY_INTRO)}</p></div><div class="why-a"><button class="btn" data-whycopy>Copy link</button><button class="btn" data-whyprint>Print</button><button class="icbtn" data-whyx aria-label="Close" style="font-size:18px">×</button></div></header>
+   <div class="why-b">${WHY.map((s,i)=>`<section><h3><span class="why-n">${i+1}</span>${esc(s.h)}</h3><ul>${s.pts.map(p=>`<li>${esc(p).replace(/`([^`]+)`/g,'<code>$1</code>')}</li>`).join('')}</ul>${s.acts?`<div class="why-acts">${s.acts.map(([l],j)=>`<button class="btn" data-whygo="${i}.${j}">${esc(l)}</button>`).join('')}</div>`:''}</section>`).join('')}</div>
+   <footer class="muted">${esc(WHY_FOOT)}</footer></div>`;
+  ov.hidden=false;document.body.style.overflow='hidden';ov.scrollTop=0;ov.querySelector('.why').focus();
+}
+function closeWhy(){const ov=$('#whyov');if(ov&&!ov.hidden){ov.hidden=true;document.body.style.overflow=''}}
+function whyGo(a){
+  closeWhy();const [app,tab]=a.go.split('/');go(app,tab,{q:'',f:{}});
+  if(a.kvq)setTimeout(()=>{const q=$('#q');if(!q)return;q.value=a.kvq;q.dispatchEvent(new Event('input',{bubbles:true}));q.blur()},60);
+}
+document.addEventListener('click',e=>{
+  const T=e.target;if(!T.closest)return;
+  if(T.closest('[data-why]')){const um=$('#usermenu');if(um)um.hidden=true;openWhy();return}
+  if(T.id==='whyov'||T.closest('[data-whyx]')){closeWhy();return}
+  if(T.closest('[data-whycopy]')){copyText(`${location.origin}${location.pathname}?read=datadog`,'Link copied');return}
+  if(T.closest('[data-whyprint]')){window.print();return}
+  const g=T.closest('[data-whygo]');if(g){const [i,j]=g.dataset.whygo.split('.').map(Number);whyGo(WHY[i].acts[j][1])}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#whyov')&&!$('#whyov').hidden){e.preventDefault();e.stopPropagation();closeWhy()}},true);
+try{if(new URLSearchParams(location.search).get('read')==='datadog'){history.replaceState(null,'',location.pathname+location.hash);setTimeout(openWhy,300)}}catch(e){}
+
 /* ---------- user menu / themes ---------- */
 const isBluebox=()=>document.documentElement.dataset.theme==='bluebox';
 const BLUEBOX=`<svg class="brandlogo bb" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l8.5 4.5L12 11.5 3.5 7z" fill="#6cc0ff"/><path d="M3.5 7L12 11.5V21.5L3.5 17z" fill="#1f78e0"/><path d="M20.5 7L12 11.5V21.5l8.5-4.5z" fill="#0d4fb0"/></svg>`;
@@ -3043,7 +3126,7 @@ function renderUserMenu(){
   $('#usermenu').innerHTML=`<div class="um-h"><span class="avatar big">F</span><div><b>Florian Ortner</b><small>Signed in to this prototype</small></div></div><div class="msep"></div><h5>Theme</h5>`+
    THEMES_UI.map(([id,n,sub,sw])=>`<button class="mi" role="menuitemradio" data-theme-opt="${id}" aria-checked="${pref===id}"><i class="rd"></i><span class="sw" aria-hidden="true">${sw.map(c=>`<i style="background:${c}"></i>`).join('')}</span>${esc(n)}${sub?`<small>${esc(sub)}</small>`:''}</button>`).join('')+
    `<div class="msep"></div><button class="mi hlrow" role="menuitemcheckbox" aria-checked="${HL}" data-hl><span>Highlight menu groups<small>Blue, yellow, purple and gray</small></span><span class="hlsw" aria-hidden="true"><i></i></span></button>`+
-   `<div class="msep"></div><a class="mi" role="menuitem" href="https://github.com/floortner/reducetothemax" target="_blank" rel="noopener noreferrer">GitHub repository<small>floortner/reducetothemax</small></a><button class="mi" data-toast="Sign out">Sign out</button>`;
+   `<div class="msep"></div><button class="mi" role="menuitem" data-why>Compared with Datadog<small>Share this view</small></button><a class="mi" role="menuitem" href="https://github.com/floortner/reducetothemax" target="_blank" rel="noopener noreferrer">GitHub repository<small>floortner/reducetothemax</small></a><button class="mi" data-toast="Sign out">Sign out</button>`;
 }
 /* ---------- DQL / dtctl ---------- */
 const dur=m=>m<60?`${Math.round(m)}m`:m<1440?`${+(m/60).toFixed(1)}h`:`${+(m/1440).toFixed(1)}d`;
