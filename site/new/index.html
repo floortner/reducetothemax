@@ -804,6 +804,27 @@ html[data-theme=dark],html[data-theme=midnight],html[data-theme=terminal],html[d
 .scopebar .find .btn{height:auto}
 .scopebar .seg button{display:flex;align-items:center}
 .find.hero{min-height:34px;font-size:inherit}
+.cause{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-width:180px;max-width:340px;white-space:normal}
+.pf-rc{margin-top:4px;font-size:13px}
+.dr-cause{margin:2px 0 12px}
+.ss-tg{font-size:12px;font-weight:600;color:var(--muted);margin:10px 0 2px}
+.ar-meta{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px;margin:6px 0 4px}
+.ar-trail{display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-size:13px}
+.ar-trail .sep{color:var(--muted)}
+.an{cursor:pointer}
+.an:hover polygon,.an:hover rect{stroke-width:4.5}
+.dr-code .dql-h{flex-wrap:wrap}
+.dr-code pre.dql{white-space:pre;word-break:normal}
+pre.dql .cm{color:var(--muted)}
+.dd summary{list-style:none;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.dd summary::-webkit-details-marker{display:none}
+.dd summary h2::after{content:' ▾';color:var(--muted);font-size:13px}
+.dd:not([open]) summary h2::after{content:' ▸'}
+.dd-g{columns:2 360px;column-gap:28px;margin-top:10px;font-size:13px}
+.dd-r{break-inside:avoid;display:grid;grid-template-columns:minmax(120px,1fr) minmax(140px,1.3fr) 12px;gap:12px;align-items:center;width:100%;padding:6px 8px;border:0;border-top:1px solid var(--line);background:none;color:var(--text);font:inherit;text-align:left;cursor:pointer}
+.dd-r:hover{background:var(--panel2)}
+.dd-d{font-weight:600}
+.dd-c{color:var(--muted)}
 @media (max-width:900px){.gsearch{width:auto}.gsearch span,.gsearch kbd{display:none}}
 
 /* explorer layout */
@@ -1176,7 +1197,7 @@ html[data-theme="contrast"]{--p:#4c1d95}
 #appmenu a.mi{flex-direction:column;align-items:flex-start;gap:0}
 @media (max-width:700px){.appchev{display:none}}
 /* menu group highlight */
-[data-g=b]{--hlc:#2f6fed}[data-g=y]{--hlc:#f2b600}[data-g=g]{--hlc:#8b93a3}
+[data-g=b]{--hlc:#2f6fed}[data-g=y]{--hlc:#f2b600}[data-g=g]{--hlc:#8b93a3}[data-g=p]{--hlc:var(--p)}
 html[data-hlg=on] .rail [data-g],html[data-hlg=on] .mmi[data-g],html[data-hlg=on] .mnav [data-g]{background:color-mix(in srgb,var(--hlc) 16%,transparent);box-shadow:inset 3px 0 0 var(--hlc)}
 html[data-hlg=on] .mnav [data-g]{box-shadow:inset 0 3px 0 var(--hlc)}
 .hlrow{display:flex;align-items:center;gap:10px}
@@ -1521,19 +1542,19 @@ const APPS=[
    {id:'business',name:'Business',kind:'Apps & tabs',noSeg:true,timed:true,render:renderBusiness}]},
  {id:'infrastructure',name:'Infrastructure',icon:'<rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/>',tabs:[
    {id:'hosts',name:'Hosts',kind:'Entities',noun:'hosts and processes',cols:entityCols,rows:HOSTS_ONLY,facets:[{k:'type',label:'Type'},{k:'health',label:'Health'},{k:'cloud',label:'Cloud'},{k:'os',label:'OS'}],
-     related:[{label:'Show problems',app:'issues',tab:'problems',key:'name'},{label:'Open in Smartscape',app:'smartscape',tab:'infra',all:true}]},
+     related:[{label:'Show problems',app:'issues',tab:'problems',key:'name'},{label:'Open in Smartscape',around:true,key:'name',fallback:'infra'}]},
    {id:'network',name:'Network',kind:'Entities',noun:'network entities',rows:NETDEV,cols:[C('name','Name','name'),C('type','Type'),C('health','Health','health'),C('vendor','Vendor'),C('traffic','Traffic (Mbit/s)','int',{num:1}),C('util','Utilization','pct',{num:1}),C('errors','Errors/s','int',{num:1}),C('site','Site')],
      facets:[{k:'type',label:'Type'},{k:'health',label:'Health'},{k:'vendor',label:'Vendor'},{k:'site',label:'Site'}],
      related:[{label:'Show problems',app:'issues',tab:'problems',key:'name'}]},
    {id:'clouds',name:'Clouds',kind:'Entities',rows:[],cols:[],facets:[],empty:{title:'No cloud resources yet',body:'Connect an AWS, Azure or GCP account to see VMs, serverless functions, containers and databases here.',cta:'Connect cloud account',go:'admin/settings/Cloud accounts'}},
    {id:'kubernetes',name:'Kubernetes',kind:'Entities',noun:'Kubernetes entities',rows:K8S,cols:[C('name','Name','name'),C('type','Type'),C('health','Health','health'),C('cluster','Cluster'),C('cpu','CPU','pct',{num:1}),C('mem','Memory','pct',{num:1}),C('pods','Pods','int',{num:1})],
      facets:[{k:'type',label:'Type'},{k:'health',label:'Health'},{k:'cluster',label:'Cluster'}],
-     related:[{label:'Open in Smartscape',app:'smartscape',tab:'k8s',all:true}]},
+     related:[{label:'Open in Smartscape',around:true,key:'name',fallback:'k8s'}]},
    {id:'templates',name:'Templates',kind:'Entities',noun:'templates',rows:ALERT_T,scoped:false,search:['name','applies','content','kind'],cols:[C('name','Template','name'),C('kind','Type','badge'),C('applies','Applies to'),C('content','Includes'),C('action','','action')],facets:[{k:'kind',label:'Type'},{k:'applies',label:'Applies to'}]}]},
  {id:'applications',name:'Applications',icon:'<rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/>',tabs:[
    {id:'services',name:'Services',kind:'Entities',noun:'services',rows:SERVICES,cols:[C('name','Name','name'),C('type','Type'),C('health','Health','health'),C('fail','Error rate','failpct',{num:1}),C('p50','Median response','ms',{num:1}),C('tput','Requests/min','int',{num:1}),C('tech','Technology')],
      facets:[{k:'type',label:'Type'},{k:'health',label:'Health'},{k:'tech',label:'Technology'}],
-     related:[{label:'Show traces',app:'telemetry',tab:'traces'},{label:'Show logs',app:'telemetry',tab:'logs'},{label:'Show problems',app:'issues',tab:'problems',key:'name'},{label:'Show feature flags',app:'experience',tab:'feature-flags',flagsvc:true}]},
+     related:[{label:'Show traces',app:'telemetry',tab:'traces'},{label:'Show logs',app:'telemetry',tab:'logs'},{label:'Show problems',app:'issues',tab:'problems',key:'name'},{label:'Open in Smartscape',around:true,key:'name',fallback:'service'},{label:'Show feature flags',app:'experience',tab:'feature-flags',flagsvc:true}]},
    {id:'errors',related:[{label:'Show service',app:'applications',tab:'services',key:'service'},{label:'Show traces',app:'telemetry',tab:'traces',key:'service'},{label:'Show logs',app:'telemetry',tab:'logs',key:'service'}],name:'Errors',kind:'Entities',noun:'failing requests',rows:FAILS,sort:{k:'failures',dir:-1},search:['name','service','reason'],cols:[C('name','Endpoint','name'),C('service','Service'),C('reason','Failure reason'),C('reqType','Request type'),C('failures','Errors','int',{num:1}),C('rate','Rate','failpct',{num:1})],facets:[{k:'reason',label:'Failure reason'},{k:'reqType',label:'Request type'},{k:'service',label:'Service'}]},
    {id:'profiling',name:'Profile & Debug',badge:{label:'New',tone:'p'},kind:'Entities',noun:'profiles',scoped:true,timed:true,noDrawer:true,rows:[],cols:[],facets:[],render:renderProfiling,related:[{label:'Show traces',app:'telemetry',tab:'traces'},{label:'Show services',app:'applications',tab:'services'}]},
    {id:'slos',name:'SLOs',kind:'Entities',noun:'SLOs',rows:SLOS,scoped:false,sort:{k:'budget',dir:1},search:['name','service'],badge:{fn:()=>SLOS.filter(s=>s.budget<0).length,tone:'r',square:true},
@@ -1553,7 +1574,7 @@ const APPS=[
      cols:[C('name','Feature','flagname'),C('type','Type'),C('status','Status','badge'),C('env','Environments'),C('tags','Tags','tags'),C('stale','Staleness','badge'),C('evals','Evaluations (24 h)','int',{num:1}),C('creator','Creator'),C('mod','Last updated','ago')],
      facets:[{k:'creator',label:'Creator'},{k:'status',label:'Status'},{k:'type',label:'Type'},{k:'stale',label:'Staleness'},{k:'env',label:'Environments'}]}
  ]},
-{id:'smartscape',name:'Smartscape',hideTabs:true,defaultTab:'grail',icon:'<circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.3 11l7.4-4M8.3 13l7.4 4"/>',tabs:[]},
+{id:'smartscape',name:'Smartscape',hideTabs:true,defaultTab:'around',icon:'<circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.3 11l7.4-4M8.3 13l7.4 4"/>',tabs:[]},
  {id:'telemetry',name:'Telemetry',icon:'<path d="M3 12h4l3-8 4 16 3-8h4"/>',tabs:[
    {id:'logs',related:[{label:'Show service',app:'applications',tab:'services',key:'source'},{label:'Show traces',app:'telemetry',tab:'traces',key:'source'}],name:'Logs',kind:'Telemetry',noIndex:true,liveCapable:true,noun:'log lines',rows:LOGS,tk:'ago',search:['name','source','ns'],cols:[C('time','Time','mono'),C('level','Level','badge'),C('source','Source'),C('ns','Namespace'),C('name','Message')],facets:[{k:'level',label:'Level'},{k:'source',label:'Source'},{k:'ns',label:'Namespace'},{k:'cluster',label:'Cluster'}]},
    {id:'metrics',name:'Metrics',kind:'Telemetry',noun:'metrics',rows:METRICS,scoped:false,search:['name','desc','domain'],cols:[C('name','Metric','mono'),C('desc','Description'),C('domain','Domain'),C('type','Type'),C('unit','Unit'),C('last','Last value','',{num:1}),C('source','Source'),C('action','','action',{text:'Explore'})],facets:[{k:'domain',label:'Domain'},{k:'type',label:'Type'},{k:'unit',label:'Unit'},{k:'source',label:'Source'}]},
@@ -1569,8 +1590,8 @@ const APPS=[
      facets:[{k:'app',label:'Application'},{k:'model',label:'Model'},{k:'quality',label:'Quality'},{k:'flag',label:'Flag'}],
      related:[{label:'Open in Smartscape',app:'smartscape',tab:'ai',all:true}]}]},
  {id:'issues',name:'Problems',icon:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 8v5M12 16h.01"/>',badge:()=>openProb(),tabs:[
-   {id:'problems',name:'Problems',kind:'Issues',noun:'problems',rows:PROB,init:{f:{status:['Open']}},sort:{k:'started',dir:1},search:['name','id','entity'],header:problemHeader,tk:'started',tkOpen:(r,to)=>r.status==='Open'&&r.started>=to,badge:{fn:openProb,tone:'r'},
-     cols:[C('id','ID','mono'),C('name','Problem','name'),C('status','Status','health'),C('category','Category'),C('entity','Affected entity'),C('impact','Impact'),C('started','Started','ago')],
+   {id:'problems',name:'Problems',kind:'Issues',noun:'problems',rows:PROB,init:{f:{status:['Open']}},sort:{k:'started',dir:1},search:['name','id','entity','cause'],header:problemHeader,drawerHtml:probDrawer,tk:'started',tkOpen:(r,to)=>r.status==='Open'&&r.started>=to,badge:{fn:openProb,tone:'r'},
+     cols:[C('id','ID','mono'),C('name','Problem','name'),C('cause','Root cause','cause'),C('status','Status','health'),C('entity','Affected entity'),C('started','Started','ago')],
      facets:[{k:'status',label:'Status'},{k:'category',label:'Category'},{k:'impact',label:'Impact'}],
      views:[{name:'Open problems',f:{status:['Open']}},{name:'Open availability problems',f:{status:['Open'],category:['Availability']}},{name:'All problems',f:{}}],
      related:[{label:'Investigate',investigate:true,key:'id'},{label:'Problem graph',app:'smartscape',tab:'problem',key:'id'},{label:'Show affected entity',entity:true,key:'entity'},{label:'Show logs',logs:true,key:'entity'}]},
@@ -1880,6 +1901,7 @@ const fmtVal=(c,r)=>{const v=r[c.k];switch(c.type){
   case'usd':return `$${Number(v).toFixed(3)}`;
   case'docname':return `<span class="dn">${iconImg(DOCKEY[cur.tab.id]||'dashboards-document-type',20)}${esc(v)}</span>`;
   case'pct':return `<span class="bar ${v>85?'hot':''}"><i style="width:${v}%"></i></span>${v}%`;
+  case'cause':return `<span class="cause" title="${esc(v)}">${esc(v)}</span>`;
   case'pct2':return `${v}%`;
   case'slobudget':return v<0?`<span style="color:var(--r)">Used up (${v}%)</span>`:`${v}% left`;
   case'burn':return `${v}×`;
@@ -1954,7 +1976,7 @@ function render(){
   if(isMobile()&&!MOB_OK.includes(app.id+'/'+tab.id))host.innerHTML=mobNote(tab);else if(tab.render)tab.render(host);else renderTable(tab,host);
   document.title=`${tab.name} · ${app.name} – Dynatrace prototype`;
 }
-const APPGRP={documents:'b',automate:'b',admin:'b',smartscape:'y',infrastructure:'y',applications:'y',experience:'y',security:'y',telemetry:'y',quickstart:'y'};
+const APPGRP={home:'p',security:'p',documents:'b',automate:'b',admin:'b',smartscape:'y',infrastructure:'y',applications:'y',experience:'y',telemetry:'y',quickstart:'y'};
 const grp=id=>APPGRP[id]||'g';
 let HL=false;try{HL=localStorage.getItem('dtproto_hl')==='1'}catch(e){}
 document.documentElement.dataset.hlg=HL?'on':'off';
@@ -2062,7 +2084,7 @@ function openDrawer(r){
   const {def,tab}=ui;
   const ae=document.activeElement;drRet=ae&&ae.closest&&ae.closest('tbody tr,.kcard')?{i:ae.closest('tbody tr,.kcard').dataset.i}:ae&&ae!==document.body?{el:ae}:null;
   const rel=(tab.related||[]).map((x,i)=>`<button class="btn" data-rel="${i}">${esc(x.label)}</button>`).join('');
-  $('#drawer').innerHTML=`<button class="x" id="dx" aria-label="Close details">×</button><h2>${esc(r.name)}</h2>${tab.drawerHtml?tab.drawerHtml(r):`<dl>${(def.more?[...def.cols,...def.more]:def.cols).filter(c=>c.type!=='star'&&c.type!=='action'&&c.type!=='name'&&c.type!=='docname'&&c.type!=='invname'&&c.label).map(c=>`<dt>${esc(c.label)}</dt><dd>${fmtVal(c,r)}</dd>`).join('')}</dl>`}<div class="acts">${rel}</div>${drawerDql(dqlRow(r))}`;
+  $('#drawer').innerHTML=`<button class="x" id="dx" aria-label="Close details">×</button><h2>${esc(r.name)}</h2>${tab.drawerHtml?tab.drawerHtml(r):`<dl>${(def.more?[...def.cols,...def.more]:def.cols).filter(c=>c.type!=='star'&&c.type!=='action'&&c.type!=='name'&&c.type!=='docname'&&c.type!=='invname'&&c.label).map(c=>`<dt>${esc(c.label)}</dt><dd>${fmtVal(c,r)}</dd>`).join('')}</dl>`}<div class="acts">${rel}</div>${drawerDql(dqlRow(r))}${codeBlock(r)}`;
   $('#drawer').classList.add('open');ui.sel=r;$('#dx').focus();
 }
 function closeDrawer(){const was=$('#drawer').classList.contains('open');$('#drawer').classList.remove('open');if(ssSel){ssSel=null;if($('#ssc'))ssPaint()}
@@ -2252,7 +2274,7 @@ const TABKEY={'security/detectors':'vulnerabilities','security/user-audits':'vul
  'documents/dashboards':'dashboards','documents/notebooks':'notebooks','documents/pages':'notebooks','documents/launchpads':'dynatrace-launcher',
  'automate/workflows':'workflows','automate/executions':'workflows','automate/guardians':'site-reliability-guardian',
  'admin/coverage':'discovery-and-coverage','admin/fleet':'fleet-management','admin/apps':'hub','admin/access':'settings','admin/settings':'settings'};
-const SSKEY={grail:'smartscape',infra:'infrastructure-and-operations',problem:'problems',service:'services',k8s:'kubernetes',aws:'clouds',azure:'clouds',ai:'smartscape',security:'vulnerabilities',network:'infrastructure-and-operations'};
+const SSKEY={around:'smartscape',grail:'smartscape',infra:'infrastructure-and-operations',problem:'problems',service:'services',k8s:'kubernetes',aws:'clouds',azure:'clouds',ai:'smartscape',security:'vulnerabilities',network:'infrastructure-and-operations'};
 const NAVI={search:'@20:<path d="M11.525 12.855a6 6 0 1 1 1.4-1.429l3.816 3.817a1 1 0 0 1-1.415 1.414zM12.498 8a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0"/>',assist:'@20:<path d="m13.25 3 .571 3.04a3 3 0 0 0 2.234 2.36L18.5 9l-2.445.6a3 3 0 0 0-2.234 2.36L13.25 15l-.571-3.04a3 3 0 0 0-2.234-2.36L8 9l2.445-.6a3 3 0 0 0 2.234-2.36z"/><path d="m5.25 3 .221 1.188A3 3 0 0 0 7.7 6.552L8.5 6.75 7.699 6.948a3 3 0 0 0-2.228 2.364L5.25 10.5 5.029 9.312A3 3 0 0 0 2.8 6.948L2 6.75l.801-.198a3 3 0 0 0 2.228-2.364z"/><path d="m7.75 10.5.221 1.188a3 3 0 0 0 2.228 2.364L11 14.25l-.801.198a3 3 0 0 0-2.228 2.363L7.75 18l-.221-1.189A3 3 0 0 0 5.3 14.449L4.5 14.25l.801-.198a3 3 0 0 0 2.228-2.363z"/>',recents:'@20:<path d="M1.779 8.65 3 9.872a8 8 0 1 1 6.996 8.065l-.002-1.515A6.6 6.6 0 0 0 11 16.499a6.47 6.47 0 0 0 4.062-1.425A6.49 6.49 0 0 0 17.5 10a6.49 6.49 0 0 0-2.438-5.075 6.5 6.5 0 0 0-10.56 4.963L5.738 8.65l.848.848-2.828 2.829L.93 9.498z"/><path d="M10 7h1.5v3.5H14V12h-4z"/>',collapse:'@20:<path d="M9.364 3.636 3 10l6.364 6.364 1.057-1.057L5.121 10l5.304-5.303z"/><path d="M14.364 3.636 8 10l6.364 6.364 1.057-1.057-5.3-5.307 5.304-5.303z"/>'};
 const iconImg=(k,s=22)=>`<img class="aicon" src="${ICONS[k]}" width="${s}" height="${s}" alt="">`;
 const appIcon=(a,s=22)=>APPKEY[a.id]?iconImg(APPKEY[a.id],s):svgI(a.icon,`style="width:${Math.round(s*.8)}px;height:${Math.round(s*.8)}px"`);
@@ -2341,6 +2363,7 @@ function openHist(h){closeRecents();go(h.app,h.tab,h.q?{q:h.q,f:{}}:{})}
 /* ---------- smartscape ---------- */
 const hexp=(cx,cy,r)=>[0,1,2,3,4,5].map(i=>{const a=Math.PI/3*i-Math.PI/2;return (cx+r*Math.cos(a)).toFixed(1)+','+(cy+r*Math.sin(a)).toFixed(1)}).join(' ');
 const SSV={
+ around:{name:'Around an entity',desc:'See what an entity calls, what calls it and where it runs.',types:[]},
  grail:{name:'Smartscape on Grail',desc:'Browse entities and relationships across your AWS, Azure and on-premises environment.',art:'grail',prov:1,sc:1,world:3.5,types:[['AWS_EC2_INSTANCE',1204],['AWS_LAMBDA_FUNCTION',583],['AWS_RDS_DBINSTANCE',162],['AWS_S3_BUCKET',327],['AWS_ELASTICLOADBALANCINGV2_LOADBALANCER',150],['AWS_EKS_CLUSTER',15],['AWS_ECS_SERVICE',223],['AWS_DYNAMODB_TABLE',204],['AWS_SQS_QUEUE',377],['AWS_SNS_TOPIC',160],['AWS_CLOUDFORMATION_STACK',305],['AWS_AUTOSCALING_AUTOSCALINGGROUP',121],['AWS_EBS_VOLUME',820],['AWS_VPC',17],['AWS_SECURITYGROUP',217],['AWS_CLOUDFRONT_DISTRIBUTION',23],['AZURE_VM',833],['AZURE_FUNCTION',522],['AZURE_SQL_DATABASE',153],['AZURE_STORAGE_ACCOUNT',221],['AZURE_APP_SERVICE',241],['AZURE_AKS_CLUSTER',10],['AZURE_LOAD_BALANCER',88],['AZURE_COSMOS_DB',111],['AZURE_SERVICE_BUS_QUEUE',318],['AZURE_MANAGED_DISK',684],['AZURE_VIRTUAL_NETWORK',22],['AZURE_NETWORK_SECURITY_GROUP',193],['AZURE_KEY_VAULT',65],['AZURE_APPLICATION_GATEWAY',17],['HOST',1118],['PROCESS_GROUP_INSTANCE',1911],['KUBERNETES_POD',1384],['KUBERNETES_NODE',142],['KUBERNETES_CLUSTER',16],['SERVICE',712],['VMWARE_VM',628],['VMWARE_HOST',103],['NETWORK_DEVICE',252],['NETWORK_INTERFACE',283],['DATABASE',80],['DISK',253]]},
  infra:{name:'Infrastructure overview',desc:'See which components are running and how they connect.',art:'infra',types:[['HOST',46],['PROCESS_GROUP_INSTANCE',52],['CONTAINER_GROUP_INSTANCE',40],['NETWORK_INTERFACE',18],['DISK',12],['ACTIVEGATE',2]]},
  problem:{name:'Problem graph',desc:'See what a problem affects and how far it spreads.',art:'problem',types:[['SERVICE',35],['HOST',20],['KUBERNETES_POD',25],['PROCESS_GROUP_INSTANCE',20],['DATABASE',6]]},
@@ -2352,7 +2375,7 @@ const SSV={
  security:{name:'Security problem',desc:'See which vulnerable libraries reach which running services.',color:'#c8162c',types:[['VULNERABILITY',25],['LIBRARY',40],['PROCESS_GROUP_INSTANCE',20],['SERVICE',15]]},
  network:{name:'Network devices',desc:'Explore devices, interfaces and SNMP configurations.',color:'#2b8a8a',types:[['NETWORK_DEVICE',14],['NETWORK_INTERFACE',40],['SNMP_CONFIG',5],['F5_POOL',6]]}
 };
-const SS_ORDER=['grail','infra','problem','service','k8s','aws','azure','ai','security','network'];
+const SS_ORDER=['around','problem','grail','infra','service','k8s','aws','azure','ai','security','network'];
 const SSI={home:'<path d="M3 11l9-8 9 8v9H4z"/>',grail:'<circle cx="6" cy="12" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 11l8-4M8 13l8 4"/>',infra:'<path d="M7 18a4 4 0 0 1-1-7.9A6 6 0 0 1 17.5 9 4.5 4.5 0 0 1 17 18z"/>',problem:'<path d="M12 3l9 9-9 9-9-9z"/><path d="M12 8v5M12 16h.01"/>',service:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="8" y="14" width="7" height="7" rx="1"/>',k8s:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6M3 12h6M15 12h6"/>',aws:'<path d="M4 9l8-5 8 5v6l-8 5-8-5z"/>',azure:'<path d="M12 3L4 20h5l3-8 2 5 3-6z"/>',ai:'<rect x="4" y="6" width="16" height="12" rx="2"/><path d="M9 12h.01M15 12h.01M12 3v3"/>',security:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>',network:'<rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="18" height="6" rx="1"/><path d="M7 7h.01M7 17h.01"/>'};
 const tcol=t=>t.startsWith('AWS')?'#e8890c':t.startsWith('AZURE')?'#0b7bd6':t.startsWith('KUBERNETES')?'#326ce5':t==='SERVICE'?'#7b61d1':t.startsWith('VMWARE')?'#1d9a6c':t.startsWith('NETWORK')?'#2b8a8a':t==='HOST'?'#5b6478':t==='VULNERABILITY'?'#c8162c':'#7d8094';
 const ssCache={};
@@ -2429,6 +2452,7 @@ function renderSmartscape(host){
   VPB=id==='problem'?{w:1000,h:700}:{w:1000*(SSV[id].world||1),h:700*(SSV[id].world||1)};
   const nav='';
   if(id==='problem'){renderProblemGraph(host,nav);return}
+  if(id==='around'){renderAround(host);return}
   const v=SSV[id],g=ssBase(id),counts={};
   g.nodes.forEach(n=>{counts[n.type]=(counts[n.type]||0)+1});
   const affN=g.nodes.filter(n=>n.aff).length;
@@ -2444,7 +2468,7 @@ function renderSmartscape(host){
       <div class="sec">Node status</div>
       <button class="ss-row" data-ssaff aria-pressed="${ssS.aff}"><span class="dot t-r" style="background:none;border:2px solid var(--r);width:14px;height:14px"></span><span class="nm">Affected by problem</span><em>${affN}</em></button>
       <div class="sec">Node types</div>
-      <div class="ss-types">${Object.entries(counts).map(([t,c])=>`<button class="ss-row" data-sstype="${esc(t)}" aria-pressed="${ssS.types.has(t)}"><span class="dot" style="background:${tcol(t)}"></span><span class="nm">${esc(t)}</span><em>${c}</em></button>`).join('')}</div>
+      <div class="ss-types">${ssTypeRows(counts,v.prov)}</div>
     </div></details>
    </div></div></div>`;
   ssWheelBind();ssDraw();
@@ -2495,7 +2519,7 @@ function ssHit(e){
 document.addEventListener('mousemove',e=>{
   if(e.target.id!=='ssc'||vpDrag){const t=$('#sstip');if(t&&!t.hidden)t.hidden=true;return}
   if(ssTipQ)return;ssTipQ=requestAnimationFrame(()=>{ssTipQ=0;const cv=$('#ssc'),t=$('#sstip');if(!cv||!t)return;const i=ssHit(e);cv.style.cursor=i>=0?'pointer':'';
-    if(i<0){t.hidden=true;return}const n=ssBase(cur.tab.id).nodes[i],r=cv.getBoundingClientRect();t.textContent=`${n.name} (${n.type})`;t.hidden=false;t.style.left=Math.min(e.clientX-r.left+14,r.width-t.offsetWidth-8)+'px';t.style.top=(e.clientY-r.top+14)+'px'});
+    if(i<0){t.hidden=true;return}const n=ssBase(cur.tab.id).nodes[i],r=cv.getBoundingClientRect();t.textContent=`${n.name} (${ssTypeName(n.type)})`;t.hidden=false;t.style.left=Math.min(e.clientX-r.left+14,r.width-t.offsetWidth-8)+'px';t.style.top=(e.clientY-r.top+14)+'px'});
 });
 function ssDraw(){
   const g=ssBase(cur.tab.id),S=ssS,pos=ssPos(g,S.layout),q=S.find.trim().toLowerCase();
@@ -2514,7 +2538,7 @@ function ssDraw(){
 }
 function showNode(i){
   const n=ssBase(cur.tab.id).nodes[i];
-  $('#drawer').innerHTML=`<button class="x" id="dx" aria-label="Close details">×</button><h2>${esc(n.name)}</h2><dl><dt>Type</dt><dd>${esc(n.type)}</dd>${n.prov?`<dt>Environment</dt><dd>${SS_PROV[n.prov]}</dd>`:''}<dt>ID</dt><dd class="mono">${esc(n.id)}</dd><dt>Status</dt><dd>${n.aff?'<span class="tag t-r">Affected by problem</span>':'<span class="tag t-g">No problem</span>'}</dd><dt>Connections</dt><dd>${n.iso?'None':`${(ssAdj(ssBase(cur.tab.id)).get(i)||[]).length.toLocaleString()} connected node${(ssAdj(ssBase(cur.tab.id)).get(i)||[]).length===1?'':'s'}${n.hub?' (hub)':''}`}</dd></dl>${drawerDql(`smartscapeNodes "${n.type}"\n| filter id == "${n.id}"\n| traverse "*", "*"\n| fields id, name, type`)}`;
+  $('#drawer').innerHTML=`<button class="x" id="dx" aria-label="Close details">×</button><h2>${esc(n.name)}</h2><dl><dt>Type</dt><dd>${esc(ssTypeName(n.type))}</dd>${n.prov?`<dt>Environment</dt><dd>${SS_PROV[n.prov]}</dd>`:''}<dt>ID</dt><dd class="mono">${esc(n.id)}</dd><dt>Type ID</dt><dd class="mono">${esc(n.type)}</dd><dt>Status</dt><dd>${n.aff?'<span class="tag t-r">Affected by problem</span>':'<span class="tag t-g">No problem</span>'}</dd><dt>Connections</dt><dd>${n.iso?'None':`${(ssAdj(ssBase(cur.tab.id)).get(i)||[]).length.toLocaleString()} connected node${(ssAdj(ssBase(cur.tab.id)).get(i)||[]).length===1?'':'s'}${n.hub?' (hub)':''}`}</dd></dl>${drawerDql(`smartscapeNodes "${n.type}"\n| filter id == "${n.id}"\n| traverse "*", "*"\n| fields id, name, type`)}`;
   $('#drawer').classList.add('open');$('#dx').focus();
 }
 
@@ -2575,7 +2599,7 @@ function problemHeader(){
    <div class="ph-card"><h3>Impact<span class="muted">Started per hour, last 24 h</span></h3><div class="ph-stats"><div><b style="color:var(--r)">${open.length}</b><span>Open</span></div><div><b>${ents}</b><span>Entities</span></div><div><b>${(2.4+open.length%7*.2).toFixed(1)} min</b><span>To detect</span></div><div><b>${38+open.length%9*3} min</b><span>To resolve</span></div></div>
     <div class="ph-chart" role="img" aria-label="Problems started per hour over the last 24 hours">${bars.map(b=>`<i style="height:${b.n/mx*100}%"><b style="height:${b.n?b.o/b.n*100:0}%"></b></i>`).join('')}</div></div>
    <div class="ph-card"><h3>SLO error budget<span class="muted">${sloSummary().text} ${sloSummary().label}</span><button class="phl" data-pgo="slos">Open SLOs</button></h3>${[...SLOS].sort((a,b)=>a.budget-b.budget).slice(0,3).map(slo).join('')}</div>
-   <div class="ph-card">${f?`<h3>Focus problem</h3><div class="pf-t"><span class="mono muted">${esc(f.id)}</span> <span class="pf-n">${esc(f.name)}</span></div><div class="muted">${esc(f.entity)} · ${esc(f.category)} · ${fmtAgo(f.started)}${acked.has(f.id)?' · <span class="tag t-g">Acknowledged by you</span>':''}</div>
+   <div class="ph-card">${f?`<h3>Focus problem</h3><div class="pf-t"><span class="mono muted">${esc(f.id)}</span> <span class="pf-n">${esc(f.name)}</span></div><div class="muted">${esc(f.entity)} · ${esc(f.category)} · ${fmtAgo(f.started)}${acked.has(f.id)?' · <span class="tag t-g">Acknowledged by you</span>':''}</div><div class="pf-rc"><span class="muted">Root cause</span> ${esc(f.cause)}</div>
     <div class="pf-acts"><button class="btn primary" data-pa="investigate">Investigate</button><button class="btn" data-pa="ack">${acked.has(f.id)?'Acknowledged ✓':'Acknowledge'}</button><button class="btn" data-pa="rca">Problem graph</button><button class="btn" data-pa="assign">Assign…</button><button class="btn" data-pa="ticket">Create ticket</button>
      <div class="pop"><button class="btn" data-pop="pamenu" aria-haspopup="menu" aria-expanded="false">More ${svgI(ICO.chev,'style="width:14px;height:14px"')}</button><div class="menu" id="pamenu" hidden role="menu">${[['runbook','Runbook'],['notify','Notify on-call'],['silence','Silence for 1 h']].map(([k,l])=>`<button class="mi" role="menuitem" data-pa="${k}">${l}</button>`).join('')}</div></div>
     </div>`:'<h3>No open problems</h3><p class="muted">Nothing needs triage in this segment. Widen the segment or timeframe to see more.</p>'}</div>
@@ -2651,6 +2675,113 @@ function pgDraw(g){
   const caps=[['Root cause',0],['Directly affected',1],['Impacted frontends',2],['Users',3]].filter(([,i])=>i<=pgDepth).map(([t,i])=>`<text x="${xs[i]}" y="150" text-anchor="middle" font-size="13" font-weight="600" fill="var(--muted)">${t}</text>`).join('');
   $('#pgs').innerHTML=`<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#e08a94"/></marker></defs>${lines}${shapes}${caps}`;
   vpMini('pgs');
+}
+
+/* ---------- smartscape: around an entity ---------- */
+const SS_TN={ACTIVEGATE:'ActiveGate',AGENT:'AI agent',AWS_AUTOSCALING_AUTOSCALINGGROUP:'Auto Scaling group',AWS_AUTOSCALING_GROUP:'Auto Scaling group',AWS_CASSANDRA_KEYSPACE:'Cassandra keyspace',AWS_CLOUDFORMATION_STACK:'CloudFormation stack',AWS_CLOUDFRONT_DISTRIBUTION:'CloudFront distribution',AWS_DYNAMODB_TABLE:'DynamoDB table',AWS_EBS_VOLUME:'EBS volume',AWS_EC2_INSTANCE:'EC2 instance',AWS_ECS_SERVICE:'ECS service',AWS_EKS_CLUSTER:'EKS cluster',AWS_ELASTICLOADBALANCINGV2_LOADBALANCER:'Elastic Load Balancer',AWS_LAMBDA_FUNCTION:'Lambda function',AWS_RDS_DBINSTANCE:'RDS database',AWS_S3_BUCKET:'S3 bucket',AWS_SECURITYGROUP:'Security group',AWS_SNS_TOPIC:'SNS topic',AWS_SQS_QUEUE:'SQS queue',AWS_VPC:'VPC',
+ AZURE_AKS_CLUSTER:'AKS cluster',AZURE_APPLICATION_GATEWAY:'Application Gateway',AZURE_APP_SERVICE:'App Service',AZURE_COSMOS_DB:'Cosmos DB',AZURE_FUNCTION:'Azure Function',AZURE_KEY_VAULT:'Key Vault',AZURE_LOAD_BALANCER:'Azure Load Balancer',AZURE_MANAGED_DISK:'Managed disk',AZURE_NETWORK_SECURITY_GROUP:'Network security group',AZURE_SERVICE_BUS_QUEUE:'Service Bus queue',AZURE_SQL_DATABASE:'Azure SQL database',AZURE_STORAGE_ACCOUNT:'Storage account',AZURE_VIRTUAL_NETWORK:'Virtual network',AZURE_VM:'Azure VM',
+ CONTAINER_GROUP_INSTANCE:'Container',DATABASE:'Database',DISK:'Disk',ENDPOINT:'Endpoint',EXTERNAL_PROVIDER:'External service',F5_POOL:'F5 pool',HOST:'Host',KUBERNETES_CLUSTER:'Kubernetes cluster',KUBERNETES_NAMESPACE:'Namespace',KUBERNETES_NODE:'Kubernetes node',KUBERNETES_POD:'Pod',KUBERNETES_WORKLOAD:'Workload',LIBRARY:'Library',LLM_MODEL:'LLM',MESSAGING:'Queue or topic',NETWORK_DEVICE:'Network device',NETWORK_INTERFACE:'Network interface',PROCESS_GROUP_INSTANCE:'Process',PROMPT_TEMPLATE:'Prompt template',SERVICE:'Service',SNMP_CONFIG:'SNMP configuration',VECTOR_DATABASE:'Vector database',VMWARE_HOST:'ESXi host',VMWARE_VM:'VMware VM',VULNERABILITY:'Vulnerability'};
+const ssTypeName=t=>SS_TN[t]||String(t).toLowerCase().replace(/_/g,' ').replace(/^./,c=>c.toUpperCase());
+function ssTypeRows(counts,prov){
+  const e=Object.entries(counts),row=([t,c])=>`<button class="ss-row" data-sstype="${esc(t)}" aria-pressed="${ssS.types.has(t)}" title="${esc(t)}"><span class="dot" style="background:${tcol(t)}"></span><span class="nm">${esc(ssTypeName(t))}</span><em>${c}</em></button>`;
+  if(!prov)return e.map(row).join('');
+  return [['AWS',t=>t.startsWith('AWS_')],['Azure',t=>t.startsWith('AZURE_')],['On-premises and other',t=>!/^(AWS|AZURE)_/.test(t)]].map(([n,f])=>{const l=e.filter(([t])=>f(t));return l.length?`<div class="ss-tg">${n}</div>`+l.map(row).join(''):''}).join('');
+}
+/* who calls whom; frontends call in from the left */
+const AR_CALLS={gateway:['checkout','cart','catalog','search','auth','user-profile','review'],checkout:['cart','payment','order','shipping','pricing','fraud-check'],cart:['catalog','pricing','session'],catalog:['inventory','media','postgres catalog'],payment:['fraud-check','billing','ledger'],search:['catalog','recommendation'],recommendation:['analytics','catalog'],order:['inventory','shipping','notification','postgres orders','kafka orders-topic'],shipping:['notification'],notification:['email','sqs notifications'],email:['rabbit emails'],auth:['session','user-profile','redis sessions'],'user-profile':['loyalty'],billing:['ledger'],review:['mongo reviews'],returns:['order','payment'],loyalty:['analytics'],session:['redis sessions'],'fraud-check':['analytics'],
+ 'shop-web':['gateway'],'shop-ios':['gateway'],'shop-android':['gateway'],'admin-portal':['gateway','returns'],'partner-console':['gateway'],'support-portal':['returns','order']};
+let ssFocus=null;const ssTrail=[];
+const arKind=n=>{const s=SERVICES.find(r=>r.name===n);if(s)return s.type==='Service'?'service':s.type==='Database'||s.type==='Messaging'?'data':null;if(FRONTS.includes(n))return'frontend';const h=HOSTS_ONLY.find(r=>r.name===n);if(h)return h.type==='Host'?'host':null;const k=K8S.find(r=>r.name===n);return k&&k.type==='Workload'?'workload':null};
+const AR_LABEL={service:'service',data:'data store',frontend:'frontend',host:'host',workload:'workload'};
+const arPick=(arr,seed)=>arr.length?arr[Math.floor(seedRng(seed)()*arr.length)]:null;
+const arHosts=()=>HOSTS_ONLY.filter(r=>r.type==='Host');
+function arRunsOn(n){
+  const k=arKind(n);
+  if(k==='service'||k==='data'){
+    const w=K8S.find(r=>r.type==='Workload'&&r.name===`${n}-deploy`);
+    if(w){const node=arPick(K8S.filter(r=>r.type==='Node'&&r.cluster===w.cluster),n);return[[w.name,'Workload'],...(node?[[node.name,'Kubernetes node']]:[]),[w.cluster,'Kubernetes cluster']]}
+    const pref=k==='data'?arHosts().filter(h=>/^(db|cache|queue)-/.test(h.name)):arHosts().filter(h=>/^(api|web|worker)-/.test(h.name));
+    const h=arPick(pref.length?pref:arHosts(),n);return h?[[h.name,'Host'],[h.cloud,'Cloud']]:[];
+  }
+  if(k==='workload'){const w=K8S.find(r=>r.name===n),node=arPick(K8S.filter(r=>r.type==='Node'&&r.cluster===w.cluster),n.replace(/-deploy$/,''));return[...(node?[[node.name,'Kubernetes node']]:[]),[w.cluster,'Kubernetes cluster']]}
+  if(k==='host'){const h=HOSTS_ONLY.find(r=>r.name===n);return[[h.cloud,'Cloud']]}
+  return[];
+}
+/* the three lanes around the focus: [left, right, below], each a list of [name, type label] */
+function arLanes(n){
+  const k=arKind(n),typ=x=>{const s=SERVICES.find(r=>r.name===x);return s?s.type:FRONTS.includes(x)?'Frontend':'Service'};
+  if(k==='service'||k==='data'){const callers=Object.keys(AR_CALLS).filter(c=>AR_CALLS[c].includes(n));return{cap:['Called by','Calls','Runs on'],l:callers.map(c=>[c,typ(c)]),r:(AR_CALLS[n]||[]).map(c=>[c,typ(c)]),b:arRunsOn(n)}}
+  if(k==='frontend')return{cap:['Used by','Calls',''],l:[[`${(1200+Math.floor(seedRng(n)()*9000)).toLocaleString()} users`,'Users']],r:(AR_CALLS[n]||[]).map(c=>[c,typ(c)]),b:[]};
+  if(k==='host'){const runs=[...SVC,...SERVICES.filter(s=>s.type==='Database'||s.type==='Messaging').map(s=>s.name)].filter(s=>{const ro=arRunsOn(s);return ro[0]&&ro[0][0]===n}),procs=HOSTS.filter(r=>r.type==='Process'),p1=arPick(procs,n+'a'),p2=arPick(procs.filter(p=>p!==p1),n+'b');
+    return{cap:['Runs','Connects to','Hosted in'],l:[...runs.map(s=>[s,typ(s)]),...[p1,p2].filter(Boolean).map(p=>[p.name,'Process'])],r:[[arPick(NETDEV.filter(d=>d.type!=='Interface'),n).name,'Network device'],[arPick(HOSTS.filter(d=>d.type==='Disk'),n).name,'Disk']],b:arRunsOn(n)}}
+  if(k==='workload'){const s=n.replace(/-deploy$/,'');return{cap:['Runs','','Runs on'],l:SERVICES.some(r=>r.name===s)?[[s,'Service']]:[],r:[],b:arRunsOn(n)}}
+  return{cap:['','',''],l:[],r:[],b:[]};
+}
+const arHealth=n=>(SERVICES.find(r=>r.name===n)||HOSTS.find(r=>r.name===n)||K8S.find(r=>r.name===n)||NETDEV.find(r=>r.name===n)||{}).health||'';
+const arProb=n=>PROB.find(p=>p.status==='Open'&&p.entity===n&&segOK(p));
+function aroundDefault(){const open=PROB.filter(p=>p.status==='Open'&&segOK(p)).sort((a,b)=>a.started-b.started).find(p=>arKind(p.entity));return open?open.entity:'checkout'}
+function aroundGo(name,fallback){if(arKind(name)){ssFocus=name;ssTrail.length=0;delete VP.pgs;go('smartscape','around')}else go('smartscape',fallback||'grail')}
+function aroundFocus(name,walk){if(!arKind(name)||name===ssFocus)return;if(walk)ssTrail.push(ssFocus);else ssTrail.length=0;ssFocus=name;delete VP.pgs;renderAround($('#body'))}
+function aroundAct(a){const n=ssFocus,k=arKind(n);
+  if(a==='open')goEntity(n);
+  else if(a==='logs')go('telemetry','logs',{q:k==='workload'?n.replace(/-deploy$/,''):n,f:{}});
+  else if(a==='problems'){const p=arProb(n);go('issues','problems',{q:p?p.id:n,f:{}})}
+  else if(a==='all')go('smartscape','grail');
+}
+function renderAround(host){
+  if(!arKind(ssFocus))ssFocus=aroundDefault();
+  const n=ssFocus,k=arKind(n),h=arHealth(n),p=arProb(n),svc=SERVICES.find(r=>r.name===n);
+  VPB={w:1000,h:700};
+  const grp=(label,list)=>list.length?`<optgroup label="${label}">${list.map(x=>`<option value="${esc(x)}" ${x===n?'selected':''}>${esc(x)}</option>`).join('')}</optgroup>`:'';
+  const opts=grp('Services',SERVICES.filter(r=>r.type==='Service').map(r=>r.name))+grp('Databases and queues',SERVICES.filter(r=>r.type==='Database'||r.type==='Messaging').map(r=>r.name))+grp('Frontends',FRONTS)+grp('Hosts',arHosts().map(r=>r.name))+grp('Kubernetes workloads',K8S.filter(r=>r.type==='Workload').map(r=>r.name));
+  const trail=ssTrail.length?`<div class="sec">Path</div><div class="ar-trail">${ssTrail.map((t,i)=>`<button class="link" data-atrail="${i}">${esc(t)}</button><span class="sep">›</span>`).join('')}<b>${esc(n)}</b></div>`:'';
+  const meta=[['Type',AR_LABEL[k][0].toUpperCase()+AR_LABEL[k].slice(1)],h&&['Health',`<span class="dot t-${TONE[h]||'n'}"></span>${esc(h)}`],svc&&svc.type==='Service'&&['Error rate',`${svc.fail}%`],svc&&svc.type==='Service'&&['Median response',`${svc.p50} ms`],['Open problem',p?`<button class="link" data-ago="problems">${esc(p.id)}</button> ${esc(p.name)}`:'None']].filter(Boolean);
+  host.innerHTML=`<div class="ss-wrap"><div class="ss-main"><div class="ss-canvas"><svg id="pgs" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Entities around ${esc(n)}"></svg></div>
+   <div class="ss-float">${ssPicker(cur.tab.id)}${scopeBar('',true)}</div>
+   <div class="ss-nav2"><div class="ss-zoom" role="group" aria-label="Zoom"><button class="btn" data-vz="in" aria-label="Zoom in" title="Zoom in">+</button><button class="btn" data-vz="out" aria-label="Zoom out" title="Zoom out">−</button><button class="btn" data-vz="fit" aria-label="Fit to screen" title="Fit to screen">${svgI('<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>','style="width:16px;height:16px"')}</button></div><svg class="ss-mm" id="pgs-mm" viewBox="0 0 1000 700" role="img" aria-label="Mini map"></svg></div>
+   <div class="ss-panels"><div class="ss-panel"><div class="ss-ph"><span>Around an entity</span></div><div class="ss-pb"><p>${esc(SSV.around.desc)} Select a node to move there.</p>
+    <div class="sec">Entity</div><select class="pg-sel" id="apick" aria-label="Choose entity">${opts}</select>
+    ${trail}
+    <div class="ar-meta">${meta.map(([a,b])=>`<span class="muted">${a}</span><span>${b}</span>`).join('')}</div>
+    ${p?`<div class="xp-cause"><span class="muted">Root cause</span><b>${esc(p.cause)}</b></div>`:''}
+    <div class="sec">Next steps</div><div style="display:flex;flex-wrap:wrap;gap:6px"><button class="btn primary" data-ago="open">Open ${AR_LABEL[k]}</button>${k==='service'||k==='workload'?'<button class="btn" data-ago="logs">Show logs</button>':''}<button class="btn" data-ago="all">Show whole environment</button></div></div></div>
+   </div></div></div>`;
+  ssWheelBind();arDraw();
+}
+function arDraw(){
+  const n=ssFocus,L=arLanes(n),cx=610,cy=300,nodes=[],edges=[],xl=350,xr=870;
+  const col=(arr,x)=>{const sp=Math.min(95,460/Math.max(arr.length,1));arr.forEach(([nm,t],i)=>nodes.push({name:nm,t,x,y:cy+(i-(arr.length-1)/2)*sp}))};
+  nodes.push({name:n,t:AR_LABEL[arKind(n)].replace(/^./,c=>c.toUpperCase()),x:cx,y:cy,focus:true});
+  col(L.l,xl);col(L.r,xr);
+  L.b.forEach(([nm,t],i)=>nodes.push({name:nm,t,x:cx+(i-(L.b.length-1)/2)*170,y:540}));
+  L.l.forEach(([nm])=>edges.push([nm,n,0]));L.r.forEach(([nm])=>edges.push([n,nm,0]));
+  L.b.forEach(([nm],i)=>edges.push([i?L.b[i-1][0]:n,nm,1]));
+  const by=x=>nodes.find(m=>m.name===x),R=22;
+  const stroke=x=>{const h=arHealth(x);return arProb(x)?'#c8162c':h==='Critical'?'var(--r)':h==='Warning'?'var(--a)':'var(--muted)'};
+  const lines=edges.map(([a,b,d])=>{const A=by(a),B=by(b),dx=B.x-A.x,dy=B.y-A.y,dd=Math.hypot(dx,dy)||1,ra=A.focus?R+8:R,rb=B.focus?R+8:R;
+    return `<line x1="${(A.x+dx/dd*(ra+2)).toFixed(1)}" y1="${(A.y+dy/dd*(ra+2)).toFixed(1)}" x2="${(B.x-dx/dd*(rb+6)).toFixed(1)}" y2="${(B.y-dy/dd*(rb+6)).toFixed(1)}" stroke="var(--edge)" stroke-width="1.6" ${d?'stroke-dasharray="5 4"':'marker-end="url(#arr)"'}/>`}).join('');
+  const shapes=nodes.map(m=>{const r=m.focus?R+8:R,sk=m.focus?'var(--accent)':stroke(m.name),pr=arProb(m.name),walk=!m.focus&&arKind(m.name),info=!m.focus&&!walk&&!['Users','Cloud'].includes(m.t);
+    const shape=['Users','Cloud'].includes(m.t)?`<rect x="${m.x-46}" y="${m.y-16}" width="92" height="32" rx="16" fill="var(--panel2)" stroke="var(--muted)" stroke-width="2"/>`:`<polygon points="${hexp(m.x,m.y,r)}" fill="${pr?'var(--aff-bg)':'var(--panel)'}" stroke="${sk}" stroke-width="${m.focus?4:3}"/>`;
+    const badge=pr?`<rect x="${m.x+r-6}" y="${m.y-r-8}" width="50" height="16" rx="8" fill="#c8162c"/><text x="${m.x+r+19}" y="${m.y-r+4}" text-anchor="middle" font-size="10" fill="#fff">${esc(pr.id)}</text>`:'';
+    const label=['Users','Cloud'].includes(m.t)?`<text x="${m.x}" y="${m.y+4}" text-anchor="middle" font-size="12" fill="var(--muted)">${esc(m.name)}</text>`:`<text x="${m.x}" y="${m.y+r+16}" text-anchor="middle" font-size="12" font-weight="${m.focus?600:400}" fill="var(--text)">${esc(m.name)}</text><text x="${m.x}" y="${m.y+r+30}" text-anchor="middle" font-size="10.5" fill="var(--muted)">${esc(m.t)}</text>`;
+    return `<g class="${walk?'an':info?'pn':''}" data-name="${esc(m.name)}" ${walk||info?'tabindex="0" role="button"':''}>${shape}${badge}${label}<title>${esc(m.name)}${walk?' · Select to move here':info?' · Open in its app':''}</title></g>`}).join('');
+  const caps=[[L.cap[0],xl,70],[L.cap[1],xr,70],[L.cap[2],cx,610]].filter(([t],i)=>t&&[L.l,L.r,L.b][i].length).map(([t,x,y])=>`<text x="${x}" y="${y}" text-anchor="middle" font-size="12" fill="var(--muted)">${t}</text>`).join('');
+  $('#pgs').innerHTML=`<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--edge)"/></marker></defs>${lines}${shapes}${caps}`;
+  vpMini('pgs');
+}
+function aroundDql(){
+  const n=(ssFocus||aroundDefault()).replace(/"/g,'\\"'),k=arKind(ssFocus||aroundDefault());
+  const src={service:['SERVICE','calls','SERVICE'],data:['DATABASE','calls','SERVICE'],frontend:['APPLICATION','calls','SERVICE'],host:['HOST','runs_on','PROCESS_GROUP_INSTANCE'],workload:['KUBERNETES_WORKLOAD','belongs_to','KUBERNETES_CLUSTER']}[k]||['SERVICE','calls','SERVICE'];
+  return `smartscapeNodes "${src[0]}"\n| filter name == "${n}"\n| traverse "${src[1]}", "${src[2]}"${k==='host'||k==='data'?', direction:backward':''}\n| fields id, name, type`;
+}
+function aroundExplain(){
+  const n=ssFocus||aroundDefault(),k=arKind(n),L=arLanes(n),p=arProb(n),near=[...L.l,...L.r,...L.b].map(([x])=>x).filter(x=>x!==n);
+  const bad=near.filter(x=>arProb(x)||['Critical','Warning'].includes(arHealth(x)));
+  const t={label:'Key insight',sum:`${n} is a ${AR_LABEL[k]}. ${L.l.length?`${L.cap[0]}: ${L.l.map(x=>x[0]).join(', ')}. `:''}${L.r.length?`${L.cap[1]}: ${L.r.map(x=>x[0]).join(', ')}. `:''}${L.b.length?`${L.cap[2]}: ${L.b.map(x=>x[0]).join(' › ')}.`:''}`,
+    cause:p?p.cause:bad.length?`${bad.length} neighbour${bad.length===1?' is':'s are'} unhealthy`:'',why:p?`${p.id} is open on ${n}.`:bad.length?`Check ${bad.slice(0,3).join(', ')} first.`:'',
+    ev:bad.slice(0,3).map(x=>({ic:'impact',text:`${x}: ${arProb(x)?`${arProb(x).id} open`:arHealth(x)}.`,btn:'Move here',fn:()=>aroundFocus(x,true)})),
+    steps:[[`Open ${AR_LABEL[k]}`,()=>goEntity(n)],stepGo('Show whole environment','smartscape/grail'),STEP_DQL]};
+  return{sub:`Around ${n}`,ph:`Ask about ${n}`,chips:['What is unhealthy nearby?','What depends on it?'],t,answer:q=>/unhealthy|nearby|problem/.test(q.toLowerCase())?(bad.length?`${bad.join(', ')} need attention.`:'All neighbours are healthy.'):/depend|call/.test(q.toLowerCase())?(L.l.length?`${L.l.map(x=>x[0]).join(', ')} depend on ${n}.`:`Nothing calls ${n}.`):'I can name unhealthy neighbours and what depends on this entity.'};
 }
 
 /* ---------- assist ---------- */
@@ -2731,6 +2862,7 @@ function renderQuickStart(host){
   const slow=[...sv].sort((a,b)=>b.p50-a.p50)[0],fail=[...sv].sort((a,b)=>b.fail-a.fail)[0],busy=[...sv].sort((a,b)=>b.tput-a.tput)[0];
   const finds=[['Slowest service',`${slow?.p50} ms`,'median response time',slow?.name],['Highest failure rate',`${fail?.fail}%`,'of requests failed',fail?.name],['Busiest service',`${busy?.tput.toLocaleString()}/min`,'requests',busy?.name]].filter(f=>f[3]);
   host.innerHTML=`${scopeBar('',true)}
+  ${ddCard()}
   <section class="qs-card"><div class="qs-head"><h2>Add more data</h2><div class="qs-tech" aria-label="Supported technologies">${QS_TECH.map(([t,c,n])=>`<i style="background:${c}" title="${esc(n)}">${t}</i>`).join('')}</div></div></section>
   <section class="qs-card"><div class="qs-head"><h2>Analyze data</h2></div>
    <div class="qs-topo">
@@ -2742,6 +2874,41 @@ function renderQuickStart(host){
   <div class="qs-charts">${[['t','Throughput'],['r','Response time'],['f','Failure rate']].map(([k,t])=>`<section class="qs-card" style="margin:0"><h3 class="qs-ch">${t}<span class="muted" aria-hidden="true">⋮</span></h3>${qsChart(k)}</section>`).join('')}</div>
   <section class="qs-card"><h2 style="margin-bottom:6px">Findings</h2>${finds.map(([l,v,d,n])=>`<div class="qs-f"><span class="qs-fi">${QS_ICO}</span><b class="qs-fl">${l}</b><span class="qs-fv">${esc(v)}</span><span class="muted">${esc(d)} in <button class="link" data-qsl="${esc(n)}">${esc(n)}</button></span></div>`).join('')||'<p class="muted">No findings in this segment.</p>'}</section>`;
 }
+
+/* ---------- coming from datadog (experiment, safe to remove with its four hooks: data-dd click, ddCard in QuickStart, DD_TERMS in buildIdx, aka in drawPal) ---------- */
+const DD_TERMS=[
+ ['APM, Service Catalog','Services','applications/services'],
+ ['Service Map','Smartscape, around an entity','smartscape/around'],
+ ['Watchdog','Problems, found and explained by Davis AI','issues/problems'],
+ ['Incidents','Problems and investigations','issues/investigations'],
+ ['Bits AI','Assist','assist'],
+ ['Monitors','Alert templates and anomaly detection','infrastructure/templates'],
+ ['Log Explorer, Live Tail','Logs, with Live','telemetry/logs'],
+ ['Log indexes, rehydration','Not needed. Grail keeps all logs queryable','telemetry/logs'],
+ ['Trace Explorer','Traces','telemetry/traces'],
+ ['Metrics Explorer','Metrics','telemetry/metrics'],
+ ['Error Tracking','Errors','applications/errors'],
+ ['Continuous Profiler','Profile & Debug','applications/profiling'],
+ ['RUM, Session Replay','Frontends and user sessions','experience/frontends'],
+ ['Synthetic Monitoring','Synthetic','experience/synthetic'],
+ ['Infrastructure List, Host Map','Hosts','infrastructure/hosts'],
+ ['Kubernetes Explorer','Kubernetes','infrastructure/kubernetes'],
+ ['Network Monitoring','Network','infrastructure/network'],
+ ['Cloud Cost Management','Cost','infrastructure/cost'],
+ ['Cloud SIEM, Code Security','SIEM and vulnerabilities','security/vulnerabilities'],
+ ['LLM Observability','LLM & Agentic','telemetry/ai'],
+ ['SLOs','SLOs','applications/slos'],
+ ['Dashboards, Notebooks','Dashboards and notebooks','documents/dashboards'],
+ ['Workflow Automation','Workflows','automate/workflows'],
+ ['Fleet Automation, Agent','Fleet and OneAgent','admin/fleet'],
+ ['Integrations','Hub','admin/apps'],
+ ['Log Pipelines','OpenPipeline','admin/settings'],
+ ['Tags: env, service, version','Segments and tags','admin/settings'],
+ ['Search syntax, facets','DQL. Every view has a DQL button','telemetry/logs'],
+ ['Terraform provider, datadog-ci','dtctl, Terraform and Monaco','automate/workflows']
+];
+const ddCard=()=>`<details class="qs-card dd" open><summary><h2>Coming from Datadog?</h2><span class="muted">Find what you know under its Dynatrace name. You can also type a Datadog term in search.</span></summary><div class="dd-g">${DD_TERMS.map(([d,t],i)=>`<button class="dd-r" data-dd="${i}" title="Open ${esc(t)}"><span class="dd-d">${esc(d)}</span><span class="dd-t">${esc(t)}</span><span class="dd-c" aria-hidden="true">›</span></button>`).join('')}</div></details>`;
+function ddOpen(i){const r=DD_TERMS[i][2];if(r==='assist'){openAssist();return}const [a,t]=r.split('/');go(a,t)}
 
 /* ---------- user menu / themes ---------- */
 const isBluebox=()=>document.documentElement.dataset.theme==='bluebox';
@@ -2755,7 +2922,7 @@ function renderUserMenu(){
   const pref=document.documentElement.dataset.themePref||'light';
   $('#usermenu').innerHTML=`<div class="um-h"><span class="avatar big">F</span><div><b>Florian Ortner</b><small>Signed in to this prototype</small></div></div><div class="msep"></div><h5>Theme</h5>`+
    THEMES_UI.map(([id,n,sub,sw])=>`<button class="mi" role="menuitemradio" data-theme-opt="${id}" aria-checked="${pref===id}"><i class="rd"></i><span class="sw" aria-hidden="true">${sw.map(c=>`<i style="background:${c}"></i>`).join('')}</span>${esc(n)}${sub?`<small>${esc(sub)}</small>`:''}</button>`).join('')+
-   `<div class="msep"></div><button class="mi hlrow" role="menuitemcheckbox" aria-checked="${HL}" data-hl><span>Highlight menu groups<small>Blue, yellow and gray</small></span><span class="hlsw" aria-hidden="true"><i></i></span></button>`+
+   `<div class="msep"></div><button class="mi hlrow" role="menuitemcheckbox" aria-checked="${HL}" data-hl><span>Highlight menu groups<small>Blue, yellow, purple and gray</small></span><span class="hlsw" aria-hidden="true"><i></i></span></button>`+
    `<div class="msep"></div><a class="mi" role="menuitem" href="https://github.com/floortner/reducetothemax" target="_blank" rel="noopener noreferrer">GitHub repository<small>floortner/reducetothemax</small></a><button class="mi" data-toast="Sign out">Sign out</button>`;
 }
 /* ---------- DQL / dtctl ---------- */
@@ -2830,12 +2997,13 @@ const SSDQL={
 };
 let dqlMeta={out:'table',live:false};
 const segApplies=()=>G.seg!=='all'&&cur.app.scoped!==false&&cur.tab.scoped!==false&&!cur.tab.noSeg;
-const hasDql=()=>{const a=cur.app.id,t=cur.tab.id;return a==='smartscape'?!!(SSDQL[t]||t==='problem'):!!DQL[`${a}/${t}`]};
+const hasDql=()=>{const a=cur.app.id,t=cur.tab.id;return a==='smartscape'?!!(SSDQL[t]||t==='problem'||t==='around'):!!DQL[`${a}/${t}`]};
 function dqlFor(){
   const a=cur.app.id,t=cur.tab.id;
   dqlMeta={out:'table',live:false};
   if(a==='smartscape'){
     if(t==='problem'){const p=PROB.find(x=>x.id===probSel);return `fetch dt.davis.problems\n| filter display_id == "${p?p.id:'P-2400'}"\n| fields display_id, event.name, root_cause_entity_id, affected_entity_ids\n| expand affected_entity_ids\n| lookup [smartscapeNodes "*"], sourceField:affected_entity_ids, lookupField:id, fields:{name, type}`}
+    if(t==='around')return aroundDql();
     return SSDQL[t]||null;
   }
   const c=DQL[`${a}/${t}`]; if(!c)return null;
@@ -2891,6 +3059,46 @@ function dqlRow(r){
 const drDqlHtml=()=>{dqlMeta={out:'table',live:false};const body=drView==='dql'?drQ:dtctlCmd(drQ);return `<div class="dql-h"><b>Query this item</b><div class="seg" role="group" aria-label="Format"><button data-drv="dql" aria-pressed="${drView==='dql'}">DQL</button><button data-drv="cli" aria-pressed="${drView==='cli'}">dtctl</button></div><button class="btn primary" data-drcopy>Copy</button></div><pre class="dql" tabindex="0">${hiDql(body)}</pre><p class="muted dql-n">Illustrative. Uses the selected item and the current timeframe.</p>`};
 const drawerDql=q=>{drQ=q;return `<div class="dr-dql" id="drdql">${drDqlHtml()}</div>`};
 
+/* manage as code: dtctl, API, Terraform and Monaco for config objects */
+let cbView='dtctl',cbRow=null,cbK=null;
+const CB_FMT=[['dtctl','dtctl'],['api','API'],['tf','Terraform'],['monaco','Monaco']];
+const cbSlug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const cbId=s=>{const r=seedRng(s),h=n=>Array.from({length:n},()=>Math.floor(r()*16).toString(16)).join('');return `${h(8)}-${h(4)}-4${h(3)}-a${h(3)}-${h(12)}`};
+function codeKind(r){
+  const key=`${cur.app.id}/${cur.tab.id}`;
+  if(key==='applications/slos')return'slo';
+  if(key==='automate/workflows')return'workflow';
+  if(cur.tab.id==='templates')return{Alert:'detector',Workflow:'workflow',Dashboard:'dashboard'}[r.kind]||null;
+  return null;
+}
+function codeText(k,r,v){
+  const name=r.name,s=cbSlug(name),tf=s.replace(/-/g,'_'),id=cbId(name),tpl=cur.tab.id==='templates',AUTH='  -H "Authorization: Bearer $DT_TOKEN"';
+  const res={workflow:['workflow','dynatrace_automation_workflow'],slo:['slo','dynatrace_platform_slo'],detector:['anomaly-detector','dynatrace_davis_anomaly_detectors'],dashboard:['dashboard','dynatrace_document']}[k];
+  if(v==='dtctl')return tpl?`# Create it from this template. --set fills the template values.\ndtctl apply -f ${s}.yaml --set env=prod\n\n# Preview the change first\ndtctl diff -f ${s}.yaml`
+    :`# Export, review the change, then apply it\ndtctl get ${res[0]} "${name}" -o yaml > ${s}.yaml\ndtctl diff -f ${s}.yaml\ndtctl apply -f ${s}.yaml`+(k==='workflow'?`\n\n# Follow its runs\ndtctl get workflows --watch`:'');
+  if(v==='api'){
+    if(k==='workflow')return tpl?`# Create the workflow\ncurl -s -X POST "$DT_ENV/platform/automation/v1/workflows" \\\n${AUTH} \\\n  -H "Content-Type: application/json" -d @${s}.json`
+      :`# Read the workflow\ncurl -s "$DT_ENV/platform/automation/v1/workflows/${id}" \\\n${AUTH}\n\n# Run it now\ncurl -s -X POST "$DT_ENV/platform/automation/v1/workflows/${id}/run" \\\n${AUTH} \\\n  -H "Content-Type: application/json" -d '{}'`;
+    if(k==='slo')return `# Read the SLO\ncurl -s "$DT_ENV/platform/slo/v1/slos/${id}" \\\n${AUTH}`;
+    if(k==='detector')return `# Create the alert as an anomaly detector\ncurl -s -X POST "$DT_ENV/platform/classic/environment-api/v2/settings/objects" \\\n${AUTH} \\\n  -H "Content-Type: application/json" \\\n  -d '[{"schemaId":"builtin:davis.anomaly-detectors","scope":"environment",\n        "value":{"title":"${name}","enabled":true,"source":"API"}}]'`;
+    return `# Create the dashboard\ncurl -s -X POST "$DT_ENV/platform/document/v1/documents" \\\n${AUTH} \\\n  -F type=dashboard -F name="${name}" -F content=@${s}.json`;
+  }
+  if(v==='tf'){
+    if(k==='workflow')return `resource "dynatrace_automation_workflow" "${tf}" {\n  title       = "${name}"\n  description = "Managed by Terraform"\n  trigger {\n    # ${tpl?'Trigger from the template':`${r.trigger} trigger`}\n  }\n  tasks {\n    # ${tpl?r.content:'Tasks exported from the workflow'}\n  }\n}`;
+    if(k==='slo')return `resource "dynatrace_platform_slo" "${tf}" {\n  name        = "${name}"\n  description = "${r.service}, managed by Terraform"\n  criteria {\n    criteria_detail {\n      target         = ${r.target}\n      timeframe_from = "now-30d"\n      timeframe_to   = "now"\n    }\n  }\n  custom_sli {\n    indicator = <<-EOT\n      timeseries { total = sum(dt.service.request.count), failed = sum(dt.service.request.failure_count) }\n      | fieldsAdd sli = 100 * (total[] - failed[]) / total[]\n    EOT\n  }\n}`;
+    if(k==='detector')return `resource "dynatrace_davis_anomaly_detectors" "${tf}" {\n  title       = "${name}"\n  description = "${r.applies}: ${r.content}"\n  enabled     = true\n  source      = "Terraform"\n  analyzer {\n    name = "dt.statistics.ui.anomaly_detection.StaticThresholdAnomalyDetectionAnalyzer"\n    # input: query, threshold, alert condition\n  }\n  event_template {\n    # event.name, event.type, dt.source_entity\n  }\n  execution_settings {\n    # actor, query_offset\n  }\n}`;
+    return `resource "dynatrace_document" "${tf}" {\n  type    = "dashboard"\n  name    = "${name}"\n  content = file("\${path.module}/${s}.json")\n}`;
+  }
+  const type={workflow:'type:\n      automation:\n        resource: workflow',slo:'type: slo-v2',detector:'type:\n      settings:\n        schema: builtin:davis.anomaly-detectors\n        scope: environment',dashboard:'type:\n      document:\n        kind: dashboard'}[k];
+  return `# Deploy with: monaco deploy manifest.yaml\nconfigs:\n  - id: ${s}\n    ${type}\n    config:\n      name: ${name}\n      template: ${s}.json`;
+}
+const CB_NOTE={dtctl:'dtctl uses the environment from dtctl auth login.',api:'Set DT_ENV to your environment URL and DT_TOKEN to a platform token.',tf:'Uses the Dynatrace Terraform provider.',monaco:'Monaco is Dynatrace configuration as code.'};
+function codeHtml(){
+  const body=codeText(cbK,cbRow,cbView),tpl=cur.tab.id==='templates';
+  return `<div class="dql-h"><b>${tpl?'Create as code':'Manage as code'}</b><div class="seg" role="group" aria-label="Format">${CB_FMT.map(([v,l])=>`<button data-cbv="${v}" aria-pressed="${cbView===v}">${l}</button>`).join('')}</div><button class="btn primary" data-cbcopy>Copy</button></div><pre class="dql" tabindex="0">${body.split('\n').map(l=>/^\s*#/.test(l)?`<span class="cm">${esc(l)}</span>`:esc(l)).join('\n')}</pre><p class="muted dql-n">Illustrative. ${CB_NOTE[cbView]}</p>`;
+}
+function codeBlock(r){const k=codeKind(r);if(!k)return'';cbRow=r;cbK=k;return `<div class="dr-dql dr-code" id="drcode">${codeHtml()}</div>`}
+
 /* ---------- explain (embedded Assist for problems) ---------- */
 let explainId=null,pendingExplain=null,xpTok=0,xpCtx=null;
 const xpWait=ms=>new Promise(r=>setTimeout(r,ms));
@@ -2914,6 +3122,9 @@ const XT={
  'Disk almost full':x=>({sum:`The disk on ${x.e} is ${x.disk}% full and filling about 1.5 GB per hour. Most of the growth is in the log directory, where rotation stopped after the last configuration change.`,cause:`Log rotation stopped on ${x.e}`,why:`Growth is concentrated in one directory and began with a configuration change.`,conf:'High',metric:`Disk usage rose from 62% to ${x.disk}%.`,steps:[['Run cleanup workflow','request'],['Check recent changes','logs'],['Open runbook','runbook']]}),
  'Connection pool exhausted':x=>({sum:`${x.e} has run out of database connections. ${x.n} requests waited for a free connection, and response times rose with the queue. Connections are held longer since release ${x.ver}.`,cause:`Release ${x.ver} holds database connections too long`,why:`Pool usage hit its limit right after the deployment while request volume stayed flat.`,conf:'Medium',metric:`Pool usage reached 100% (limit 50).`,steps:[['Roll back ${E}','rollback'],['Raise the pool size','request'],['Open runbook','runbook']]})
 };
+/* root cause per problem for the list and details panel. Same values as explainX, without calling rnd() */
+const probVer=p=>{const r=seedRng(p.id);for(let i=0;i<6;i++)r();const n=(a,b)=>a+Math.floor(r()*(b-a+1));return `${n(2,4)}.${n(1,20)}.${n(0,9)}`};
+PROB.forEach(p=>{const t=(XT[p.name]||XT['Failure rate increase'])({e:p.entity,ver:probVer(p)});p.cause=t.cause;p.conf=t.conf;p.why=t.why});
 function explainBuild(p){
   const x=explainX(p),t=(XT[p.name]||XT['Failure rate increase'])(x);
   t.steps=t.steps.map(([l,k])=>[l.replace('${E}',x.e),k]);
@@ -3085,12 +3296,13 @@ function explainCustom(){
     const t={label:'Key insight',sum:`${sv.length} services report data. ${fail.name} has the highest failure rate at ${fail.fail}%, ${slow.name} is slowest at ${slow.p50} ms and ${busy.name} handles the most requests at ${busy.tput.toLocaleString()} per minute.`,cause:`${fail.name} fails the most requests`,why:'Failure rate matters more than response time for first triage.',ev:[{ic:'impact',text:`${fail.name} fails ${fail.fail}% of requests.`,btn:'Open service',fn:()=>go('applications','services',{q:fail.name,f:{}})},{ic:'trace',text:`${slow.name} has the slowest median response (${slow.p50} ms).`,btn:'Open service',fn:()=>go('applications','services',{q:slow.name,f:{}})},{ic:'metric',text:`${busy.name} is busiest at ${busy.tput.toLocaleString()} requests per minute.`,btn:'Open service',fn:()=>go('applications','services',{q:busy.name,f:{}})}],steps:[stepGo('Open Errors','applications/errors'),stepGo('Open the dependency graph','smartscape/service'),STEP_DQL]};
     return{sub:'QuickStart',ph:'Ask about these services',chips:['Which service is slowest?','Which service fails most?'],t,answer:q=>/slow/.test(q.toLowerCase())?`${slow.name} is slowest at ${slow.p50} ms median.`:/fail/.test(q.toLowerCase())?`${fail.name} fails ${fail.fail}% of requests.`:'I can rank the services by speed, failures and traffic.'};
   }
+  if(key==='smartscape/around')return aroundExplain();
   if(cur.app.id==='smartscape'){
     const id=cur.tab.id,g=ssBase(id),vis=g.nodes.filter(n=>G.seg==='all'||n.seg===G.seg),types=countBy(vis,'type'),aff=vis.filter(n=>n.aff),iso=vis.filter(n=>n.iso).length;
     const hubs=g.hubs.map((i,k)=>({n:g.nodes[i],c:g.nodes.filter(x=>x.pk===k).length})).sort((a,b)=>b.c-a.c),hub=hubs[0];
     const name=SSV[id].name;
-    const t={label:'Key insight',sum:`${name} shows ${vis.length} nodes${G.seg!=='all'?` in segment ${G.seg}`:''} across ${types.length} types. ${types[0][0]} is the largest type with ${types[0][1]} nodes. ${aff.length} nodes are affected by problems and ${iso} have no connections.${hub?` ${hub.n.name} is the biggest hub with ${hub.c} dependent nodes.`:''}`,cause:hub?`${hub.n.name} is the most connected node`:'The graph has no clear hub',why:`A node with ${hub?hub.c:0} dependents is a single point of failure if it becomes unhealthy.`,
-      ev:[{ic:'impact',text:`${aff.length} nodes are affected by problems.`,btn:'Show them',fn:()=>{ssS.aff=true;renderSmartscape($('#body'))}},{ic:'metric',text:`Largest types: ${types.slice(0,3).map(([v,c])=>`${v} ${c}`).join(', ')}.`,btn:`Show ${types[0][0]}`,fn:()=>{ssS.types=new Set([types[0][0]]);renderSmartscape($('#body'))}},{ic:'trace',text:`${iso} nodes have no connections. Hide them to see the structure.`,btn:'Hide them',fn:()=>{ssS.hide=true;renderSmartscape($('#body'))}}],
+    const t={label:'Key insight',sum:`${name} shows ${vis.length} nodes${G.seg!=='all'?` in segment ${G.seg}`:''} across ${types.length} types. ${ssTypeName(types[0][0])} is the largest type with ${types[0][1]} nodes. ${aff.length} nodes are affected by problems and ${iso} have no connections.${hub?` ${hub.n.name} is the biggest hub with ${hub.c} dependent nodes.`:''}`,cause:hub?`${hub.n.name} is the most connected node`:'The graph has no clear hub',why:`A node with ${hub?hub.c:0} dependents is a single point of failure if it becomes unhealthy.`,
+      ev:[{ic:'impact',text:`${aff.length} nodes are affected by problems.`,btn:'Show them',fn:()=>{ssS.aff=true;renderSmartscape($('#body'))}},{ic:'metric',text:`Largest types: ${types.slice(0,3).map(([v,c])=>`${ssTypeName(v)} ${c}`).join(', ')}.`,btn:`Show ${ssTypeName(types[0][0])}`,fn:()=>{ssS.types=new Set([types[0][0]]);renderSmartscape($('#body'))}},{ic:'trace',text:`${iso} nodes have no connections. Hide them to see the structure.`,btn:'Hide them',fn:()=>{ssS.hide=true;renderSmartscape($('#body'))}}],
       steps:[['Show affected nodes',()=>{ssS.aff=true;renderSmartscape($('#body'))}],stepGo('Open the problem graph','smartscape/problem'),STEP_DQL]};
     return{sub:name,ph:`Ask about ${name}`,chips:['What is the biggest hub?','What is affected?'],t,answer:q=>/hub|biggest|connected/.test(q.toLowerCase())?`${hub?hub.n.name:'No hub'} has ${hub?hub.c:0} dependent nodes.`:/affect|problem/.test(q.toLowerCase())?`${aff.length} nodes are affected: ${aff.slice(0,3).map(n=>n.name).join(', ')}.`:'I can name the biggest hub and the affected nodes.'};
   }
@@ -3537,6 +3749,9 @@ const BIZ_TPL=[
  ['Travel & Leisure','Searches, bookings and payments across web and app.','<path d="M21 4L3 11l6 2.5L11.5 20l2.5-5 5.5-4z"/>',['Booking conversion rate','Searches per hour','Payment success rate','Availability API response time','Mobile app crash rate','Open problems']]
 ];
 const SLO_MON={checkout:'Checkout',payment:'Payment',search:'Search',login:'Login',catalog:'Homepage',order:'Checkout',cart:'Cart',notification:'API health',shipping:'API health',profile:'API health'};
+function probDrawer(r){
+  return `<div class="xp-cause dr-cause"><span class="muted">Root cause</span><b>${esc(r.cause)}</b><span class="tag t-${r.conf==='High'?'g':'a'}">${esc(r.conf)} confidence</span><span class="muted">${esc(r.why)} Found by Davis AI.</span></div><dl>${ui.def.cols.filter(c=>c.label&&c.type!=='name'&&c.k!=='cause').map(c=>`<dt>${esc(c.label)}</dt><dd>${fmtVal(c,r)}</dd>`).join('')}<dt>Category</dt><dd>${esc(r.category)}</dd><dt>Impact</dt><dd>${esc(r.impact)}</dd></dl>`;
+}
 function sloDrawer(r){
   const key=SLO_MON[r.service.split('-')[0]]||'API health',mons=SYNTH.filter(m=>m.name.startsWith(key)).slice(0,4),st=sloState(r);
   return `<dl><dt>Service</dt><dd>${esc(r.service)}</dd><dt>Status</dt><dd><span class="tag t-${st[1]}">${st[0]}</span></dd><dt>Target</dt><dd>${r.target}% over ${r.window}</dd><dt>Current</dt><dd>${r.cur}%</dd><dt>Error budget</dt><dd>${sloBudgetTxt(r)}</dd><dt>Burn rate</dt><dd>${r.burn}×</dd></dl>
@@ -3583,6 +3798,7 @@ function buildIdx(){
       (t.modes||[t]).forEach((d,mi)=>(d.rows||[]).forEach(r=>{const k=`${t.app}/${t.id}/${mi}/${r.name}`;if(seen.has(k))return;seen.add(k);
         idx.push({chip:t.kind,label:r.name,sub:`${a.name} › ${t.name}`,seg:r.seg,app:a.id,tab:t.id,mode:t.modes?mi:undefined,q:r.name})}))})});
   USER_DOCS.forEach(d=>idx.push({chip:'Documents',label:d.name,sub:`${(appOf(d.app)||{}).name} › ${DOC_TYPES[d.type][0]}`,app:d.app,tab:'doc-'+d.id}));
+  DD_TERMS.forEach(([d,,r])=>{const [a,t]=r.split('/'),A=appOf(a),T=A&&A.tabs.find(x=>x.id===t);if(T)idx.push({chip:'Apps & tabs',label:`${A.name} › ${T.name}`,sub:`Datadog: ${d}`,aka:d.toLowerCase(),app:a,tab:t})});
   idx.push(...ACTIONS);
 }
 function openPal(){if(!idx)buildIdx();$('#scrim').classList.add('open');$('#pal').classList.add('open');$('#pq').value='';pChip='All';pSel=0;drawPal();$('#pq').focus()}
@@ -3598,7 +3814,7 @@ function drawPal(){
     if(rc.length)groups.push(['Recent',rc]);
   }else{
     const ql=q.toLowerCase();
-    const scored=idx.filter(i=>chip==='All'||(CHIPKINDS[chip]||[chip]).includes(i.chip)).map(i=>{const l=i.label.toLowerCase();const p=l.indexOf(ql);const wb=l.split(/[\s›\-_./]+/).some(w=>w.startsWith(ql));
+    const scored=idx.filter(i=>chip==='All'||(CHIPKINDS[chip]||[chip]).includes(i.chip)).map(i=>{const l=(i.aka||i.label).toLowerCase();const p=l.indexOf(ql);const wb=l.split(/[\s›\-_./]+/).some(w=>w.startsWith(ql));
       return{i,sc:!ql?1:l.startsWith(ql)?4:wb?3:p>=0?2:0}}).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc||a.i.label.localeCompare(b.i.label));
     const per=chip==='All'?4:14;
     ALLKINDS.forEach(c=>{const g=scored.filter(x=>x.i.chip===c).slice(0,per).map(x=>x.i);if(g.length)groups.push([c,g])});
@@ -3886,7 +4102,7 @@ function vpZoom(id,f,cx,cy){
 }
 const vpPt=(svg,e)=>{const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())};
 const vpOf=el=>{const a=el&&el.closest&&el.closest('#ssg,#pgs,#ssc');return a&&a.id==='ssc'?$('#ssg'):a};
-document.addEventListener('mouseover',e=>{const c=e.target;if(c.classList&&c.classList.contains('gn')&&!c.firstChild){const n=ssBase(cur.tab.id).nodes[+c.dataset.i],t=document.createElementNS('http://www.w3.org/2000/svg','title');t.textContent=`${n.name} (${n.type})`;c.appendChild(t)}});
+document.addEventListener('mouseover',e=>{const c=e.target;if(c.classList&&c.classList.contains('gn')&&!c.firstChild){const n=ssBase(cur.tab.id).nodes[+c.dataset.i],t=document.createElementNS('http://www.w3.org/2000/svg','title');t.textContent=`${n.name} (${ssTypeName(n.type)})`;c.appendChild(t)}});
 const vpWheel=e=>{const svg=vpOf(e.target);if(!svg)return;e.preventDefault();const p=vpPt(svg,e);vpZoom(svg.id,e.deltaY<0?1.15:1/1.15,p.x,p.y)};
 const ssWheelBind=()=>document.querySelectorAll('.ss-canvas').forEach(el=>{if(!el._wb){el._wb=1;el.addEventListener('wheel',vpWheel,{passive:false})}});
 document.addEventListener('pointerdown',e=>{
@@ -3924,6 +4140,9 @@ document.addEventListener('click',e=>{
   const xe=T.closest('[data-xpe]');if(xe){const ctx=xpMsgs[+xe.closest('[data-xm]').dataset.xm],e=ctx.t.ev[+xe.dataset.xpe];if(e.fn){e.fn(ctx);return}if(e.go[1]==='problem'){probSel=ctx.p.id;go('smartscape','problem')}else go(e.go[0],e.go[1],{q:e.go[2]||'',f:{}});return}
   const xs=T.closest('[data-xps]');if(xs){const ctx=xpMsgs[+xs.closest('[data-xm]').dataset.xm],st=ctx.t.steps[+xs.dataset.xps];typeof st[1]==='function'?st[1](ctx):XP_ACT[st[1]](ctx,st[0]);return}
   const drv=T.closest('[data-drv]');if(drv){drView=drv.dataset.drv;$('#drdql').innerHTML=drDqlHtml();return}
+  const dd=T.closest('[data-dd]');if(dd){ddOpen(+dd.dataset.dd);return}
+  const cbv=T.closest('[data-cbv]');if(cbv){cbView=cbv.dataset.cbv;$('#drcode').innerHTML=codeHtml();return}
+  if(T.closest('[data-cbcopy]')){copyText(codeText(cbK,cbRow,cbView),'Copied');return}
   if(T.closest('[data-drcopy]')){copyText($('#drdql pre.dql').textContent,drView==='dql'?'DQL copied':'dtctl command copied');return}
   const dv=T.closest('[data-dqlv]');if(dv){dqlView=dv.dataset.dqlv;drawDql();return}
   if(T.closest('[data-dqlcopy]')){copyText($('#dqlmenu pre.dql').textContent,dqlView==='dql'?'DQL copied':'dtctl command copied');return}
@@ -4023,6 +4242,9 @@ document.addEventListener('click',e=>{
   const pgo=T.closest('[data-pgo]');if(pgo){const k=pgo.dataset.pgo,p=PROB.find(x=>x.id===probSel)||focusProb();
     if(k==='explain'){openExplain(p.id)}else if(k==='open')go('issues','problems',{q:p.id,f:{}});else if(k==='logs')go('telemetry','logs',{q:pgBuild(p).root,f:{}});else if(k==='workflows')go('automate','workflows',{q:'remediate',f:{}});else if(k==='slos')go('applications','slos',{q:'',f:{status:['Breaching']}});else if(k==='guardians')go('automate','guardians',{q:'',f:{}});return}
   const pd=T.closest('[data-pdepth]');if(pd){pgDepth=+pd.dataset.pdepth;$$('[data-pdepth]').forEach(b=>b.setAttribute('aria-pressed',String(b===pd)));pgDraw();return}
+  const an=T.closest('.an');if(an){if(vpMoved)return;aroundFocus(an.dataset.name,true);return}
+  const ago=T.closest('[data-ago]');if(ago){aroundAct(ago.dataset.ago);return}
+  const atr=T.closest('[data-atrail]');if(atr){const i=+atr.dataset.atrail;ssFocus=ssTrail[i];ssTrail.length=i;delete VP.pgs;renderAround($('#body'));return}
   const pn=T.closest('.pn');if(pn){if(vpMoved)return;goEntity(pn.dataset.name);return}
   const qn=T.closest('[data-qsn],[data-qsl]');if(qn){go('applications','services',{q:'',f:{}});return}
   const qst=T.closest('[data-qsstep]');if(qst){const opts=['all',...QS_GROUPS[qsG].svcs],i=opts.indexOf(qsSvc);qsSvc=opts[(i+ +qst.dataset.qsstep+opts.length)%opts.length];renderQuickStart($('#body'));return}
@@ -4041,7 +4263,7 @@ document.addEventListener('click',e=>{
   const vw=T.closest('[data-view]');if(vw){const k=vw.dataset.view,v=k[0]==='p'?tab.views[+k.slice(1)]:userViews[vkey()][+k.slice(1)];$$('.menu').forEach(m=>{m.hidden=true});applyView(v);toast(`View: ${v.name}`);return}
   const vd=T.closest('[data-vdel]');if(vd){userViews[vkey()].splice(+vd.dataset.vdel,1);saveUV();drawViewMenu();return}
   if(T.closest('[data-vsave]')){const n=$('#vname').value.trim();if(!n){toast('Name the view first');$('#vname').focus();return}saveView(n);toast(`Saved view “${n}”`);drawViewMenu();return}
-  const rel=T.closest('[data-rel]');if(rel){const x=tab.related[+rel.dataset.rel];if(x.investigate){startInvestigation(null,ui.sel.id);return}if(x.explain){probFocus=ui.sel.id;closeDrawer();$('#phead').innerHTML=def.header();openExplain(probFocus);return}if(x.entity){goEntity(ui.sel.entity);return}if(x.flagsvc){go('experience','feature-flags',{q:Object.entries(FL_ALIAS).find(([k,v])=>v===ui.sel.name)?.[0]||ui.sel.name,f:{}});return}if(x.logs){go('telemetry','logs',{q:SERVICES.some(r=>r.name===ui.sel.entity)?ui.sel.entity:'',f:{}});return}if(x.app==='smartscape')probSel=ui.sel.id;go(x.app,x.tab,{q:x.all?'':String(ui.sel[x.key||'name']??''),f:{}});return}
+  const rel=T.closest('[data-rel]');if(rel){const x=tab.related[+rel.dataset.rel];if(x.around){aroundGo(String(ui.sel[x.key||'name']??''),x.fallback);return}if(x.investigate){startInvestigation(null,ui.sel.id);return}if(x.explain){probFocus=ui.sel.id;closeDrawer();$('#phead').innerHTML=def.header();openExplain(probFocus);return}if(x.entity){goEntity(ui.sel.entity);return}if(x.flagsvc){go('experience','feature-flags',{q:Object.entries(FL_ALIAS).find(([k,v])=>v===ui.sel.name)?.[0]||ui.sel.name,f:{}});return}if(x.logs){go('telemetry','logs',{q:SERVICES.some(r=>r.name===ui.sel.entity)?ui.sel.entity:'',f:{}});return}if(x.app==='smartscape')probSel=ui.sel.id;go(x.app,x.tab,{q:x.all?'':String(ui.sel[x.key||'name']??''),f:{}});return}
   if(T.closest('#ftoggle')||T.closest('#ftoggle2')){s.panel=!s.panel;$('.split').classList.toggle('nopanel',!s.panel);const ft=$('#ftoggle');if(ft)ft.setAttribute('aria-pressed',s.panel);return}
   const fv=T.closest('[data-flagview]');if(fv){s.view=fv.dataset.flagview;renderTable(tab,$('#body'));return}
   const mkb=T.closest('[data-mk]');if(mkb){const [k,v]=mkb.dataset.mk.split(':');
@@ -4068,6 +4290,7 @@ document.addEventListener('change',e=>{
   if(e.target.dataset&&e.target.dataset.flagpct!==undefined&&fl){const x=fl.envs[+e.target.dataset.flagpct];x.pct=+e.target.value;flagTouch(fl,`Changed rollout to ${x.pct}%`,x.n);render();return}
   if(e.target.dataset&&e.target.dataset.kbsort!==undefined&&ui){ui.s.bsort=ui.s.bsort||{};ui.s.bsort[e.target.dataset.kbsort]=e.target.value;updateGrid();return}
   if(e.target.id==='sshide'){ssS.hide=e.target.checked;ssDraw();return}
+  if(e.target.id==='apick'){aroundFocus(e.target.value,false);return}
   if(e.target.id==='ppick'){probSel=e.target.value;renderSmartscape($('#body'));return}
   if(e.target.id==='qsgrp'){qsG=+e.target.value;qsSvc='all';renderQuickStart($('#body'));return}
   if(e.target.id==='qssvc'){qsSvc=e.target.value;renderQuickStart($('#body'));return}
@@ -4134,7 +4357,7 @@ document.addEventListener('click',()=>setTimeout(syncExpanded,0));
 document.addEventListener('keydown',()=>setTimeout(syncExpanded,0));
 window.addEventListener('hashchange',render);
 setInterval(()=>{if(ui&&ui.tab.liveCapable&&ui.s.live&&!document.hidden&&!$('#drawer.open')&&!$('#grid:hover')){LOGS.unshift((r=>{xenrich('logs',r,0);return r})(mkLog(Date.now())));if(LOGS.length>500)LOGS.pop();updateGrid()}},1300);
-APPS.find(x=>x.id==='smartscape').tabs=[...SS_ORDER.map(v=>[v,SSV[v].name])].map(([id,name])=>({id,name,app:'smartscape',kind:'Apps & tabs',flush:true,noSeg:id==='problem',render:renderSmartscape}));
+APPS.find(x=>x.id==='smartscape').tabs=[...SS_ORDER.map(v=>[v,SSV[v].name])].map(([id,name])=>({id,name,app:'smartscape',kind:'Apps & tabs',flush:true,noSeg:id==='problem'||id==='around',render:renderSmartscape}));
 $('#asug').innerHTML=ASSIST_SUGG.map(t=>`<button data-as="${esc(t)}">${esc(t)}</button>`).join('');
 renderUserMenu();
 applyAssistMode();
