@@ -7,7 +7,7 @@
 
 ## What was built
 - **Deliverable:** `site/new/index.html`, a single self-contained file of about 560 KB (CSS and JS inline, no external requests, icons as data URIs). It's served at `/new/` after deploy.
-- **Origin:** I analysed the screenshots and proposed two groupings to reduce the number of apps: **Option A** (aggressive, few apps and tabs) and **Option B** (relaxed). Only Option B is implemented. The original analysis text exists only in the Claude transcript on the old machine.
+- **Origin:** I analysed the screenshots and proposed two groupings to reduce the number of apps: **Option A** (aggressive, few apps and tabs) and **Option B** (relaxed). Only Option B is implemented. The original analysis is captured below.
 - **Menu order (hard-coded in `renderRail`):** Home | Search, Assist, Recents | Problems, Smartscape, Infrastructure, Applications, Telemetry, Security | Documents, Automate, QuickStart, Admin | pinned view | Collapse.
 - **Tabs:**
   - Home: Overview, Business (industry dashboard templates)
@@ -22,6 +22,45 @@
   - Admin: Coverage, Fleet, Hub, Access requests, Settings
   - QuickStart: one page
   - Every app also has a "+" tab for user-created documents, saved in the browser.
+
+## Original analysis (from the screenshots)
+Four patterns drove both groupings:
+- **Same list, six tabs.** Dashboards, Notebooks and Workflows each split one document list into All, Favorites, Owned, Shared, Ready-made and Trash. These are filters, not tabs.
+- **One explorer built six times.** Infrastructure, Kubernetes, Clouds, Services, Synthetic monitors and Experience Vitals all use a type tree or facets plus a Health/Utilization/Metadata table.
+- **Overview tabs carry little content.** On Clouds, Services, Synthetic, Experience Vitals and Discovery & Coverage they are mostly promo, onboarding or numbers repeated from other tabs.
+- **Some apps only launch other apps.** Smartscape, QuickStart and Business Events show no data of their own.
+
+Both options group by user job instead of by product. Both also move Fleet, Coverage and Private locations to Admin (setup work, not daily use). Alert setup was split across Infrastructure Alert templates, K8s Recommendations and Problems, and consolidating it was called the best single UX win.
+
+### Option A: aggressive (22 apps → 6, about 10 tabs)
+
+| App | Tabs | Absorbs |
+|---|---|---|
+| **Home** | none | QuickStart, Smartscape launcher, Business Events landing, every Overview tab |
+| **Explore** | Entities, Telemetry | Infra, K8s, Clouds, Services, Synthetic, Experience Vitals, Smartscape as a Map toggle, Logs, Traces, Business events |
+| **Issues** | Problems, Security, Recommendations | Problems, Vulnerabilities (Prioritization and Findings become a grouping toggle), Discovery findings, K8s Recommendations |
+| **Library** | none (one list with type and filter chips) | Dashboards, Notebooks, Investigations |
+| **Automate** | Workflows, Executions, Guardians | Workflows, Site Reliability Guardian |
+| **Admin** | left nav, not tabs | Hub, Settings, Fleet Management, Coverage, Private locations, Cloud connections |
+
+- **Entities** is one type tree (Hosts, Clusters, Cloud, Services, Synthetic, Frontends).
+- **Telemetry** is a signal switch for Logs, Traces and Events. Live logs and Exceptions become toggles, and Failures and Response Time become saved views.
+- **Why:** a user thinks "what's broken?" (Issues), "show me the thing" (Explore), "keep my analysis" (Library), "automate it" (Automate) or "configure it" (Admin). Nobody thinks "open the Kubernetes app."
+- **Risk:** Explore carries a lot, so the type tree has to scale well.
+- **Suggested start:** the Library and Automate merges are the lowest risk. Decide between A and B for Explore using real tab-usage telemetry, since the screenshots show layout, not usage.
+
+### Option B: relaxed on tabs (22 apps → 8, about 30 tabs), as first proposed
+Home (Overview, Topology, Business); Infrastructure (Hosts & Network, Kubernetes, Clouds, Alert templates); Applications (Services, Failures, Response Time, Synthetic, Frontends); Telemetry (Logs, Live logs, Traces, Exceptions, Business events); Issues & Security (Problems, Vulnerabilities, Investigations, Recommendations); Library (Dashboards, Notebooks, one shared filter bar); Automate (Workflows, Executions, Guardians); Admin (Coverage, Fleet, Apps, Settings). The prototype has since evolved well beyond this (see the tab list above).
+
+### Mapping Option A onto the current prototype
+- **Home:** the Overview tab exists. The Business tab and QuickStart would fold into it.
+- **Explore (Entities):** this is Hosts, Network, Clouds, Kubernetes, Synthetic, Services, Errors, Response time and Frontends. All use the same table engine, so a type tree plus one table needs only a new top-level view over the existing row arrays (`HOSTS_ONLY`, `NETDEV`, `K8S`, `SYNTH`, `SERVICES`, `FRONT`).
+- **Explore (Telemetry):** Logs, Traces, Metrics, Events, User sessions and AI would become a signal switch.
+- **Smartscape:** already a view picker. As a Map toggle it would reuse `renderSmartscape` and the zoom, pan and mini map code.
+- **Issues:** Problems, Vulnerabilities (with its Prioritization/Findings `modes`), SIEM, User audits, Detections and Recommendations.
+- **Library:** Dashboards, Notebooks, Pages, Launchpads and Investigations, which already share one document list pattern (`DOC_SCOPES`, user documents via the "+" tab).
+- **Admin:** Coverage, Fleet, Hub, Access requests, Settings.
+- **Existing glue to keep:** `related` links, the `DQL` and `XV` maps, drawers, hash detail routes and the SLO, Synthetic and Security data. Rewrite the `APPS` structure, `renderRail`, link targets and copy.
 
 ## Architecture (all in `site/new/index.html`)
 - **Structure:**
