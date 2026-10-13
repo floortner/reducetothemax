@@ -826,16 +826,6 @@ pre.dql .cm{color:var(--muted)}
 .dd-r:hover{background:var(--panel2)}
 .dd-d{font-weight:600}
 .dd-c{color:var(--muted)}
-.kvfind{position:relative}
-.kvmenu{top:calc(100% + 4px);right:0;max-height:340px;overflow:auto}
-.kvmenu .mi{display:flex;justify-content:space-between;gap:12px;width:100%}
-.kvmenu .mi[aria-selected=true]{background:var(--panel2)}
-.kvh{font-size:11.5px;padding:6px 8px 2px;border-top:1px solid var(--line);margin-top:4px}
-.seghint{font-size:12px;margin:0 8px 6px;max-width:250px}
-.exdep line{stroke:var(--accent);stroke-width:1.5;stroke-dasharray:3 3}
-.exdep circle{fill:var(--accent)}
-.exdep text{font-size:10px;fill:var(--accent);paint-order:stroke;stroke:var(--panel);stroke-width:3px}
-.exleg i.dep{background:none;border-left:2px dashed var(--accent);width:0;border-radius:0}
 @media (max-width:900px){.gsearch{width:auto}.gsearch span,.gsearch kbd{display:none}}
 
 /* explorer layout */
@@ -1719,11 +1709,10 @@ const EXPLORER={
   stats:rows=>[SB('Monitors',rows.length),SB('Failing',xc(rows,r=>r.status==='Failing'),{tone:'r',f:['status','Failing'],p:share(rows,r=>r.status==='Failing')}),SB('Availability',xa(rows,'avail').toFixed(1)+'%',{p:1-xa(rows,'avail')/100}),SB('Duration',xms(xa(rows,'dur'))),SB('Locations',xu(rows,'loc'))],
   tl:{w:()=>1,mult:60,bad:r=>r.status==='Failing'?1:0,okL:'Successful runs',badL:'Failed runs',y:'Runs',hist:{k:'dur',label:'Duration',log:1,fmt:xms,noun:'monitors'}}},
  'applications/services':{
-  cols:[C('name','Name','name'),C('type','Type'),C('health','Health','health'),C('fail','Error rate','failpct',{num:1}),C('p50','Median response','ms',{num:1}),C('tput','Requests/min','int',{num:1}),C('ver','Version','mono')],
   facets:[FX('type','Type'),FX('health','Health'),FX('tech','Technology'),RG('fail','Error rate','%'),RG('p50','Median response','ms'),RG('tput','Requests/min','',),FX('ns','Namespace','Metadata'),FX('cl','Cluster','Metadata'),FX('team','Team','Metadata')],
-  more:[C('tech','Technology'),XC('inst','Instances','int',{num:1}),XC('ns','Namespace'),XC('cl','Cluster'),XC('p90','Response p90','ms',{num:1}),XC('p99','Response p99','ms',{num:1}),XC('errs','Errors','int',{num:1}),XC('eps','Endpoints','int',{num:1}),XC('deps','Dependencies','int',{num:1}),XC('team','Team'),XC('since','First seen','ago')],
+  more:[XC('ver','Version','mono'),XC('inst','Instances','int',{num:1}),XC('ns','Namespace'),XC('cl','Cluster'),XC('p90','Response p90','ms',{num:1}),XC('p99','Response p99','ms',{num:1}),XC('errs','Errors','int',{num:1}),XC('eps','Endpoints','int',{num:1}),XC('deps','Dependencies','int',{num:1}),XC('team','Team'),XC('since','First seen','ago')],
   stats:rows=>[SB('Services',rows.length),SB('Critical',xc(rows,r=>r.health==='Critical'),{tone:'r',f:['health','Critical'],p:share(rows,r=>r.health==='Critical')}),SB('Warning',xc(rows,r=>r.health==='Warning'),{tone:'a',f:['health','Warning'],p:share(rows,r=>r.health==='Warning')}),SB('Requests/min',xn(xs(rows,'tput'))),SB('Error rate',xa(rows,'fail').toFixed(1)+'%',{tone:xa(rows,'fail')>1.5?'a':'',p:xa(rows,'fail')/10})],
-  tl:{deploys:1,w:r=>r.tput,mult:1,bad:r=>Math.min(1,r.fail/100),okL:'Successful requests',badL:'Failed requests',y:'Requests / min',hist:{k:'p50',label:'Median response time',log:1,fmt:xms,noun:'services'}}},
+  tl:{w:r=>r.tput,mult:1,bad:r=>Math.min(1,r.fail/100),okL:'Successful requests',badL:'Failed requests',y:'Requests / min',hist:{k:'p50',label:'Median response time',log:1,fmt:xms,noun:'services'}}},
  'applications/errors':{
   facets:[FX('reason','Failure reason'),FX('reqType','Request type'),FX('service','Service'),RG('failures','Errors','',),RG('rate','Rate','%'),FX('code','HTTP status','Metadata'),FX('exc','Exception','Metadata'),FX('trend','Trend','Metadata'),FX('team','Team','Metadata')],
   more:[XC('first','First seen','ago'),XC('lastseen','Last seen','ago'),XC('users','Affected users','int',{num:1}),XC('code','HTTP status','mono'),XC('exc','Exception','mono'),XC('traces','Failed traces','int',{num:1}),XC('trend','Trend'),XC('rel','Release','mono'),XC('team','Team')],
@@ -1882,120 +1871,25 @@ function st(key){
     const tab=findTab(key); const f={};
     Object.entries(tab.init?.f||{}).forEach(([k,v])=>f[k]=new Set(v));
     const nrows=((tab.modes?tab.modes[0]:tab).rows||[]).length;
-    stateMap[key]={q:'',f,sort:null,mode:0,scope:'All',panel:(tab.modes?tab.modes[0]:tab).explorer?innerWidth>=1100:nrows>15&&innerWidth>=1200,closed:new Set(),live:false,cq:'',rng:{},cols:null,wrap:false,tl:'ts',exOpen:true,fsearch:'',fq:{},fmore:new Set(),fhid:new Set(),gclosed:new Set(),colq:'',kv:[]};
+    stateMap[key]={q:'',f,sort:null,mode:0,scope:'All',panel:(tab.modes?tab.modes[0]:tab).explorer?innerWidth>=1100:nrows>15&&innerWidth>=1200,closed:new Set(),live:false,cq:'',rng:{},cols:null,wrap:false,tl:'ts',exOpen:true,fsearch:'',fq:{},fmore:new Set(),fhid:new Set(),gclosed:new Set(),colq:''};
   }
   return stateMap[key];
 }
 const getDef=(tab,s)=>tab.modes?{...tab,...tab.modes[s.mode]}:tab;
 const scopeOk=(r,sc)=>sc==='All'?!r.trash:sc==='Mine'?r.mine&&!r.trash:sc==='Shared with me'?r.shared&&!r.trash:sc==='Ready-made'?r.ready&&!r.trash:sc==='Favorites'?r.fav&&!r.trash:sc==='Trash'?r.trash:true;
 function filtered(def,s,except,ignoreScope){
-  const q=s.q.trim().toLowerCase(); const keys=def.search||['name'],words=q?kvWords(q):[];
+  const q=s.q.trim().toLowerCase(); const keys=def.search||['name'];
   return def.rows.filter(r=>{
     if(def.scoped!==false&&!segOK(r))return false;
     if(def.tk&&!s.live){const {to,from}=tfRange(),v=r[def.tk];if(!((v>=to&&v<=from)||(def.tkOpen&&def.tkOpen(r,to))))return false}
     if(def.scopes&&!ignoreScope&&!scopeOk(r,s.scope))return false;
-    for(const w of words){const hit=keys.some(k=>String(r[k]??'').toLowerCase().includes(w.w));if(hit===w.neg)return false}
-    for(const t of s.kv||[]){if(t.k===except)continue;const v=String(r[t.k]??'').toLowerCase(),hit=t.vals.some(x=>x.m==='eq'?v===x.v:x.m==='wild'?x.re.test(v):v.includes(x.v));if(hit===t.neg)return false}
+    if(q&&!keys.some(k=>String(r[k]??'').toLowerCase().includes(q)))return false;
     if(s.cq&&!exText(def,r).includes(s.cq.trim().toLowerCase()))return false;
     for(const [k,rg] of Object.entries(s.rng||{})){if(k===except)continue;const v=+r[k];if(rg.min!==''&&v<+rg.min)return false;if(rg.max!==''&&v>+rg.max)return false}
     for(const [k,set] of Object.entries(s.f)) if(k!==except&&set.size&&!set.has(String(r[k])))return false;
     return true;
   });
 }
-
-/* ---------- key:value search in filter boxes ---------- */
-const KV_ALIAS={service:['service','source','svc'],env:['seg'],environment:['seg'],status:['status','level','health','state'],host:['host','hostname'],version:['ver','version'],team:['team','owner'],namespace:['ns'],kube_namespace:['ns'],cluster:['cluster','cl'],level:['level'],type:['type','kind'],duration:['dur','duration'],error:['fail'],'http.status_code':['code','httpStatus'],trace_id:['id']};
-const kvSlug=l=>String(l).toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');
-function kvFields(def){
-  const out=[],seen=new Set(),add=(k,label)=>{if(!k||!label||seen.has(k))return;seen.add(k);out.push({k,label,slug:kvSlug(label)})};
-  (def.facets||[]).forEach(f=>add(f.k,f.label));
-  [...(def.cols||[]),...(def.more||[])].forEach(c=>{if(!['star','action','approve'].includes(c.type))add(c.k,c.label)});
-  return out;
-}
-function kvKey(def,raw){
-  const k=String(raw).replace(/^@/,'').toLowerCase(),F=kvFields(def),has=x=>F.find(f=>f.k===x);
-  return F.find(f=>f.slug===k)||F.find(f=>f.k.toLowerCase()===k)||(KV_ALIAS[k]||[]).map(has).find(Boolean)||(k==='service'&&cur.tab.id==='services'?has('name'):null)||null;
-}
-const kvWords=q=>[...String(q).matchAll(/(-?)"([^"]*)"?|(-?)(\S+)/g)].map(m=>m[2]!==undefined?{neg:!!m[1],w:m[2].toLowerCase()}:{neg:!!m[3],w:m[4].toLowerCase()}).filter(x=>x.w);
-const kvQuote=v=>/[\s()":]/.test(v)||v===''?`"${String(v).replace(/"/g,'')}"`:v;
-function kvParse(def,text){
-  const out={f:{},rng:{},kv:[],free:[]},re=/(-?)([@\w.\-]+):(\([^)]*\)?|"[^"]*"?|\S*)|(-?"[^"]*"?)|(\S+)/g;let m;
-  while((m=re.exec(text))){
-    if(m[4]!==undefined||m[5]!==undefined){out.free.push(m[4]??m[5]);continue}
-    const fld=kvKey(def,m[2]);
-    if(!fld){out.free.push(m[0]);continue}
-    const raw=m[3],neg=!!m[1];if(!raw||raw==='"'||raw==='(')continue;
-    const rg=raw.match(/^(>=|<=|>|<)(-?[\d.]+)/)||raw.match(/^(-?[\d.]+)\.\.(-?[\d.]+)/);
-    if(rg&&!neg){const r=out.rng[fld.k]||(out.rng[fld.k]={min:'',max:''});if(rg[1][0]==='>')r.min=String(parseFloat(rg[2]));else if(rg[1][0]==='<')r.max=String(parseFloat(rg[2]));else{r.min=String(parseFloat(rg[1]));r.max=String(parseFloat(rg[2]))}continue}
-    const vals=(raw[0]==='('?raw.replace(/^\(|\)$/g,'').split(/\s+OR\s+|\s*,\s*|\s+/i):[raw]).map(v=>v.replace(/^"|"$/g,'')).filter(v=>v&&v.toUpperCase()!=='OR');
-    if(!vals.length)continue;
-    const canon=new Map();def.rows.forEach(r=>{const v=r[fld.k];if(v!=null&&v!=='')canon.set(String(v).toLowerCase(),String(v))});
-    const isFacet=(def.facets||[]).some(f=>f.k===fld.k&&!f.range);
-    if(!neg&&isFacet&&vals.every(v=>canon.has(v.toLowerCase()))){const set=out.f[fld.k]||(out.f[fld.k]=new Set());vals.forEach(v=>set.add(canon.get(v.toLowerCase())));continue}
-    out.kv.push({k:fld.k,label:fld.label,slug:fld.slug,neg,raw,vals:vals.map(v=>{const l=v.toLowerCase();return v.includes('*')?{m:'wild',v:l,o:v,re:new RegExp('^'+l.replace(/[.+?^${}()|[\]\\]/g,'\\$&').replace(/\*/g,'.*')+'$')}:canon.has(l)?{m:'eq',v:l,o:canon.get(l)}:{m:'sub',v:l,o:v}})});
-  }
-  out.free=out.free.join(' ');return out;
-}
-function kvCompose(def,s){
-  const F=kvFields(def),slug=k=>(F.find(f=>f.k===k)||{slug:k}).slug,out=[];
-  Object.entries(s.f).forEach(([k,set])=>{if(!set.size)return;const vs=[...set];out.push(`${slug(k)}:${vs.length>1?`(${vs.map(kvQuote).join(' OR ')})`:kvQuote(vs[0])}`)});
-  Object.entries(s.rng||{}).forEach(([k,r])=>{const a=r.min!==''&&r.min!=null,b=r.max!==''&&r.max!=null;if(a&&b)out.push(`${slug(k)}:${r.min}..${r.max}`);else if(a)out.push(`${slug(k)}:>=${r.min}`);else if(b)out.push(`${slug(k)}:<=${r.max}`)});
-  (s.kv||[]).forEach(t=>out.push(`${t.neg?'-':''}${t.slug}:${t.raw}`));
-  if(s.q.trim())out.push(s.q.trim());
-  return out.join(' ');
-}
-function kvExample(def){
-  const f=(def.facets||[]).find(x=>!x.range);if(!f)return '';
-  const c={};def.rows.forEach(r=>{const v=r[f.k];if(v!=null&&v!=='')c[v]=(c[v]||0)+1});
-  const top=Object.entries(c).sort((a,b)=>b[1]-a[1])[0];return top?`, try ${kvSlug(f.label)}:${kvQuote(String(top[0]))}`:'';
-}
-function kvInput(el){
-  const {s,def}=ui,p=kvParse(def,el.value);s.f=p.f;s.rng=p.rng;s.kv=p.kv;s.q=p.free;
-  updateAll();kvSuggest(el);
-  const dm=$('#dqlmenu');if(dm&&!dm.hidden)drawDql();
-}
-let kvSel=0,kvItems=[];
-function kvTok(el){const v=el.value,c=el.selectionStart??v.length;let a=c;while(a>0&&!/\s/.test(v[a-1]))a--;return{a,b:c,t:v.slice(a,c)}}
-function kvSuggest(el){
-  const m=$('#kvmenu');if(!m||!ui)return;
-  const {def,s}=ui,{t}=kvTok(el),neg=t.startsWith('-'),tt=neg?t.slice(1):t,i=tt.indexOf(':'),pre=neg?'-':'';let items=[];
-  if(i>0){
-    const key=tt.slice(0,i),fld=kvKey(def,key);
-    if(fld){
-      const num=(def.facets||[]).some(f=>f.k===fld.k&&f.range)||[...(def.cols||[]),...(def.more||[])].some(c=>c.k===fld.k&&c.num);
-      if(num&&!tt.slice(i+1))items=[['>','greater than'],['<','less than'],['10..100','between two values']].map(([o,h])=>({ins:`${key}:${o}`,label:`${key}:${o}${o.length<2?'N':''}`,hint:h,keep:o.length<2}));
-      else if(!num){
-        const q=tt.slice(i+1).replace(/^"/,'').toLowerCase(),cnt={};
-        filtered(def,s,fld.k).forEach(r=>{const v=String(r[fld.k]??'');if(v)cnt[v]=(cnt[v]||0)+1});
-        items=Object.entries(cnt).filter(([v])=>v.toLowerCase().includes(q)).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([v,n])=>({ins:`${pre}${key}:${kvQuote(v)} `,label:v,hint:n.toLocaleString()}));
-      }
-    }
-  }else if(tt.length){
-    const q=tt.toLowerCase(),F=kvFields(def);
-    const keys=[...F.map(f=>({k:f.slug,hint:f.label})),...Object.keys(KV_ALIAS).filter(a=>!F.some(f=>f.slug===a)&&kvKey(def,a)).map(a=>({k:a,hint:`Same as ${kvKey(def,a).slug}`}))];
-    items=keys.filter(x=>x.k.startsWith(q)).slice(0,6).map(x=>({ins:`${pre}${x.k}:`,label:`${pre}${x.k}:`,hint:x.hint,keep:1}));
-  }
-  kvItems=items;kvSel=0;
-  if(!items.length||document.activeElement!==el){m.hidden=true;el.setAttribute('aria-expanded','false');return}
-  m.innerHTML=items.map((x,j)=>`<button class="mi" role="option" tabindex="-1" data-kvs="${j}" aria-selected="${j===kvSel}"><span class="mono">${esc(x.label)}</span><span class="muted">${esc(x.hint)}</span></button>`).join('')+`<div class="kvh muted">Tab or Enter completes. -key:value excludes. key:(a OR b) matches either.</div>`;
-  m.hidden=false;el.setAttribute('aria-expanded','true');
-}
-function kvAccept(el,j){
-  const x=kvItems[j];if(!x)return false;
-  const {a,b}=kvTok(el),v=el.value,rest=v.slice(b).replace(/^\S*/,'');
-  el.value=v.slice(0,a)+x.ins+rest;const c=a+x.ins.length;el.setSelectionRange(c,c);kvInput(el);return true;
-}
-function kvMove(d){const m=$('#kvmenu');kvSel=(kvSel+d+kvItems.length)%kvItems.length;m.querySelectorAll('[data-kvs]').forEach((b,j)=>b.setAttribute('aria-selected',j===kvSel))}
-document.addEventListener('keydown',e=>{
-  if(e.target.id!=='q'||!ui)return;const m=$('#kvmenu');if(!m||m.hidden)return;
-  if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();e.stopPropagation();kvMove(e.key==='ArrowDown'?1:-1)}
-  else if(e.key==='Enter'||e.key==='Tab'){if(kvAccept(e.target,kvSel)){e.preventDefault();e.stopPropagation()}}
-  else if(e.key==='Escape'){e.preventDefault();e.stopPropagation();m.hidden=true}
-},true);
-document.addEventListener('mousedown',e=>{const b=e.target.closest&&e.target.closest('[data-kvs]');if(!b)return;e.preventDefault();kvAccept($('#q'),+b.dataset.kvs)});
-document.addEventListener('focusin',e=>{if(e.target.id==='q'&&ui)kvSuggest(e.target)});
-document.addEventListener('focusout',e=>{if(e.target.id==='q'){const m=$('#kvmenu');if(m)m.hidden=true}});
-document.addEventListener('click',e=>{if(e.target.id==='q'&&ui)kvSuggest(e.target)});
 
 /* ---------- formatting ---------- */
 const TONE={Healthy:'g',Success:'g',Pass:'g','Up to date':'g',Monitored:'g',Enabled:'g',Active:'g',OK:'g',Warning:'a',Medium:'a','Update available':'a',Paused:'a',Running:'b',Muted:'n',Closed:'n',Disabled:'n',Resolved:'n',Low:'n',DEBUG:'n',INFO:'n',Critical:'r',Failing:'r',Error:'r',ERROR:'r',Fail:'r',High:'r',Gap:'r','Failed to trigger':'r',Open:'r',WARN:'a',Pending:'a',Approved:'g',Denied:'n',Satisfied:'g',Tolerating:'a',Frustrated:'r',Investigating:'b',Completed:'g',Cancelled:'n',Confirmed:'g',Likely:'b',Inconclusive:'a',Good:'g','Needs review':'a',Poor:'r',Hallucination:'r','PII leak':'r',Toxicity:'r','Prompt injection':'a',Refusal:'n',Failed:'r','Breaching':'r','At risk':'a','On track':'g',Development:'b',Live:'g',Complete:'n',Archived:'n',Released:'a',Unused:'a',Unknown:'n','Not stale':'n'};
@@ -2040,7 +1934,6 @@ function go(app,tab,o={}){
   const key=`${app}/${tab}`; const s=st(key);
   if(o.f){s.f={};Object.entries(o.f).forEach(([k,v])=>s.f[k]=new Set(v))}
   if(o.q!==undefined)s.q=o.q;
-  if(o.f||o.q!==undefined)s.kv=[];
   if(o.mode!==undefined)s.mode=o.mode;
   if(o.q!==undefined||o.f)s.scope='All';
   const h=`#/${app}/${tab}${o.id?'/'+encodeURIComponent(o.id):''}`;
@@ -2132,7 +2025,7 @@ function renderTable(tab,host){
   host.innerHTML=`
    ${def.header?'<div id="phead"></div>':''}
    ${def.kpis?'<div class="kpis" id="kpis"></div>':''}
-   ${scopeBar(`<label class="find kvfind"><svg class="i fill" viewBox="0 0 20 20" aria-hidden="true"><path d="M11.525 12.855a6 6 0 1 1 1.4-1.429l3.816 3.817a1 1 0 0 1-1.415 1.414zM12.498 8a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0"/></svg><input id="q" placeholder="Filter ${esc(noun)}${kvExample(def)}" value="${esc(s.q)}" autocomplete="off" spellcheck="false" aria-label="Filter ${esc(noun)}. Type key:value to filter by a field." aria-autocomplete="list" aria-controls="kvmenu"><button class="btn ghost clr" id="qclear" aria-label="Clear filter">×</button><kbd>/</kbd><div class="menu kvmenu" id="kvmenu" role="listbox" hidden></div></label>`,false,extra)}
+   ${scopeBar(`<label class="find"><svg class="i fill" viewBox="0 0 20 20" aria-hidden="true"><path d="M11.525 12.855a6 6 0 1 1 1.4-1.429l3.816 3.817a1 1 0 0 1-1.415 1.414zM12.498 8a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0"/></svg><input id="q" placeholder="Filter ${esc(noun)}" value="${esc(s.q)}" autocomplete="off" aria-label="Filter ${esc(noun)}"><button class="btn ghost clr" id="qclear" aria-label="Clear filter">×</button><kbd>/</kbd></label>`,false,extra)}
    ${def.scopes?`<div class="scopes" id="scopes" role="group" aria-label="Show"></div>`:''}
    <div class="statusrow ${def.explorer?'ex':''}"><span class="muted" id="rc" ${def.explorer?'hidden':''}></span><div class="chips" id="chips"></div></div>
    ${def.explorer?exMarkup(s,def,noun,hasF):`<div class="split ${s.panel&&hasF?'':'nopanel'}"><aside class="facets" id="facets" aria-label="Filters"></aside><div class="gridwrap" id="grid"></div></div>`}`;
@@ -2147,9 +2040,7 @@ function updateAll(){
   s.limit=PAGE();
   const chips=[];Object.entries(s.f).forEach(([k,set])=>set.forEach(v=>{const lab=def.facets.find(f=>f.k===k)?.label||k;chips.push(`<button class="chip" data-k="${esc(k)}" data-v="${esc(v)}" aria-label="Remove filter ${esc(lab)} ${esc(v)}">${esc(lab)}: ${esc(v)} <span aria-hidden="true">×</span></button>`)}));
   Object.entries(s.rng||{}).forEach(([k,r])=>{const lab=def.facets.find(f=>f.k===k)?.label||k;chips.push(`<button class="chip" data-crng="${esc(k)}" aria-label="Remove filter ${esc(lab)}">${esc(lab)}: ${esc(r.min||'…')} – ${esc(r.max||'…')} <span aria-hidden="true">×</span></button>`)});
-  (s.kv||[]).forEach((t,i)=>chips.push(`<button class="chip" data-kvi="${i}" aria-label="Remove filter ${esc(t.label)} ${esc(t.raw)}">${esc(t.label)}: ${t.neg?'not ':''}${esc(t.raw)} <span aria-hidden="true">×</span></button>`));
   $('#chips').innerHTML=chips.join('')+(chips.length>1?`<button class="chip clear" id="clearall">Clear all</button>`:'');
-  const qi=$('#q');if(qi&&document.activeElement!==qi)qi.value=kvCompose(def,s);
   renderFacets(); updateGrid();
   if(def.explorer)exPanel(filtered(def,s));
 }
@@ -2280,7 +2171,7 @@ function exDraw(rows){
     const bw=pw/n,Y=v=>mt+ph*(1-v/mx),rate=cfg.badL?tot.map((t,i)=>t?bad[i]/t*100:0):null,rm=rate?Math.min(100,niceMax(Math.max(1,...rate)*1.25)):0,YR=v=>mt+ph*(1-v/rm);
     body=`<g class="exax">${yAxis(mx,xn)}${rate?[0,1].map(t=>`<text class="exr" x="${W-mr+5}" y="${mt+ph*(1-t)+4}" text-anchor="start">${Math.round(rm*t)}%</text>`).join(''):''}${(W<520?[0,2,4]:[0,1,2,3,4]).map(k=>`<text x="${ml+pw*k/4}" y="${H-4}" text-anchor="${k?k<4?'middle':'end':'start'}">${esc(fmtT(from-(from-to)*k/4))}</text>`).join('')}</g>`+
      tot.map((t,i)=>`<g><title>${esc(fmtT(from-(from-to)*(i+.5)/n))}: ${xn(t)} ${esc((cfg.y||'').toLowerCase())}${bad[i]>0&&cfg.badL?` (${xn(bad[i])} ${esc(cfg.badL.toLowerCase())}, ${(rate?rate[i]:0).toFixed(1)}%)`:''}</title><rect class="exb" x="${(ml+i*bw+bw*.14).toFixed(1)}" y="${Y(bad[i]).toFixed(1)}" width="${(bw*.72).toFixed(1)}" height="${(ph*bad[i]/mx).toFixed(1)}"/><rect class="exo" x="${(ml+i*bw+bw*.14).toFixed(1)}" y="${Y(t).toFixed(1)}" width="${(bw*.72).toFixed(1)}" height="${(ph*ok[i]/mx).toFixed(1)}"/></g>`).join('')+
-     (rate?`<polyline class="exln" fill="none" points="${rate.map((v,i)=>`${(ml+i*bw+bw/2).toFixed(1)},${YR(v).toFixed(1)}`).join(' ')}"/>`:'')+exDepSvg(rows,cfg,ml,pw,mt,ph,to,from);
+     (rate?`<polyline class="exln" fill="none" points="${rate.map((v,i)=>`${(ml+i*bw+bw/2).toFixed(1)},${YR(v).toFixed(1)}`).join(' ')}"/>`:'');
   }else{
     const hc=cfg.hist,log=!!hc.log,T=v=>log?Math.log10(Math.max(v,1)):v,pts=rows.map(r=>({v:+r[hc.k]||0,b:cfg.bad(r)>=.5})).sort((a,b)=>a.v-b.v);
     if(!pts.length){body=`<text x="${W/2}" y="${H/2}" text-anchor="middle" fill="var(--muted)">No data in this selection</text>`}
@@ -2295,7 +2186,7 @@ function exDraw(rows){
     }
   }
   svg.innerHTML=body;
-  $('#exleg').innerHTML=(cfg.badL?`<div><i style="background:var(--r)"></i>${esc(cfg.badL)}</div>`:'')+(cfg.okL?`<div><i style="background:var(--g);opacity:.6"></i>${esc(cfg.okL)}</div>`:'')+(!hist&&cfg.badL?`<div><i class="ln"></i>${esc('Share of '+cfg.badL.toLowerCase())}</div>`:'')+(!hist&&cfg.deploys&&exDeps(rows).length?'<div><i class="dep"></i>Deployment</div>':'')
+  $('#exleg').innerHTML=(cfg.badL?`<div><i style="background:var(--r)"></i>${esc(cfg.badL)}</div>`:'')+(cfg.okL?`<div><i style="background:var(--g);opacity:.6"></i>${esc(cfg.okL)}</div>`:'')+(!hist&&cfg.badL?`<div><i class="ln"></i>${esc('Share of '+cfg.badL.toLowerCase())}</div>`:'')
 }
 
 /* table */
@@ -2322,7 +2213,7 @@ let exFloatOpen=false;
 function exAction(a){
   const {s,def}=ui;
   if(a==='cols'){s.cols=null;updateGrid()}
-  else if(a==='reset'){s.f={};s.rng={};s.kv=[];s.q='';s.cq='';const q=$('#q'),c=$('#cq');if(q)q.value='';if(c)c.value='';updateAll()}
+  else if(a==='reset'){s.f={};s.rng={};s.q='';s.cq='';const q=$('#q'),c=$('#cq');if(q)q.value='';if(c)c.value='';updateAll()}
   else if(a==='csv'){const {vis}=exCols(def,s),q=v=>`"${String(v??'').replace(/"/g,'""')}"`,txt=[vis.map(c=>q(c.label)).join(','),...ui.rowsView.map(r=>vis.map(c=>q(r[c.k])).join(','))].join('\n'),l=document.createElement('a');l.href=URL.createObjectURL(new Blob([txt],{type:'text/csv'}));l.download=`${cur.tab.id}.csv`;l.click();toast(`Exported ${ui.rowsView.length} rows`)}
 }
 function exClick(T,e){
@@ -2410,8 +2301,8 @@ function scopeBar(input='',compact=false,extra=''){
   const showDql=hasDql(),showX=hasExplain();
   if(!input&&!extra&&!showSeg&&!showTime&&!showDql&&!showX)return '';
   const segs=['all',...SEGS],chev=svgI(ICO.chev,'style="width:14px;height:14px"');
-  const seg=showSeg?`<div class="pop"><button class="pickbtn" data-pop="segmenu" aria-haspopup="listbox" aria-expanded="false" aria-label="Segment: ${G.seg==='all'?'none':esc(G.seg)}" title="Segment">${svgI(ICO.cube)}<span class="segname">${G.seg==='all'?'All data':esc(G.seg)}</span>${chev}</button>
-    <div class="menu" id="segmenu" hidden><h5>Segments</h5><p class="seghint muted">A segment filters every view, for example by environment or team.</p><input class="msearch" placeholder="Search segments" aria-label="Search segments">${segs.map(x=>`<button class="mi" role="option" data-seg="${x}" aria-checked="${x===G.seg}"><i></i>${x==='all'?'No segment (all data)':esc(x)}</button>`).join('')}</div></div>`:'';
+  const seg=showSeg?`<div class="pop"><button class="pickbtn" data-pop="segmenu" aria-haspopup="listbox" aria-expanded="false" aria-label="Segment: ${G.seg==='all'?'none':esc(G.seg)}" title="Segment">${svgI(ICO.cube)}${G.seg==='all'?'':`<span class="segname">${esc(G.seg)}</span>`}${chev}</button>
+    <div class="menu" id="segmenu" hidden><h5>Segments</h5><input class="msearch" placeholder="Search segments" aria-label="Search segments">${segs.map(x=>`<button class="mi" role="option" data-seg="${x}" aria-checked="${x===G.seg}"><i></i>${x==='all'?'No segment (all data)':esc(x)}</button>`).join('')}</div></div>`:'';
   const dqlBtn=showDql?`<div class="pop"><button class="pickbtn" data-pop="dqlmenu" aria-haspopup="dialog" aria-expanded="false" title="Show this view as a DQL query">${svgI('<path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/>','style="width:16px;height:16px"')}DQL</button><div class="menu right dqlpop" id="dqlmenu" hidden></div></div>`:'';
   const xBtn=showX?`<button class="pickbtn" data-vx aria-pressed="${viewXp}" title="Ask Assist about this view">${svgI(SPARK,'style="width:16px;height:16px"')}Assist</button>`:'';
   const time=showTime?`<div class="tgrp"><div class="pop"><button class="pickbtn" data-pop="tfmenu" aria-haspopup="listbox" aria-expanded="false">${svgI('<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>','style="width:16px;height:16px"')}${esc(tfLabel())}${chev}</button>
@@ -2672,7 +2563,7 @@ function drawViewMenu(){
 }
 function applyView(v){
   const {s,tab}=ui;
-  s.q=v.q||'';s.kv=[];s.f={};Object.entries(v.f||{}).forEach(([k,a])=>{s.f[k]=new Set(a)});s.sort=v.sort||null;
+  s.q=v.q||'';s.f={};Object.entries(v.f||{}).forEach(([k,a])=>{s.f[k]=new Set(a)});s.sort=v.sort||null;
   if(v.scope)s.scope=v.scope;
   if(v.mode!==undefined&&v.mode!==s.mode){s.mode=v.mode;renderTable(tab,$('#body'));return}
   const q=$('#q');if(q)q.value=s.q;updateAll();
@@ -3140,10 +3031,7 @@ function dqlFor(){
   if(s){
     Object.entries(s.f).forEach(([k,set])=>{if(!set.size)return;const m=(cfg.map||{})[k];const fld=m?m[0]:k,tr=m?m[1]:(v=>v);const vals=[...set].map(v=>{const o=tr(v);return o==='true'||o==='false'?o:`"${o}"`});
       lines.push(vals.length===1?`filter ${fld} == ${vals[0]}`:`filter in(${fld}, ${vals.join(', ')})`)});
-    const fq=(k,m)=>m?m[0]:k,dq=v=>String(v).replace(/"/g,'\\"');
-    Object.entries(s.rng||{}).forEach(([k,r])=>{const fld=fq(k,(cfg.map||{})[k]);if(r.min!==''&&r.min!=null)lines.push(`filter ${fld} >= ${r.min}`);if(r.max!==''&&r.max!=null)lines.push(`filter ${fld} <= ${r.max}`)});
-    (s.kv||[]).forEach(t=>{const m=(cfg.map||{})[t.k],fld=fq(t.k,m),ex=t.vals.map(x=>x.m==='eq'?`${fld} == "${dq(m?m[1](x.o):x.o)}"`:x.m==='wild'?`matchesValue(${fld}, "${dq(x.o)}")`:`contains(${fld}, "${dq(x.o)}", caseSensitive:false)`),e=ex.length>1?`(${ex.join(' or ')})`:ex[0];lines.push(`filter ${t.neg?`not ${ex.length>1?e:`(${e})`}`:e}`)});
-    kvWords(s.q.trim()).forEach(w=>lines.push(`filter ${w.neg?'not ':''}contains(${cfg.search||'name'}, "${dq(w.w)}", caseSensitive:false)`));
+    if(s.q.trim())lines.push(`filter contains(${cfg.search||'name'}, "${s.q.trim().replace(/"/g,'\\"')}", caseSensitive:false)`);
     if(cfg.scopeMap){const sc=cfg.scopeMap[s.scope];lines.push(`filter ${sc||cfg.def}`)}
   }
   (cfg.tail||[]).forEach(x=>lines.push(x));
@@ -3246,12 +3134,8 @@ const XT={
  'Connection pool exhausted':x=>({sum:`${x.e} has run out of database connections. ${x.n} requests waited for a free connection, and response times rose with the queue. Connections are held longer since release ${x.ver}.`,cause:`Release ${x.ver} holds database connections too long`,why:`Pool usage hit its limit right after the deployment while request volume stayed flat.`,conf:'Medium',metric:`Pool usage reached 100% (limit 50).`,steps:[['Roll back ${E}','rollback'],['Raise the pool size','request'],['Open runbook','runbook']]})
 };
 /* root cause per problem for the list and details panel. Same values as explainX, without calling rnd() */
-const probRel=p=>{const r=seedRng(p.id),n=(a,b)=>a+Math.floor(r()*(b-a+1));for(let i=0;i<5;i++)r();const mins=n(4,38);return{mins,ver:`${n(2,4)}.${n(1,20)}.${n(0,9)}`}};
-PROB.forEach(p=>{const t=(XT[p.name]||XT['Failure rate increase'])({e:p.entity,ver:probRel(p).ver});p.cause=t.cause;p.conf=t.conf;p.why=t.why});
-/* a service runs the release its newest release-related problem names */
-[...PROB].sort((a,b)=>b.started-a.started).forEach(p=>{const sv=SERVICES.find(r=>r.name===p.entity&&r.type==='Service');if(sv&&/release/i.test(p.cause))sv.ver=probRel(p).ver});
-function exDeps(rows){const {to,from}=tfRange(),names=new Set(rows.map(r=>r.name)),seen=new Set();return PROB.filter(p=>names.has(p.entity)&&/release/i.test(p.cause)).map(p=>{const r=probRel(p);return{svc:p.entity,ver:r.ver,m:p.started+r.mins,after:r.mins,pid:p.id}}).filter(d=>d.m>=to&&d.m<=from&&!seen.has(d.svc+d.ver)&&seen.add(d.svc+d.ver)).sort((a,b)=>b.m-a.m).slice(0,5)}
-function exDepSvg(rows,cfg,ml,pw,mt,ph,to,from){if(!cfg.deploys)return'';const d=exDeps(rows);return d.map(x=>{const X=ml+pw*(from-x.m)/(from-to),end=X>ml+pw-90;return `<g class="exdep"><title>Deployed ${esc(x.svc)} ${esc(x.ver)}, ${fmtAgo(x.m)}. ${esc(x.pid)} started ${x.after} min later.</title><line x1="${X.toFixed(1)}" x2="${X.toFixed(1)}" y1="${mt}" y2="${mt+ph}"/><circle cx="${X.toFixed(1)}" cy="${mt+3}" r="3.5"/>${d.length<=3?`<text x="${(end?X-6:X+6).toFixed(1)}" y="${mt+7}" text-anchor="${end?'end':'start'}">${esc(x.svc)} ${esc(x.ver)}</text>`:''}</g>`}).join('')}
+const probVer=p=>{const r=seedRng(p.id);for(let i=0;i<6;i++)r();const n=(a,b)=>a+Math.floor(r()*(b-a+1));return `${n(2,4)}.${n(1,20)}.${n(0,9)}`};
+PROB.forEach(p=>{const t=(XT[p.name]||XT['Failure rate increase'])({e:p.entity,ver:probVer(p)});p.cause=t.cause;p.conf=t.conf;p.why=t.why});
 function explainBuild(p){
   const x=explainX(p),t=(XT[p.name]||XT['Failure rate increase'])(x);
   t.steps=t.steps.map(([l,k])=>[l.replace('${E}',x.e),k]);
@@ -4386,7 +4270,7 @@ document.addEventListener('click',e=>{
   const {s,tab,def}=ui;
   if(def.explorer&&exClick(T,e))return;
   if(T.closest('#cqclear')){const c=$('#cq');if(c){c.value='';ui.s.cq='';updateAll();c.focus()}return}
-  if(T.closest('#qclear')){s.q='';s.f={};s.rng={};s.kv=[];const q=$('#q');q.value='';updateAll();q.focus();return}
+  if(T.closest('#qclear')){s.q='';const q=$('#q');q.value='';updateAll();q.focus();return}
   const vw=T.closest('[data-view]');if(vw){const k=vw.dataset.view,v=k[0]==='p'?tab.views[+k.slice(1)]:userViews[vkey()][+k.slice(1)];$$('.menu').forEach(m=>{m.hidden=true});applyView(v);toast(`View: ${v.name}`);return}
   const vd=T.closest('[data-vdel]');if(vd){userViews[vkey()].splice(+vd.dataset.vdel,1);saveUV();drawViewMenu();return}
   if(T.closest('[data-vsave]')){const n=$('#vname').value.trim();if(!n){toast('Name the view first');$('#vname').focus();return}saveView(n);toast(`Saved view “${n}”`);drawViewMenu();return}
@@ -4397,11 +4281,10 @@ document.addEventListener('click',e=>{
     if(k==='doc')createDoc(v,'');
     else{s.q='';s.f={};s.scope='All';createWorkflow()}
     return}
-  const md=T.closest('[data-mode]');if(md){s.mode=+md.dataset.mode;s.f={};s.kv=[];s.sort=null;s.cols=null;s.rng={};s.cq='';s.fq={};s.fmore=new Set();renderTable(tab,$('#body'));return}
+  const md=T.closest('[data-mode]');if(md){s.mode=+md.dataset.mode;s.f={};s.sort=null;s.cols=null;s.rng={};s.cq='';s.fq={};s.fmore=new Set();renderTable(tab,$('#body'));return}
   const sc=T.closest('[data-scope]');if(sc){s.scope=sc.dataset.scope;updateAll();return}
   const chip=T.closest('.chip[data-k]');if(chip){s.f[chip.dataset.k]?.delete(chip.dataset.v);updateAll();return}
-  const kvi=T.closest('[data-kvi]');if(kvi&&ui){ui.s.kv.splice(+kvi.dataset.kvi,1);updateAll();return}
-  if(T.closest('#clearall')||T.closest('#reset')){s.f={};s.q='';s.rng={};s.kv=[];s.cq='';const q=$('#q');if(q)q.value='';const cq=$('#cq');if(cq)cq.value='';updateAll();return}
+  if(T.closest('#clearall')||T.closest('#reset')){s.f={};s.q='';s.rng={};s.cq='';const q=$('#q');if(q)q.value='';const cq=$('#cq');if(cq)cq.value='';updateAll();return}
   if(T.closest('#livebtn')){s.live=!s.live;renderTable(tab,$('#body'));return}
   const ap=T.closest('[data-apr]');if(ap){const r=ui.rowsView[+ap.dataset.apr];r.status=ap.dataset.v;toast(`${ap.dataset.v}: ${r.requester}, ${r.name}`);renderHead();updateAll();return}
   if(T.closest('[data-more]')){s.limit=(s.limit||PAGE())+PAGE();updateGrid();return}
@@ -4446,7 +4329,7 @@ document.addEventListener('input',e=>{
     if(e.target.dataset.fq!==undefined){s.fq[e.target.dataset.fq]=e.target.value;exFacets();return}
     if(e.target.id==='excq'){s.colq=e.target.value;drawColMenu();const i=$('#excq');i.focus();i.setSelectionRange(i.value.length,i.value.length);return}
   }
-  if(e.target.id==='q'&&ui){kvInput(e.target)}
+  if(e.target.id==='q'&&ui){ui.s.q=e.target.value;updateAll()}
 });
 document.addEventListener('toggle',e=>{if(!ui)return;if(e.target.matches('.fg')){const k=e.target.dataset.k;e.target.open?ui.s.closed.delete(k):ui.s.closed.add(k)}else if(e.target.matches('.exg')){const g=e.target.dataset.g;e.target.open?ui.s.gclosed.delete(g):ui.s.gclosed.add(g)}else if(e.target.matches('.exf')){const k=e.target.dataset.k;e.target.open?ui.s.closed.delete(k):ui.s.closed.add(k)}else if(e.target.matches('.ph-wrap'))ui.s.hideHead=!e.target.open},true);
 document.addEventListener('mousedown',e=>{const m=e.target.closest&&e.target.closest('#sxm');if(!m)return;sxDrag={x:e.clientX,y:e.clientY,l:m.scrollLeft,t:m.scrollTop,m};sxDragMoved=false});
@@ -4495,7 +4378,7 @@ render();
 </script>
 <script>
 /* Option A navigation layer.
-   Loaded after the Option B prototype (site/new). It leaves every page and route untouched and only
+   Loaded after the Option B prototype (site/new/index.html). It leaves every page and route untouched and only
    replaces the navigation chrome: the rail, the header tabs, the type switcher and the phone menu.
    6 apps instead of 12: Home, Explore, Issues, Library, Automate, Admin. */
 (function(){
@@ -4578,7 +4461,7 @@ renderMmenu=function(){
 };
 
 const _um=renderUserMenu;
-renderUserMenu=function(){_um();$('#usermenu').insertAdjacentHTML('afterbegin',`<a class="mi" role="menuitem" href="../new/">Switch to Option B<small>Original navigation, 12 apps</small></a><div class="msep"></div>`)};
+renderUserMenu=function(){_um();$('#usermenu').insertAdjacentHTML('afterbegin',`<a class="mi" role="menuitem" href="index.html">Switch to Option B<small>Original navigation, 12 apps</small></a><div class="msep"></div>`)};
 
 /* Home absorbs QuickStart, Business templates and the Smartscape launcher */
 {const ht=appOf('home').tabs.find(t=>t.id==='overview'),_r=ht.render;
