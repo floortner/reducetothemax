@@ -13,10 +13,11 @@
   - Home: Overview, Business (industry dashboard templates)
   - Problems: Problems, Investigations, Recommendations
   - Smartscape: 10 views in a top-bar picker, no tabs
-  - Infrastructure: Hosts, Network, Clouds, Kubernetes, Synthetic, SLOs, Alert templates
-  - Applications: Services, Errors, Response time, Frontends, Feature flags, Alert templates
-  - Telemetry: Logs, Metrics, Traces, User sessions, Events, AI
-  - Security: Vulnerabilities, SIEM (MITRE ATT&CK matrix), User audits, Detections, Alert templates
+  - Infrastructure: Hosts, Network, Clouds, Kubernetes, Cost, Templates
+  - Applications: Services, Errors, Profile & Debug, SLOs, Templates
+  - Experience: Frontends, Synthetic, User analytics, Feature flags, Heatmaps
+  - Telemetry: Logs, Metrics, Traces, User sessions, Events, LLM & Agentic
+  - Security: Vulnerabilities, SIEM (MITRE ATT&CK matrix), User audits, Detections, Templates
   - Documents: Dashboards, Notebooks, Pages, Launchpads
   - Automate: Workflows, Executions, Guardians
   - Admin: Coverage, Fleet, Hub, Access requests, Settings
@@ -66,9 +67,9 @@ Home (Overview, Topology, Business); Infrastructure (Hosts & Network, Kubernetes
 - **Structure:**
   - The global `APPS` array holds apps and tabs.
   - A tab uses the generic table engine (`renderTable`, `updateAll`, `updateGrid`, `filtered`, with facets, saved views, a drawer and `related` links) or a custom `render` function.
-  - `scopeBar` builds the top bar: segment, search, extras, Explain, DQL, timeframe.
+  - `scopeBar` builds the top bar: segment, search, extras, Assist, DQL, timeframe.
   - Detail pages (investigations, feature flags) use hash URLs of the form `#/app/tab/id`; `render()` derives `invOpen` and `flagOpen` from them.
-- **Cross-linking:** `go`, `goSpec`/`stepGo` and the `DQL` map (the `dtctl` command is derived from it) tie views together. The `XV` map holds Explain text, and Explain opens in the docked Assist panel through `explainToAssist`. `entityTarget`/`goEntity` route an entity name to the right app.
+- **Cross-linking:** `go`, `goSpec`/`stepGo` and the `DQL` map (the `dtctl` command is derived from it) tie views together. The `XV` map holds Assist text, and Explain opens in the docked Assist panel through `explainToAssist`. `entityTarget`/`goEntity` route an entity name to the right app.
 - **Themes and storage:** the themes are system, light, dark, midnight, terminal, contrast and bluebox, set by a `data-theme` attribute. `localStorage` keys are `dtproto_theme`, `dtproto_docs`, `dtproto_views`, `dtproto_dets`, `dtproto_flags` and `dtproto_assist_mode`.
 - **Data:** all mock. The pieces with real behaviour are the SLOs, feature flags, detections (linked to the SIEM matrix), investigations, and the Smartscape viewport (zoom, pan, mini map).
 
@@ -92,3 +93,7 @@ Home (Overview, Topology, Business); Infrastructure (Hosts & Network, Kubernetes
 
 ## For revised Option A
 Reuse these pieces: the `APPS` definition, the table engine, the `related`, `DQL` and `XV` maps, the drawer and detail routes, and the SLO, Synthetic and Security data models. The fewer-apps grouping is mostly a change to the `APPS` structure, `renderRail`, the link targets and the copy. Run the route sweep and the link-target check after regrouping.
+
+## Phone layout
+
+Below 700 px the prototype shows a read-only subset: Home, Problems, Services, Logs and Assist. A bottom bar replaces the rail, tables become cards, filters open as a bottom sheet, and the details panel and Assist are full screen. Every other view shows a "Best on a larger screen" notice. The subset is the `MOB_OK` list in `site/new/index.html`. Not built for phones: Smartscape pinch-zoom, Heatmaps, Profile & Debug, editing documents.
