@@ -9,7 +9,7 @@
 
 ## What was built
 - **Deliverable:** `site/new/index.html`, a single self-contained file of about 560 KB (CSS and JS inline, no external requests, icons as data URIs). It's served at `/new/` after deploy.
-- **Origin:** I analysed the screenshots and proposed two groupings to reduce the number of apps: **Option A** (aggressive, few apps and tabs) and **Option B** (relaxed). Option B is the prototype. Option A exists only as a parked alternative, `site/new/index-a.html`: a self-contained file (a copy of an earlier `index.html` with the Option A navigation layer inlined as a second `<script>` at the end). Don't maintain it; it is out of date. The original analysis is captured below.
+- **Origin:** I analysed the screenshots and proposed two groupings to reduce the number of apps: **Option A** (aggressive, few apps and tabs) and **Option B** (relaxed). Option B is the prototype. Option A exists only as a parked alternative, `site/new/minimal.html` (live at `/new/minimal.html`): a self-contained file (a copy of an earlier `index.html` with the Option A navigation layer inlined as a second `<script>` at the end). Don't maintain it beyond the shared user menu; it is out of date. The user menu in both files has a Navigation switch (Option B / Option A) that keeps the current view. The original analysis is captured below.
 - **Menu order (hard-coded in `renderRail` and `renderMmenu`):** Home | Search, Assist, Recents | Problems, Smartscape, Infrastructure, Applications, Experience, Security, Telemetry | Documents, Automate, Admin, QuickStart | pinned view | Collapse.
 - **Tabs:**
   - Home: Overview, Business (industry dashboard templates)
