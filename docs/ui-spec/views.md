@@ -1,6 +1,6 @@
 # View reference (generated from the prototype)
 
-Every app and tab of the Option B prototype (live at https://reducetothemax.com/new/, source `site/new/index.html`), extracted from its configuration. Each route links to the view in the live prototype. Use it as a checklist of **what each view shows**, not as a fixed design: column sets, facets and queries are starting points. The DQL is the prototype's illustrative query for the default state; your tuned backend queries win.
+Every app and tab of the Dynatrace prototype (live at https://reducetothemax.com/new/, source `site/new/index.html`), extracted from its configuration. Each route links to the view in the live prototype. Use it as a checklist of **what each view shows**, not as a fixed design: column sets, facets and queries are starting points. The DQL is the prototype's illustrative query for the default state; your tuned backend queries win.
 
 Legend: **Explorer** is the inventory pattern (overview panel, facets, table, details panel; see [README § 5.1](README.md#51-explorer-inventory-view--required)). **Table** is the simpler list (facets, table, details panel). **Custom** is a page with its own layout (see [README § 5.6](README.md#56-custom-pages--recommended-layout-your-call-details)). **Scope** lists the global controls that apply: segment, timeframe, live mode. **Phone** marks the read-only phone subset.
 

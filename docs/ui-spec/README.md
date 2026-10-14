@@ -1,6 +1,6 @@
-# Dynatrace UI spec (Option B)
+# Dynatrace UI spec
 
-A specification for building the Option B user interface in React, on top of a backend that already exists and talks to Dynatrace through **dtctl**. It is written for a team that will build with Claude Code.
+A specification for building the Dynatrace navigation option (the default prototype) in React, on top of a backend that already exists and talks to Dynatrace through **dtctl**. It is written for a team that will build with Claude Code.
 
 - **Owner:** Florian Ortner. Talk to him before changing anything marked **Required**.
 - **Source of truth for behaviour:** the clickable prototype at **https://reducetothemax.com/new/**. Open it next to this spec. Its source is `site/new/index.html` in the `floortner/reducetothemax` repo.
