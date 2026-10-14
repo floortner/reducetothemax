@@ -1,5 +1,7 @@
 # Handover: Dynatrace "Option B" navigation prototype
 
+**Status (2026-10-14):** everything is merged to `main`; no open PRs or branches. Work only on `site/new/index.html` (Option B). Use your own `git worktree` and a PR (see `CLAUDE.md`); two sessions in one folder have swept each other's changes into commits. The open items are listed at the end ("Open items").
+
 ## Project
 - **Repo:** GitHub `floortner/reducetothemax`. It's a static site: `site/` holds the mantras page for reducetothemax.com (see `CLAUDE.md`).
 - **Deploy:** the GitHub Action validates `mantras.json` on every PR. A push to `main` starts the FTPS deploy, which waits for manual approval in the `production` environment. `main` is protected, so changes go through a branch and PR, and the `validate` check must pass before merging. Workflow used: `git checkout -b <branch>`, commit, `git push -u origin <branch>`, `gh pr create --base main`, then `gh pr merge <n> --merge`.
@@ -7,8 +9,8 @@
 
 ## What was built
 - **Deliverable:** `site/new/index.html`, a single self-contained file of about 560 KB (CSS and JS inline, no external requests, icons as data URIs). It's served at `/new/` after deploy.
-- **Origin:** I analysed the screenshots and proposed two groupings to reduce the number of apps: **Option A** (aggressive, few apps and tabs) and **Option B** (relaxed). Only Option B is implemented. The original analysis is captured below.
-- **Menu order (hard-coded in `renderRail`):** Home | Search, Assist, Recents | Problems, Smartscape, Infrastructure, Applications, Telemetry, Security | Documents, Automate, QuickStart, Admin | pinned view | Collapse.
+- **Origin:** I analysed the screenshots and proposed two groupings to reduce the number of apps: **Option A** (aggressive, few apps and tabs) and **Option B** (relaxed). Option B is the prototype. Option A exists only as a parked, generated alternative, `site/new/index-a.html` (built by `site/new/build-index-a.py` from `index.html` plus `index-a.layer.js`). Don't maintain it; it may be out of date. The original analysis is captured below.
+- **Menu order (hard-coded in `renderRail` and `renderMmenu`):** Home | Search, Assist, Recents | Problems, Smartscape, Infrastructure, Applications, Experience, Security, Telemetry | Documents, Automate, Admin, QuickStart | pinned view | Collapse.
 - **Tabs:**
   - Home: Overview, Business (industry dashboard templates)
   - Problems: Problems, Investigations, Recommendations
@@ -70,12 +72,12 @@ Home (Overview, Topology, Business); Infrastructure (Hosts & Network, Kubernetes
   - `scopeBar` builds the top bar: segment, search, extras, Assist, DQL, timeframe.
   - Detail pages (investigations, feature flags) use hash URLs of the form `#/app/tab/id`; `render()` derives `invOpen` and `flagOpen` from them.
 - **Cross-linking:** `go`, `goSpec`/`stepGo` and the `DQL` map (the `dtctl` command is derived from it) tie views together. The `XV` map holds Assist text, and Explain opens in the docked Assist panel through `explainToAssist`. `entityTarget`/`goEntity` route an entity name to the right app.
-- **Themes and storage:** the themes are system, light, dark, midnight, terminal, contrast and bluebox, set by a `data-theme` attribute. `localStorage` keys are `dtproto_theme`, `dtproto_docs`, `dtproto_views`, `dtproto_dets`, `dtproto_flags` and `dtproto_assist_mode`.
+- **Themes and storage:** the themes are light (default), dark, midnight, terminal, contrast and bluebox, set by a `data-theme` attribute (there is no "system" theme). `localStorage` keys are `dtproto_theme`, `dtproto_docs`, `dtproto_views`, `dtproto_dets`, `dtproto_flags`, `dtproto_assist_mode` and `dtproto_hl` (menu group highlight).
 - **Data:** all mock. The pieces with real behaviour are the SLOs, feature flags, detections (linked to the SIEM matrix), investigations, and the Smartscape viewport (zoom, pan, mini map).
 
 ## Working method and pitfalls
 - **Edits:** I used Python patch scripts with exact-string replacements that assert a single match, and kept backups. For a quick syntax check, extract the last `<script>` and run `node --check`.
-- **Browser checks:** I used Chrome DevTools MCP. A file URL works for most checks, but `fetch` on the page needs an HTTP server (`python3 -m http.server` in `site/`). My standard check loops every `APPS`/`visibleTabs` route in each theme, asserts the body isn't empty, and watches for console errors. A second check asserts every `go()`/`goSpec` target resolves to a real tab id.
+- **Browser checks:** I used headless Chrome driven over the DevTools protocol (Node scripts), earlier Chrome DevTools MCP. Disable the cache (`Network.setCacheDisabled`) or you may test a stale page. A file URL works for most checks, but `fetch` on the page needs an HTTP server (`python3 -m http.server` in `site/`). My standard check loops every `APPS`/`visibleTabs` route in each theme, asserts the body isn't empty, and watches for console errors. A second check asserts every `go()`/`goSpec` target resolves to a real tab id.
 - **Data and load order:**
   - Data constants must be defined before `const APPS=[`.
   - Don't add `rnd()` calls early, or every later mock value changes. Use a hash like `flh`/`hr` instead.
@@ -116,3 +118,19 @@ Traps:
 Decisions: no "Monitors" as a Dynatrace term. Category and Impact left the Problems table (still filters and in the details panel). Technology moved to the hidden columns in Services.
 
 Next: Alert rules tab in Problems (name open: "Alert rules" or "Alerting"), then Grail features (query any field in one click, log patterns), then a span waterfall and flame graph in trace details.
+
+## Prototype features added after the first handover (all in `site/new/index.html`)
+- **Explorer layout** for Infrastructure, Applications, Experience and Telemetry tabs, Security vulnerabilities, Clouds and Feature flags: stats chips, stacked chart with a rate line (legend on hover), facets with search, content search across all columns, column chooser, row menu. Configured in the `EXPLORER` map (keys `app/tab`: `facets`, `more`, `stats`, `tl`); helpers `FX`, `RG`, `XC`, `SB`; extra column values come from `XSPEC` (hash-seeded `xh`, so they don't shift other mock data). Render: `exMarkup`, `exPanel`, `exDraw`, `exFacets`, `exGrid`. Timelines come from `exSeries` (daily pattern, spike at the open focus problem).
+- **New tabs:** Infrastructure Cost (`costTab`), Applications Profile & Debug (`renderProfiling`, state `PF`), Experience Heatmaps (`renderHeatmaps`, state `HM`) and User analytics (`uaTab`), Telemetry LLM & Agentic, Templates (alerts, dashboards, workflows). Old routes redirect through `LEGACY`.
+- **Smartscape:** the Grail view generates about 15k AWS, Azure and on-premises nodes (`SSV.grail`, `ssBase`, `ssPos`) and draws them on a canvas (`ssPaint`, `ssHit`). Clicking a node highlights its neighbours (`ssSel`). The wheel zoom is bound only to the graph canvases (`ssWheelBind`); a page-wide wheel listener slowed scrolling.
+- **Details panels** end with a copyable DQL/dtctl block (`dqlRow`, `drawerDql`). The app name in the header opens the start page; its chevron menu has pin, reset view, copy link and what's new (`drawAppMenu`, `WHATS_NEW`).
+- **Colour rules:** purple (`--p`) marks recommendations, access requests and "New" tab chips (`badge:{label:'New',tone:'p'}` on Heatmaps, Cost, Profile & Debug, SIEM). Don't use yellow for those. The avatar menu has "Highlight menu groups" (`APPGRP`, attribute `data-hlg`).
+- **Phone layout (below 700 px):** `MOB_OK` is the read-only subset (Home, Problems, Investigations, Services, Logs, Assist). Burger menu `renderMmenu`, bottom bar `renderMnav`, card tables, filter sheet, full-screen panels, 30 rows per page (`PAGE()`). Tested only in emulation.
+- **Accessibility pass (PR #12):** focus returns to the opened row, higher contrast, 12 px minimum text, skip link and a hidden page heading (`#pageh`), 44 px phone tap targets, segment picker on Profile & Debug and Heatmaps.
+
+## Open items
+- **Decide one expand pattern.** The app mixes a pill with a right chevron (˅ closed: Problems overview, QuickStart Datadog card), a left caret (▸ closed: investigation sections, explorer facets), a right ▾ (old facets) and none (Profile & Debug Insights). Recommendation: ▸ closed, ▾ open, on the left everywhere. Waiting for the owner's call.
+- Convert Investigations, SLOs, Workflows, Dashboards and Coverage to the explorer table layout.
+- Chart text alternatives, keyboard access to the Smartscape canvas, a few remaining low-contrast and tap-target cases.
+- Test the phone layout on a real device.
+- Datadog comfort backlog above (Alert rules tab, Grail moments, span waterfall).
