@@ -2,7 +2,8 @@
 
 A specification for building the Option B user interface in React, on top of a backend that already exists and talks to Dynatrace through **dtctl**. It is written for a team that will build with Claude Code.
 
-- **Source of truth for behaviour:** the clickable prototype, `site/new/index.html` (served at `/new/`). Open it next to this spec.
+- **Owner:** Florian Ortner. Talk to him before changing anything marked **Required**.
+- **Source of truth for behaviour:** the clickable prototype at **https://reducetothemax.com/new/**. Open it next to this spec. Its source is `site/new/index.html` in the `floortner/reducetothemax` repo.
 - **Source of truth for data:** your backend. This spec says what the UI needs and how it should feel. How you fetch, cache and tune is yours.
 - **Companion files:** [`views.md`](views.md) lists every app and tab with its columns, facets, stats, related actions and an illustrative DQL query. [`screenshots/`](screenshots/) holds 33 captures of the prototype (desktop 1440×900 and phone 390 px).
 
@@ -23,7 +24,7 @@ A specification for building the Option B user interface in React, on top of a b
 11. [Performance](#11-performance)
 12. [Build order](#12-build-order)
 13. [Lessons from the prototype](#13-lessons-from-the-prototype)
-14. [Open decisions](#14-open-decisions)
+14. [Decisions and planned work](#14-decisions-and-planned-work)
 15. [Appendix: working with Claude Code](#15-appendix-working-with-claude-code)
 
 ---
@@ -32,7 +33,7 @@ A specification for building the Option B user interface in React, on top of a b
 
 | Label | Meaning |
 |---|---|
-| **Required** | Users or other parts of the UI depend on it. Changing it changes the product. Talk to design first. |
+| **Required** | Users or other parts of the UI depend on it. Changing it changes the product. Talk to Florian Ortner first. |
 | **Recommended** | What the prototype learned. Deviate when you have a reason, and write the reason down. |
 | **Your call** | Deliberately open. Use your own ideas, especially where you know the backend better. |
 
@@ -113,7 +114,7 @@ The prototype uses `#/app/tab` and `#/app/tab/id` for detail pages (an investiga
 - **Each app shows its icon and name.** The current app is highlighted with a left bar. Apps with something waiting show a count pip (Problems shows open problems).
 - **Collapse** shrinks the rail to icons. The logo links to Home.
 - Search and Assist show their keyboard shortcuts (⌘K, ⌘I).
-- **Optional "Highlight menu groups"** (user menu): tints rail items by group (blue: Search, Assist, Recents, Documents, Automate, Admin; yellow: Infrastructure, Applications, Experience, Telemetry, QuickStart; purple: Home, Security, Smartscape). **Your call** whether to ship it. It was a review aid.
+- The prototype's "Highlight menu groups" toggle (user menu) was a review aid for the menu grouping. **Don't ship it.**
 
 ### 4.2 App header — Required
 
@@ -122,7 +123,7 @@ The prototype uses `#/app/tab` and `#/app/tab/id` for detail pages (an investiga
 - **The app name is a link** to the app's start page (its first tab) and clears that tab's filters.
 - **The chevron opens the app menu** ([screenshot](screenshots/23-app-menu.png)): Pin this view, Reset view, Copy link, What's new (the new tabs of this app with one line each), Documentation, Give feedback.
 - **Tabs** carry badges (section 6.2). The **+** button opens "Add a document" (dashboard, notebook, launchpad).
-- The **avatar** opens the user menu ([screenshot](screenshots/24-user-menu.png)): theme, highlight toggle, links, sign out.
+- The **avatar** opens the user menu ([screenshot](screenshots/24-user-menu.png)): theme, "Compared with Datadog" (5.7), links, sign out.
 
 ### 4.3 Scope bar — Required
 
@@ -289,7 +290,7 @@ interface ExplorerView {
 
 Problems, Recommendations, SLOs, Templates, User audits, the Documents tabs, Workflows, Executions, Guardians and the Admin tabs use a lighter version: facet panel, table, details panel, no overview chart. Some add **scope chips** above the table (Documents: All, Mine, Shared with me, Ready-made, Favorites, Trash). A **board** layout (List / Board by status) also exists, on the Feature flags explorer.
 
-- **Recommended:** convert these to the explorer once it exists. The review found the two generations side by side confusing (Open decision 14.3).
+- **Recommended:** convert these to the explorer once it exists. The review found the two generations side by side confusing.
 
 ### 5.3 Details panel — Required
 
@@ -338,9 +339,17 @@ Rules: Esc closes it. **Focus returns to the row that opened it** (a fixed acces
 | **Home** | Investigate box (free text or pick a problem), recent investigations, "Needs attention" tiles, latest problems, recommendations, recently opened. | [01](screenshots/01-home.png) |
 | **QuickStart** | "Coming from Datadog?" glossary (29 terms → Dynatrace place), add data, an environment overview, charts, findings. | [20](screenshots/20-quickstart.png) |
 
-### 5.7 Datadog comfort — Recommended
+### 5.7 Datadog comfort — Required
 
-For teams switching from Datadog: the `key:value` syntax with Datadog aliases (5.1.3), service versions and deploy markers on the Services chart, the QuickStart glossary, Datadog terms in search, and a "Compared with Datadog" write-up in the user menu (shareable link). The glossary is an experiment; keep it easy to remove.
+For teams switching from Datadog. Build all of it:
+
+- **`key:value` search with Datadog aliases** in every filter box (5.1.3).
+- **Service versions and deploy markers** on the Services table and chart ([screenshot](screenshots/06-explorer-details-dql.png)).
+- **"Coming from Datadog?" glossary** on QuickStart: 29 Datadog terms, each linking to its place in Dynatrace ([screenshot](screenshots/20-quickstart.png)).
+- **Datadog terms in global search:** "monitors", "service map", "watchdog" and the other glossary terms find their Dynatrace equivalent (4.4).
+- **"Compared with Datadog" write-up** in the user menu: a readable page on why the product feels familiar and where Dynatrace goes further, with a shareable link ([prototype](https://reducetothemax.com/new/?read=datadog)).
+
+Keep the glossary and write-up content in data files, not in components, so product marketing can edit the wording.
 
 ---
 
@@ -368,9 +377,17 @@ For teams switching from Datadog: the `key:value` syntax with Datadog aliases (5
 
 Open on click, close on outside click, Esc and **route change** (a prototype bug left a row menu open on the next page). Keyboard: arrow keys move, Enter selects. Menus near the screen edge flip to stay visible.
 
-### 6.4 Expand and collapse — Open decision
+### 6.4 Expand and collapse — Required
 
-The prototype has four styles, which is the main inconsistency left. See 14.1 before building any collapsible section.
+Two levels, each with one look:
+
+| Level | Use for | Look |
+|---|---|---|
+| **Page panel** | An area that hides or shows a whole block of the page: the Problems "Overview", the QuickStart "Coming from Datadog?" | A bordered pill button: title, a muted summary ("10 open, 5 availability", "29 terms"), a chevron on the right: **˅ collapsed, ˄ expanded**. The content sits below the pill. |
+| **Section** | A section inside a page or panel: investigation sections, facet groups, insights, groups in a details panel | A caret on the left of the title: **▸ collapsed, ▾ expanded**. The whole header row is the click target. |
+
+- Both are buttons with `aria-expanded`, work with Enter and Space, and keep their state per user and view (Recommended).
+- **Fix two prototype deviations:** the older facet panels put a ▾ on the right of the facet name, and the Profile & Debug "Insights" box has no arrow at all. Both are sections and get the left caret.
 
 ### 6.5 Loading, empty, error and permission states — Required (new; the prototype has mock data and none of these)
 
@@ -421,7 +438,7 @@ Tag text is mixed 74% tone and 26% text colour on a 15% tone background, which k
 
 ### 7.3 Icons — Recommended
 
-Product app icons for apps (the PNG/SVG set in `dynatrace-explore-apps-screenshots/dynatrace-app-icons/`), line icons (1.7 px stroke) for actions. Icons never carry meaning alone.
+Product app icons for apps (the PNG/SVG set in `dynatrace-explore-apps-screenshots/dynatrace-app-icons/` in the repo), line icons (1.7 px stroke) for actions. Icons never carry meaning alone.
 
 ### 7.4 Charts — Required (rules), Your call (library)
 
@@ -613,7 +630,7 @@ Things that went wrong once and shouldn't happen again:
 - **Filters were not in the URL**, so "Copy link" couldn't share a filtered view.
 - **Two table generations** confused reviewers (5.2).
 - **Status colours drifted** (yellow for "new", amber for counts). Fixed by the purple rule (6.2).
-- **Expanders disagree on arrow direction** (14.1).
+- **Expanders disagreed on arrow direction**, until the two-level rule (6.4).
 - **The overview header was too tall** and was condensed twice (5.1.1).
 - **Charts were confusing** until they became stacked bars with a rate line and chips instead of thin lines and coloured underlines (5.1.1).
 - **Clearing filters must clear all filter state**, free text and structured (5.1.3).
@@ -622,16 +639,27 @@ Things that went wrong once and shouldn't happen again:
 
 ---
 
-## 14. Open decisions
+## 14. Decisions and planned work
 
-| # | Decision | Options | Recommendation |
-|---|---|---|---|
-| 14.1 | **Expand/collapse pattern** | pill with a right chevron (˅ closed, ˄ open: Problems overview, QuickStart glossary); left caret (▸ closed, ▾ open: investigation sections, facet groups); right ▾ (old facets); none (Profile & Debug Insights) | ▸ closed / ▾ open, on the left, everywhere |
-| 14.2 | Name of the alerting tab in Problems | "Alert rules" or "Alerting" | not decided |
-| 14.3 | Convert simple lists to the explorer | Investigations, SLOs, Workflows, Dashboards, Coverage | convert |
-| 14.4 | Menu group highlight | ship or drop | review aid; drop unless users ask |
-| 14.5 | Live data transport | polling or streaming from your backend | your call (dtctl server mode can't stream) |
-| 14.6 | Where saved views, pins, recents and user documents live | backend or local | backend |
+### 14.1 Decisions made for this spec
+
+| Decision | Outcome |
+|---|---|
+| Expand/collapse | Two levels: pill for page panels, left caret for sections (6.4) |
+| Datadog comfort | Build all of it, including the "Compared with Datadog" write-up (5.7) |
+| Simple lists (Investigations, SLOs, Workflows, Dashboards, Coverage) | Convert to the explorer when it exists (Recommended, 5.2) |
+| "Highlight menu groups" toggle | Don't ship; it was a review aid (4.1) |
+| Saved views, pins, recents, user documents | Stored in the backend, per user (9.4) |
+| Live data transport | Your call: polling or streaming from your backend; dtctl server mode can't stream (9.1) |
+| Themes | Light is the default; which other themes to ship is your call (4.7) |
+
+### 14.2 Planned, not in the prototype yet
+
+These were next on the prototype's list. They are not designed; treat them as direction, and check with Florian Ortner before building.
+
+- **Alerting tab in Problems** (name not decided: "Alert rules" or "Alerting"): one place for alert rules, today split across the Templates tabs and Recommendations.
+- **Grail moments:** query any field in one click from any table, and log patterns.
+- **Span waterfall and flame graph** in trace details.
 
 ---
 
@@ -647,6 +675,7 @@ Things that went wrong once and shouldn't happen again:
 - Wording: sentence case; "Open" navigates, "Show" filters a list, "Create" makes something.
 - Every view shows the DQL it ran (DQL popover and "Query this item"). Keep them in sync with the real query.
 - Every transient menu or panel closes on route change and on Esc; focus returns to the opener.
+- Collapsible areas: page panels are a pill with a right chevron (˅/˄), sections use a left caret (▸/▾). Nothing else.
 - The browser never sees a Dynatrace token. All Dynatrace access goes through the backend client (dtctl underneath).
 - Each agent or person works in its own git worktree; changes go through a PR.
 ```
@@ -661,7 +690,7 @@ Things that went wrong once and shouldn't happen again:
 
 The prototype is one file (`site/new/index.html`, about 750 KB). Useful entry points when you want to see how something behaves: `APPS` (all apps and tabs), `EXPLORER` (explorer configurations), `renderTable`/`exPanel`/`exFacets`/`exGrid` (explorer), `openDrawer`/`dqlRow` (details panel), `kvParse`/`kvSuggest` (key:value search), `dqlFor` and the `DQL` map (queries), `renderSmartscape`/`ssPaint` (graph), `renderRail`/`renderHead` (shell), `MOB_OK`/`renderMmenu` (phone). Don't port its code: it's optimised for being a single static file with mock data.
 
-Serve it locally:
+The live version is at https://reducetothemax.com/new/. To run it locally from the repo:
 
 ```bash
 cd site && python3 -m http.server 8000   # then open http://localhost:8000/new/

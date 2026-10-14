@@ -1,6 +1,6 @@
 # View reference (generated from the prototype)
 
-Every app and tab of the Option B prototype (`site/new/index.html`), extracted from its configuration. Use it as a checklist of **what each view shows**, not as a fixed design: column sets, facets and queries are starting points. The DQL is the prototype's illustrative query for the default state; your tuned backend queries win.
+Every app and tab of the Option B prototype (live at https://reducetothemax.com/new/, source `site/new/index.html`), extracted from its configuration. Each route links to the view in the live prototype. Use it as a checklist of **what each view shows**, not as a fixed design: column sets, facets and queries are starting points. The DQL is the prototype's illustrative query for the default state; your tuned backend queries win.
 
 Legend: **Explorer** is the inventory pattern (overview panel, facets, table, details panel; see [README § 5.1](README.md#51-explorer-inventory-view--required)). **Table** is the simpler list (facets, table, details panel). **Custom** is a page with its own layout (see [README § 5.6](README.md#56-custom-pages--recommended-layout-your-call-details)). **Scope** lists the global controls that apply: segment, timeframe, live mode. **Phone** marks the read-only phone subset.
 
@@ -25,7 +25,7 @@ Stats chips: the first entry is shown as the count next to the view title, the r
 
 ### Home / Overview
 
-- **Route:** `#/home/overview` · **View:** Custom (`renderHome`) · **Scope:** segment · **Phone:** yes
+- **Route:** [`#/home/overview`](https://reducetothemax.com/new/#/home/overview) · **View:** Custom (`renderHome`) · **Scope:** segment · **Phone:** yes
 - **Screenshot:** [01-home](screenshots/01-home.png)
 
 ```
@@ -37,7 +37,7 @@ fetch dt.davis.problems
 
 ### Home / Business
 
-- **Route:** `#/home/business` · **View:** Custom (`renderBusiness`) · **Scope:** segment, timeframe
+- **Route:** [`#/home/business`](https://reducetothemax.com/new/#/home/business) · **View:** Custom (`renderBusiness`) · **Scope:** segment, timeframe
 
 ```
 fetch bizevents, from:now()-2h
@@ -48,7 +48,7 @@ fetch bizevents, from:now()-2h
 
 ### Infrastructure / Hosts
 
-- **Route:** `#/infrastructure/hosts` · **View:** Explorer · **Scope:** segment
+- **Route:** [`#/infrastructure/hosts`](https://reducetothemax.com/new/#/infrastructure/hosts) · **View:** Explorer · **Scope:** segment
 - **Stats chips:** Entities, Critical, Warning, CPU, Memory
 - **Chart:** Entities over time, stacked Unhealthy entities / Healthy entities; histogram of CPU usage
 - **Facets:** Type, Health, Cloud, OS, CPU (range), Memory (range), Host group [Metadata], Region [Metadata], Monitoring mode [Metadata], Team [Metadata]
@@ -65,7 +65,7 @@ smartscapeNodes "HOST"
 
 ### Infrastructure / Network
 
-- **Route:** `#/infrastructure/network` · **View:** Explorer · **Scope:** segment
+- **Route:** [`#/infrastructure/network`](https://reducetothemax.com/new/#/infrastructure/network) · **View:** Explorer · **Scope:** segment
 - **Stats chips:** Entities, Critical, Warning, Utilization, Traffic
 - **Chart:** Entities over time, stacked Unhealthy entities / Healthy entities; histogram of Utilization
 - **Facets:** Type, Health, Vendor, Site, Utilization (range), Traffic (range), Model [Metadata], SNMP version [Metadata], Team [Metadata]
@@ -81,7 +81,7 @@ smartscapeNodes "NETWORK_DEVICE", "NETWORK_INTERFACE"
 
 ### Infrastructure / Clouds
 
-- **Route:** `#/infrastructure/clouds` · **View:** Explorer · **Scope:** segment
+- **Route:** [`#/infrastructure/clouds`](https://reducetothemax.com/new/#/infrastructure/clouds) · **View:** Explorer · **Scope:** segment
 - **Stats chips:** Resources, Critical, Warning, Unmonitored, Accounts, Regions
 - **Chart:** Resources over time, stacked Unhealthy resources / Healthy resources; histogram of CPU usage
 - **Facets:** Cloud, Category, Resource type, Health, Monitoring, CPU (range), Account [Metadata], Region [Metadata], State [Metadata], Environment [Metadata], Team [Metadata]
@@ -98,7 +98,7 @@ smartscapeNodes "AWS_*", "AZURE_*", "GCP_*"
 
 ### Infrastructure / Kubernetes
 
-- **Route:** `#/infrastructure/kubernetes` · **View:** Explorer · **Scope:** segment
+- **Route:** [`#/infrastructure/kubernetes`](https://reducetothemax.com/new/#/infrastructure/kubernetes) · **View:** Explorer · **Scope:** segment
 - **Stats chips:** Entities, Critical, Warning, Pods, CPU
 - **Chart:** Entities over time, stacked Unhealthy entities / Healthy entities; histogram of CPU usage
 - **Facets:** Type, Health, Cluster, CPU (range), Memory (range), Namespace [Metadata], Version [Metadata], Team [Metadata]
@@ -114,7 +114,7 @@ smartscapeNodes "KUBERNETES_WORKLOAD"
 
 ### Infrastructure / Cost
 
-- **Route:** `#/infrastructure/cost` · **View:** Explorer · **Scope:** segment · **Tab badge:** New
+- **Route:** [`#/infrastructure/cost`](https://reducetothemax.com/new/#/infrastructure/cost) · **View:** Explorer · **Scope:** segment · **Tab badge:** New
 - **Stats chips:** Entities, Monthly cost, Potential savings, Idle spend, Unallocated
 - **Chart:** Spend per hour ($) over time, stacked Idle spend / Used capacity; histogram of Cost per month
 - **Facets:** Type, Cloud, Rightsizing, Cost / month (range), Idle (range), Account [Metadata], Region [Metadata], Team [Metadata], Environment [Metadata], Cost center [Metadata]
@@ -132,7 +132,7 @@ fetch dt.cost.entities
 
 ### Infrastructure / Templates
 
-- **Route:** `#/infrastructure/templates` · **View:** Table · **Scope:** —
+- **Route:** [`#/infrastructure/templates`](https://reducetothemax.com/new/#/infrastructure/templates) · **View:** Table · **Scope:** —
 - **Facets:** Type, Applies to
 - **Columns:** Template, Type, Applies to, Includes
 
@@ -146,7 +146,7 @@ fetch dt.system.templates
 
 ### Applications / Services
 
-- **Route:** `#/applications/services` · **View:** Explorer · **Scope:** segment · **Phone:** yes
+- **Route:** [`#/applications/services`](https://reducetothemax.com/new/#/applications/services) · **View:** Explorer · **Scope:** segment · **Phone:** yes
 - **Stats chips:** Services, Critical, Warning, Requests/min, Error rate
 - **Chart:** Requests / min over time, stacked Failed requests / Successful requests; histogram of Median response time
 - **Facets:** Type, Health, Technology, Error rate (range), Median response (range), Requests/min (range), Namespace [Metadata], Cluster [Metadata], Team [Metadata]
@@ -163,7 +163,7 @@ smartscapeNodes "SERVICE"
 
 ### Applications / Errors
 
-- **Route:** `#/applications/errors` · **View:** Explorer · **Scope:** segment
+- **Route:** [`#/applications/errors`](https://reducetothemax.com/new/#/applications/errors) · **View:** Explorer · **Scope:** segment
 - **Stats chips:** Distinct errors, Errors, Affected services, Affected users, New or increasing
 - **Chart:** Errors over time, stacked Failed requests / —; histogram of Errors per endpoint
 - **Facets:** Failure reason, Request type, Service, Errors (range), Rate (range), HTTP status [Metadata], Exception [Metadata], Trend [Metadata], Team [Metadata]
@@ -181,7 +181,7 @@ fetch spans, from:now()-2h
 
 ### Applications / Profile & Debug
 
-- **Route:** `#/applications/profiling` · **View:** Custom (`renderProfiling`) · **Scope:** segment, timeframe · **Tab badge:** New
+- **Route:** [`#/applications/profiling`](https://reducetothemax.com/new/#/applications/profiling) · **View:** Custom (`renderProfiling`) · **Scope:** segment, timeframe · **Tab badge:** New
 - **Related actions (details panel):** Show traces, Show services
 - **Screenshot:** [14-profile-debug](screenshots/14-profile-debug.png)
 
@@ -194,7 +194,7 @@ fetch dt.profiling.samples
 
 ### Applications / SLOs
 
-- **Route:** `#/applications/slos` · **View:** Table · **Scope:** — · **Tab badge:** count, r
+- **Route:** [`#/applications/slos`](https://reducetothemax.com/new/#/applications/slos) · **View:** Table · **Scope:** — · **Tab badge:** count, r
 - **Facets:** Status, Service
 - **Columns:** SLO, Service, Target, Current, Error budget, Burn rate, Status
 - **Related actions (details panel):** Show service, Show problems, Show monitors, Open guardians
@@ -208,7 +208,7 @@ fetch dt.system.slo_status
 
 ### Applications / Templates
 
-- **Route:** `#/applications/templates` · **View:** Table · **Scope:** —
+- **Route:** [`#/applications/templates`](https://reducetothemax.com/new/#/applications/templates) · **View:** Table · **Scope:** —
 - **Facets:** Type, Applies to
 - **Columns:** Template, Type, Applies to, Includes
 
@@ -222,7 +222,7 @@ fetch dt.system.templates
 
 ### Experience / Frontends
 
-- **Route:** `#/experience/frontends` · **View:** Explorer · **Scope:** segment
+- **Route:** [`#/experience/frontends`](https://reducetothemax.com/new/#/experience/frontends) · **View:** Explorer · **Scope:** segment
 - **Stats chips:** Frontends, Without RUM, Apdex, Load time, User actions
 - **Chart:** User actions over time, stacked Frustrated actions / Satisfied actions; histogram of Load time
 - **Facets:** Kind, Real user monitoring, Apdex (range), Load time (range), Region [Metadata], Host [Metadata], Team [Metadata]
@@ -239,7 +239,7 @@ smartscapeNodes "APPLICATION"
 
 ### Experience / Synthetic
 
-- **Route:** `#/experience/synthetic` · **View:** Explorer · **Scope:** segment · **Tab badge:** count, r
+- **Route:** [`#/experience/synthetic`](https://reducetothemax.com/new/#/experience/synthetic) · **View:** Explorer · **Scope:** segment · **Tab badge:** count, r
 - **Stats chips:** Monitors, Failing, Availability, Duration, Locations
 - **Chart:** Runs over time, stacked Failed runs / Successful runs; histogram of Duration
 - **Facets:** Type, Status, Frequency, Location, Availability (range), Duration (range), Team [Metadata]
@@ -255,7 +255,7 @@ smartscapeNodes "SYNTHETIC_TEST"
 
 ### Experience / User analytics
 
-- **Route:** `#/experience/user-analytics` · **View:** Explorer · **Scope:** segment
+- **Route:** [`#/experience/user-analytics`](https://reducetothemax.com/new/#/experience/user-analytics) · **View:** Explorer · **Scope:** segment
 - **Modes:** Users, Pages, Journeys
 - **Stats chips:** Users, Frustrated, New users, Sessions, Avg session, Converted
 - **Chart:** Sessions over time, stacked Frustrated sessions / Satisfied sessions; histogram of Avg session duration
@@ -274,7 +274,7 @@ fetch user.sessions
 
 ### Experience / Feature flags
 
-- **Route:** `#/experience/feature-flags` · **View:** Explorer · **Scope:** —
+- **Route:** [`#/experience/feature-flags`](https://reducetothemax.com/new/#/experience/feature-flags) · **View:** Explorer · **Scope:** —
 - **Stats chips:** Flags, Live, In development, Unused, Evaluations (24 h)
 - **Chart:** Evaluations / min over time, stacked Evaluation errors / Evaluations; histogram of Evaluations per flag (24 h)
 - **Facets:** Status, Type, Staleness, Environments, Creator, Evaluations (24 h) (range), Service [Metadata], Team [Metadata], Approval [Metadata]
@@ -293,7 +293,7 @@ fetch events, from:now()-24h
 
 ### Experience / Heatmaps
 
-- **Route:** `#/experience/heatmaps` · **View:** Custom (`renderHeatmaps`) · **Scope:** segment, timeframe · **Tab badge:** New
+- **Route:** [`#/experience/heatmaps`](https://reducetothemax.com/new/#/experience/heatmaps) · **View:** Custom (`renderHeatmaps`) · **Scope:** segment, timeframe · **Tab badge:** New
 - **Related actions (details panel):** Show frontends, Show user sessions
 - **Screenshot:** [15-heatmaps](screenshots/15-heatmaps.png)
 
@@ -309,7 +309,7 @@ fetch user.events
 
 ### Smartscape / Around an entity
 
-- **Route:** `#/smartscape/around` · **View:** Custom (`renderSmartscape`) · **Scope:** segment
+- **Route:** [`#/smartscape/around`](https://reducetothemax.com/new/#/smartscape/around) · **View:** Custom (`renderSmartscape`) · **Scope:** segment
 - **Screenshot:** [11-smartscape-around](screenshots/11-smartscape-around.png)
 
 ```
@@ -321,7 +321,7 @@ smartscapeNodes "SERVICE"
 
 ### Smartscape / Problem graph
 
-- **Route:** `#/smartscape/problem` · **View:** Custom (`renderSmartscape`) · **Scope:** segment
+- **Route:** [`#/smartscape/problem`](https://reducetothemax.com/new/#/smartscape/problem) · **View:** Custom (`renderSmartscape`) · **Scope:** segment
 - **Screenshot:** [13-problem-graph](screenshots/13-problem-graph.png)
 
 ```
@@ -334,7 +334,7 @@ fetch dt.davis.problems
 
 ### Smartscape / Smartscape on Grail
 
-- **Route:** `#/smartscape/grail` · **View:** Custom (`renderSmartscape`) · **Scope:** segment
+- **Route:** [`#/smartscape/grail`](https://reducetothemax.com/new/#/smartscape/grail) · **View:** Custom (`renderSmartscape`) · **Scope:** segment
 - **Screenshot:** [12-smartscape-grail](screenshots/12-smartscape-grail.png)
 
 ```
@@ -345,7 +345,7 @@ smartscapeNodes "*"
 
 ### Smartscape / Infrastructure overview
 
-- **Route:** `#/smartscape/infra` · **View:** Custom (`renderSmartscape`) · **Scope:** segment
+- **Route:** [`#/smartscape/infra`](https://reducetothemax.com/new/#/smartscape/infra) · **View:** Custom (`renderSmartscape`) · **Scope:** segment
 
 ```
 smartscapeNodes "HOST", "PROCESS_GROUP_INSTANCE", "CONTAINER_GROUP_INSTANCE"
@@ -355,7 +355,7 @@ smartscapeNodes "HOST", "PROCESS_GROUP_INSTANCE", "CONTAINER_GROUP_INSTANCE"
 
 ### Smartscape / Service dependency graph
 
-- **Route:** `#/smartscape/service` · **View:** Custom (`renderSmartscape`) · **Scope:** segment
+- **Route:** [`#/smartscape/service`](https://reducetothemax.com/new/#/smartscape/service) · **View:** Custom (`renderSmartscape`) · **Scope:** segment
 
 ```
 smartscapeEdges "calls"
@@ -365,7 +365,7 @@ smartscapeEdges "calls"
 
 ### Smartscape / Kubernetes overview
 
-- **Route:** `#/smartscape/k8s` · **View:** Custom (`renderSmartscape`) · **Scope:** segment
+- **Route:** [`#/smartscape/k8s`](https://reducetothemax.com/new/#/smartscape/k8s) · **View:** Custom (`renderSmartscape`) · **Scope:** segment
 
 ```
 smartscapeNodes "KUBERNETES_CLUSTER", "KUBERNETES_NODE", "KUBERNETES_NAMESPACE", "KUBERNETES_WORKLOAD", "KUBERNETES_POD"
@@ -374,7 +374,7 @@ smartscapeNodes "KUBERNETES_CLUSTER", "KUBERNETES_NODE", "KUBERNETES_NAMESPACE",
 
 ### Smartscape / AWS overview
 
-- **Route:** `#/smartscape/aws` · **View:** Custom (`renderSmartscape`) · **Scope:** segment
+- **Route:** [`#/smartscape/aws`](https://reducetothemax.com/new/#/smartscape/aws) · **View:** Custom (`renderSmartscape`) · **Scope:** segment
 
 ```
 smartscapeNodes "AWS_*"
@@ -384,7 +384,7 @@ smartscapeNodes "AWS_*"
 
 ### Smartscape / Azure overview
 
-- **Route:** `#/smartscape/azure` · **View:** Custom (`renderSmartscape`) · **Scope:** segment
+- **Route:** [`#/smartscape/azure`](https://reducetothemax.com/new/#/smartscape/azure) · **View:** Custom (`renderSmartscape`) · **Scope:** segment
 
 ```
 smartscapeNodes "AZURE_*"
@@ -394,7 +394,7 @@ smartscapeNodes "AZURE_*"
 
 ### Smartscape / AI Observability
 
-- **Route:** `#/smartscape/ai` · **View:** Custom (`renderSmartscape`) · **Scope:** segment
+- **Route:** [`#/smartscape/ai`](https://reducetothemax.com/new/#/smartscape/ai) · **View:** Custom (`renderSmartscape`) · **Scope:** segment
 
 ```
 smartscapeNodes "LLM_MODEL", "AGENT", "VECTOR_DATABASE"
@@ -404,7 +404,7 @@ smartscapeNodes "LLM_MODEL", "AGENT", "VECTOR_DATABASE"
 
 ### Smartscape / Security problem
 
-- **Route:** `#/smartscape/security` · **View:** Custom (`renderSmartscape`) · **Scope:** segment
+- **Route:** [`#/smartscape/security`](https://reducetothemax.com/new/#/smartscape/security) · **View:** Custom (`renderSmartscape`) · **Scope:** segment
 
 ```
 smartscapeNodes "VULNERABILITY"
@@ -415,7 +415,7 @@ smartscapeNodes "VULNERABILITY"
 
 ### Smartscape / Network devices
 
-- **Route:** `#/smartscape/network` · **View:** Custom (`renderSmartscape`) · **Scope:** segment
+- **Route:** [`#/smartscape/network`](https://reducetothemax.com/new/#/smartscape/network) · **View:** Custom (`renderSmartscape`) · **Scope:** segment
 
 ```
 smartscapeNodes "NETWORK_DEVICE", "NETWORK_INTERFACE"
@@ -427,7 +427,7 @@ smartscapeNodes "NETWORK_DEVICE", "NETWORK_INTERFACE"
 
 ### Telemetry / Logs
 
-- **Route:** `#/telemetry/logs` · **View:** Explorer · **Scope:** segment, timeframe, live · **Phone:** yes
+- **Route:** [`#/telemetry/logs`](https://reducetothemax.com/new/#/telemetry/logs) · **View:** Explorer · **Scope:** segment, timeframe, live · **Phone:** yes
 - **Stats chips:** Log lines, Error, Warn, Sources, Namespaces
 - **Chart:** Log lines over time, stacked Errors / Other log lines
 - **Facets:** Level, Source, Namespace, Cluster, Environment [Metadata], Process [Metadata], Deployment [Metadata]
@@ -445,7 +445,7 @@ fetch logs, from:now()-2h
 
 ### Telemetry / Metrics
 
-- **Route:** `#/telemetry/metrics` · **View:** Explorer · **Scope:** —
+- **Route:** [`#/telemetry/metrics`](https://reducetothemax.com/new/#/telemetry/metrics) · **View:** Explorer · **Scope:** —
 - **Stats chips:** Metrics, Built in, Custom and extensions, Series, Data points / min
 - **Chart:** Data points over time, stacked — / Data points; histogram of Series per metric
 - **Facets:** Domain, Type, Unit, Source, Aggregations [Metadata], Retention (days) [Metadata], Team [Metadata]
@@ -461,7 +461,7 @@ metrics
 
 ### Telemetry / Traces
 
-- **Route:** `#/telemetry/traces` · **View:** Explorer · **Scope:** segment, timeframe
+- **Route:** [`#/telemetry/traces`](https://reducetothemax.com/new/#/telemetry/traces) · **View:** Explorer · **Scope:** segment, timeframe
 - **Stats chips:** Traces, Failed, Duration, Services, Spans
 - **Chart:** Requests over time, stacked Failed requests / Successful requests; histogram of Duration
 - **Facets:** Status, Service, Duration (range), Spans (range), HTTP method [Metadata], HTTP status [Metadata], Kubernetes namespace [Metadata], Request type [Metadata]
@@ -480,7 +480,7 @@ fetch spans, from:now()-2h
 
 ### Telemetry / User sessions
 
-- **Route:** `#/telemetry/user-sessions` · **View:** Explorer · **Scope:** segment, timeframe
+- **Route:** [`#/telemetry/user-sessions`](https://reducetothemax.com/new/#/telemetry/user-sessions) · **View:** Explorer · **Scope:** segment, timeframe
 - **Stats chips:** Sessions, Frustrated, Tolerating, Duration, Errors
 - **Chart:** Sessions over time, stacked Frustrated sessions / Satisfied sessions; histogram of Session duration
 - **Facets:** Frontend, Country, Browser or OS, Experience, Duration (range), Errors (range), City [Metadata], Referrer [Metadata], Bounced [Metadata]
@@ -497,7 +497,7 @@ fetch user.sessions, from:now()-2h
 
 ### Telemetry / Events
 
-- **Route:** `#/telemetry/business-events` · **View:** Explorer · **Scope:** segment
+- **Route:** [`#/telemetry/business-events`](https://reducetothemax.com/new/#/telemetry/business-events) · **View:** Explorer · **Scope:** segment
 - **Stats chips:** Event types, Events, Active, Providers, Categories
 - **Chart:** Events over time, stacked — / Events; histogram of Events per type
 - **Facets:** Category, Status, Provider, Bucket [Metadata], Source [Metadata], Schema [Metadata], Team [Metadata]
@@ -512,7 +512,7 @@ fetch bizevents, from:now()-2h
 
 ### Telemetry / LLM & Agentic
 
-- **Route:** `#/telemetry/ai` · **View:** Table · **Scope:** segment, timeframe
+- **Route:** [`#/telemetry/ai`](https://reducetothemax.com/new/#/telemetry/ai) · **View:** Table · **Scope:** segment, timeframe
 - **Facets:** Application, Model, Quality, Flag
 - **Columns:** Conversation, Application, Model, Turns, Latency, Cost, Groundedness, Relevance, Quality, Flag, Started
 - **Related actions (details panel):** Open in Smartscape
@@ -529,7 +529,7 @@ fetch spans, from:now()-2h
 
 ### Problems / Problems
 
-- **Route:** `#/issues/problems` · **View:** Table · **Scope:** segment, timeframe · **Phone:** yes · **Tab badge:** count, r
+- **Route:** [`#/issues/problems`](https://reducetothemax.com/new/#/issues/problems) · **View:** Table · **Scope:** segment, timeframe · **Phone:** yes · **Tab badge:** count, r
 - **Facets:** Status, Category, Impact
 - **Columns:** ID, Problem, Root cause, Status, Affected entity, Started
 - **Related actions (details panel):** Investigate, Problem graph, Show affected entity, Show logs
@@ -545,7 +545,7 @@ fetch dt.davis.problems, from:now()-2h
 
 ### Problems / Investigations
 
-- **Route:** `#/issues/investigations` · **View:** Custom (`renderInvestigations`) · **Scope:** — · **Phone:** yes
+- **Route:** [`#/issues/investigations`](https://reducetothemax.com/new/#/issues/investigations) · **View:** Custom (`renderInvestigations`) · **Scope:** — · **Phone:** yes
 - **Facets:** Status, Root cause, Trigger, Sharing
 - **Columns:** Investigation, Status, Root cause, Trigger, Sharing, Created
 - **Primary action:** New investigation
@@ -560,7 +560,7 @@ fetch dt.system.investigations
 
 ### Problems / Recommendations
 
-- **Route:** `#/issues/recommendations` · **View:** Table · **Scope:** — · **Tab badge:** count, p
+- **Route:** [`#/issues/recommendations`](https://reducetothemax.com/new/#/issues/recommendations) · **View:** Table · **Scope:** — · **Tab badge:** count, p
 - **Facets:** Source, Priority, Category
 - **Columns:** Recommendation, Source, Priority, Category
 
@@ -574,7 +574,7 @@ fetch dt.system.recommendations
 
 ### Security / Vulnerabilities
 
-- **Route:** `#/security/vulnerabilities` · **View:** Explorer · **Scope:** — · **Tab badge:** count, r
+- **Route:** [`#/security/vulnerabilities`](https://reducetothemax.com/new/#/security/vulnerabilities) · **View:** Explorer · **Scope:** — · **Tab badge:** count, r
 - **Modes:** Prioritization, Findings
 - **Stats chips:** Vulnerabilities, Critical, High, Open, Avg score
 - **Chart:** Vulnerabilities over time, stacked Critical and high / Medium and low; histogram of Security score
@@ -595,7 +595,7 @@ fetch security.events, from:now()-2h
 
 ### Security / SIEM
 
-- **Route:** `#/security/siem` · **View:** Custom (`renderSecurity`) · **Scope:** — · **Tab badge:** New
+- **Route:** [`#/security/siem`](https://reducetothemax.com/new/#/security/siem) · **View:** Custom (`renderSecurity`) · **Scope:** — · **Tab badge:** New
 - **Screenshot:** [17-siem](screenshots/17-siem.png)
 
 ```
@@ -606,7 +606,7 @@ fetch dt.system.detection_rules
 
 ### Security / User audits
 
-- **Route:** `#/security/user-audits` · **View:** Table · **Scope:** timeframe
+- **Route:** [`#/security/user-audits`](https://reducetothemax.com/new/#/security/user-audits) · **View:** Table · **Scope:** timeframe
 - **Facets:** Action, Result, Risk, Method, User
 - **Columns:** Time, User, Event, Action, Result, Risk, Method, Source IP, Location
 - **Related actions (details panel):** Show user sessions, Open detections
@@ -620,7 +620,7 @@ fetch dt.system.audit_events, from:now()-2h
 
 ### Security / Detections
 
-- **Route:** `#/security/detectors` · **View:** Custom (`renderDetectors`) · **Scope:** —
+- **Route:** [`#/security/detectors`](https://reducetothemax.com/new/#/security/detectors) · **View:** Custom (`renderDetectors`) · **Scope:** —
 
 ```
 fetch dt.system.detections
@@ -630,7 +630,7 @@ fetch dt.system.detections
 
 ### Security / Templates
 
-- **Route:** `#/security/templates` · **View:** Table · **Scope:** —
+- **Route:** [`#/security/templates`](https://reducetothemax.com/new/#/security/templates) · **View:** Table · **Scope:** —
 - **Facets:** Type, Applies to
 - **Columns:** Template, Type, Applies to, Includes
 
@@ -645,7 +645,7 @@ fetch dt.system.templates
 
 ### Documents / Dashboards
 
-- **Route:** `#/documents/dashboards` · **View:** Table · **Scope:** —
+- **Route:** [`#/documents/dashboards`](https://reducetothemax.com/new/#/documents/dashboards) · **View:** Table · **Scope:** —
 - **Columns:** Name, Owner, Category, Modified
 - **Scope chips:** All, Mine, Shared with me, Ready-made, Favorites, Trash
 - **Primary action:** Create dashboard
@@ -662,7 +662,7 @@ fetch dt.system.documents
 
 ### Documents / Notebooks
 
-- **Route:** `#/documents/notebooks` · **View:** Table · **Scope:** —
+- **Route:** [`#/documents/notebooks`](https://reducetothemax.com/new/#/documents/notebooks) · **View:** Table · **Scope:** —
 - **Columns:** Name, Owner, Category, Modified
 - **Scope chips:** All, Mine, Shared with me, Ready-made, Favorites, Trash
 - **Primary action:** Create notebook
@@ -678,7 +678,7 @@ fetch dt.system.documents
 
 ### Documents / Pages
 
-- **Route:** `#/documents/pages` · **View:** Table · **Scope:** —
+- **Route:** [`#/documents/pages`](https://reducetothemax.com/new/#/documents/pages) · **View:** Table · **Scope:** —
 - **Columns:** Name, Owner, Category, Modified
 - **Scope chips:** All, Mine, Shared with me, Ready-made, Favorites, Trash
 - **Primary action:** Create page
@@ -694,7 +694,7 @@ fetch dt.system.documents
 
 ### Documents / Launchpads
 
-- **Route:** `#/documents/launchpads` · **View:** Table · **Scope:** —
+- **Route:** [`#/documents/launchpads`](https://reducetothemax.com/new/#/documents/launchpads) · **View:** Table · **Scope:** —
 - **Columns:** Name, Owner, Category, Modified
 - **Scope chips:** All, Mine, Shared with me, Ready-made, Favorites, Trash
 - **Primary action:** Create launchpad
@@ -712,7 +712,7 @@ fetch dt.system.documents
 
 ### Automate / Workflows
 
-- **Route:** `#/automate/workflows` · **View:** Table · **Scope:** — · **Tab badge:** count, r
+- **Route:** [`#/automate/workflows`](https://reducetothemax.com/new/#/automate/workflows) · **View:** Table · **Scope:** — · **Tab badge:** count, r
 - **Facets:** Trigger, Status, Owner
 - **Columns:** Workflow, Trigger, Status, Owner, Last run, Success rate
 - **Scope chips:** All, Mine, Trash
@@ -729,7 +729,7 @@ fetch dt.system.workflows
 
 ### Automate / Executions
 
-- **Route:** `#/automate/executions` · **View:** Table · **Scope:** timeframe
+- **Route:** [`#/automate/executions`](https://reducetothemax.com/new/#/automate/executions) · **View:** Table · **Scope:** timeframe
 - **Facets:** State, Trigger
 - **Columns:** Run, Workflow, Trigger, State, Started, Duration
 - **Related actions (details panel):** Show workflow
@@ -743,7 +743,7 @@ fetch dt.system.workflow_executions, from:now()-2h
 
 ### Automate / Guardians
 
-- **Route:** `#/automate/guardians` · **View:** Table · **Scope:** — · **Tab badge:** count, r
+- **Route:** [`#/automate/guardians`](https://reducetothemax.com/new/#/automate/guardians) · **View:** Table · **Scope:** — · **Tab badge:** count, r
 - **Facets:** Status, Tag
 - **Columns:** Guardian, Status, Objectives, Application, Tag, Last validation
 - **Related actions (details panel):** Show SLOs
@@ -759,7 +759,7 @@ fetch bizevents
 
 ### Admin / Coverage
 
-- **Route:** `#/admin/coverage` · **View:** Table · **Scope:** —
+- **Route:** [`#/admin/coverage`](https://reducetothemax.com/new/#/admin/coverage) · **View:** Table · **Scope:** —
 - **Facets:** Area, Status
 - **Columns:** Name, Area, Status, Reason
 - **Related actions (details panel):** Show fleet
@@ -774,7 +774,7 @@ smartscapeNodes "HOST", "NETWORK_DEVICE", "SERVICE"
 
 ### Admin / Fleet
 
-- **Route:** `#/admin/fleet` · **View:** Table · **Scope:** —
+- **Route:** [`#/admin/fleet`](https://reducetothemax.com/new/#/admin/fleet) · **View:** Table · **Scope:** —
 - **Facets:** Type, Health
 - **Columns:** Name, Type, Version, Health, Assigned
 - **Related actions (details panel):** Show coverage
@@ -787,7 +787,7 @@ smartscapeNodes "ONEAGENT", "ACTIVEGATE", "SYNTHETIC_ENGINE"
 
 ### Admin / Hub
 
-- **Route:** `#/admin/apps` · **View:** Table · **Scope:** —
+- **Route:** [`#/admin/apps`](https://reducetothemax.com/new/#/admin/apps) · **View:** Table · **Scope:** —
 - **Modes:** Installed, Discover
 - **Facets:** Status
 - **Columns:** App, Type, Version, Last update, Status
@@ -801,7 +801,7 @@ fetch dt.system.apps
 
 ### Admin / Access requests
 
-- **Route:** `#/admin/access` · **View:** Table · **Scope:** — · **Tab badge:** count, p
+- **Route:** [`#/admin/access`](https://reducetothemax.com/new/#/admin/access) · **View:** Table · **Scope:** — · **Tab badge:** count, p
 - **Facets:** Status, Access, Scope
 - **Columns:** Request, Requester, Access, Scope, Requested, Status
 
@@ -815,7 +815,7 @@ fetch dt.system.access_requests
 
 ### Admin / Settings
 
-- **Route:** `#/admin/settings` · **View:** Table · **Scope:** —
+- **Route:** [`#/admin/settings`](https://reducetothemax.com/new/#/admin/settings) · **View:** Table · **Scope:** —
 - **Facets:** Section, Scope
 - **Columns:** Setting, Section, Scope, Description
 
@@ -830,7 +830,7 @@ fetch dt.system.settings_schemas
 
 ### QuickStart / QuickStart
 
-- **Route:** `#/quickstart/landing` · **View:** Custom (`renderQuickStart`) · **Scope:** segment, timeframe
+- **Route:** [`#/quickstart/landing`](https://reducetothemax.com/new/#/quickstart/landing) · **View:** Custom (`renderQuickStart`) · **Scope:** segment, timeframe
 - **Screenshot:** [20-quickstart](screenshots/20-quickstart.png)
 
 ```
