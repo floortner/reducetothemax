@@ -817,10 +817,7 @@ html[data-theme=dark],html[data-theme=midnight],html[data-theme=terminal],html[d
 .dr-code .dql-h{flex-wrap:wrap}
 .dr-code pre.dql{white-space:pre;word-break:normal}
 pre.dql .cm{color:var(--muted)}
-.dd summary{list-style:none;cursor:pointer;display:flex;flex-direction:column;gap:2px}
-.dd summary::-webkit-details-marker{display:none}
-.dd summary h2::after{content:' ▾';color:var(--muted);font-size:13px}
-.dd:not([open]) summary h2::after{content:' ▸'}
+.dd-h{margin:0 0 4px}
 .dd-g{columns:2 360px;column-gap:28px;margin-top:10px;font-size:13px}
 .dd-r{break-inside:avoid;display:grid;grid-template-columns:minmax(120px,1fr) minmax(140px,1.3fr) 12px;gap:12px;align-items:center;width:100%;padding:6px 8px;border:0;border-top:1px solid var(--line);background:none;color:var(--text);font:inherit;text-align:left;cursor:pointer}
 .dd-r:hover{background:var(--panel2)}
@@ -3046,7 +3043,7 @@ const DD_TERMS=[
  ['Search syntax, facets','DQL. Every view has a DQL button','telemetry/logs'],
  ['Terraform provider, datadog-ci','dtctl, Terraform and Monaco','automate/workflows']
 ];
-const ddCard=()=>`<details class="qs-card dd" open><summary><h2>Coming from Datadog?</h2><span class="muted">Find what you know under its Dynatrace name. You can also type a Datadog term in search.</span></summary><div class="dd-g">${DD_TERMS.map(([d,t],i)=>`<button class="dd-r" data-dd="${i}" title="Open ${esc(t)}"><span class="dd-d">${esc(d)}</span><span class="dd-t">${esc(t)}</span><span class="dd-c" aria-hidden="true">›</span></button>`).join('')}</div></details>`;
+const ddCard=()=>`<details class="ph-wrap dd" open><summary>Coming from Datadog?<span class="muted">${DD_TERMS.length} terms</span>${svgI(ICO.chev,'style="width:14px;height:14px"')}</summary><section class="qs-card"><p class="muted dd-h">Find what you know under its Dynatrace name. You can also type a Datadog term in search.</p><div class="dd-g">${DD_TERMS.map(([d,t],i)=>`<button class="dd-r" data-dd="${i}" title="Open ${esc(t)}"><span class="dd-d">${esc(d)}</span><span class="dd-t">${esc(t)}</span><span class="dd-c" aria-hidden="true">›</span></button>`).join('')}</div></section></details>`;
 function ddOpen(i){const r=DD_TERMS[i][2];if(r==='assist'){openAssist();return}const [a,t]=r.split('/');go(a,t)}
 
 /* ---------- compared with datadog (user menu, shareable with ?read=datadog) ---------- */
