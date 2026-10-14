@@ -12,7 +12,7 @@ Stats chips: the first entry is shown as the count next to the view title, the r
 - **Infrastructure:** [Hosts](#infrastructure--hosts), [Network](#infrastructure--network), [Clouds](#infrastructure--clouds), [Kubernetes](#infrastructure--kubernetes), [Cost](#infrastructure--cost), [Templates](#infrastructure--templates)
 - **Applications:** [Services](#applications--services), [Errors](#applications--errors), [Profile & Debug](#applications--profile--debug), [SLOs](#applications--slos), [Templates](#applications--templates)
 - **Experience:** [Frontends](#experience--frontends), [Synthetic](#experience--synthetic), [User analytics](#experience--user-analytics), [Feature flags](#experience--feature-flags), [Heatmaps](#experience--heatmaps)
-- **Smartscape:** [Around an entity](#smartscape--around-an-entity), [Problem graph](#smartscape--problem-graph), [Smartscape on Grail](#smartscape--smartscape-on-grail), [Infrastructure overview](#smartscape--infrastructure-overview), [Service dependency graph](#smartscape--service-dependency-graph), [Kubernetes overview](#smartscape--kubernetes-overview), [AWS overview](#smartscape--aws-overview), [Azure overview](#smartscape--azure-overview), [AI Observability](#smartscape--ai-observability), [Security problem](#smartscape--security-problem), [Network devices](#smartscape--network-devices)
+- **Smartscape:** [Smartscape on Grail](#smartscape--smartscape-on-grail), [Around an entity](#smartscape--around-an-entity), [Problem graph](#smartscape--problem-graph), [Infrastructure overview](#smartscape--infrastructure-overview), [Service dependency graph](#smartscape--service-dependency-graph), [Kubernetes overview](#smartscape--kubernetes-overview), [AWS overview](#smartscape--aws-overview), [Azure overview](#smartscape--azure-overview), [AI Observability](#smartscape--ai-observability), [Security problem](#smartscape--security-problem), [Network devices](#smartscape--network-devices)
 - **Telemetry:** [Logs](#telemetry--logs), [Metrics](#telemetry--metrics), [Traces](#telemetry--traces), [User sessions](#telemetry--user-sessions), [Events](#telemetry--events), [LLM & Agentic](#telemetry--llm--agentic)
 - **Problems:** [Problems](#problems--problems), [Investigations](#problems--investigations), [Recommendations](#problems--recommendations)
 - **Security:** [Vulnerabilities](#security--vulnerabilities), [SIEM](#security--siem), [User audits](#security--user-audits), [Detections](#security--detections), [Templates](#security--templates)
@@ -307,6 +307,17 @@ fetch user.events
 
 ## Smartscape
 
+### Smartscape / Smartscape on Grail
+
+- **Route:** [`#/smartscape/grail`](https://reducetothemax.com/new/#/smartscape/grail) · **View:** Custom (`renderSmartscape`) · **Scope:** segment
+- **Screenshot:** [12-smartscape-grail](screenshots/12-smartscape-grail.png)
+
+```
+smartscapeNodes "*"
+| summarize nodes = count(), by:{type}
+| sort nodes desc
+```
+
 ### Smartscape / Around an entity
 
 - **Route:** [`#/smartscape/around`](https://reducetothemax.com/new/#/smartscape/around) · **View:** Custom (`renderSmartscape`) · **Scope:** segment
@@ -330,17 +341,6 @@ fetch dt.davis.problems
 | fields display_id, event.name, root_cause_entity_id, affected_entity_ids
 | expand affected_entity_ids
 | lookup [smartscapeNodes "*"], sourceField:affected_entity_ids, lookupField:id, fields:{name, type}
-```
-
-### Smartscape / Smartscape on Grail
-
-- **Route:** [`#/smartscape/grail`](https://reducetothemax.com/new/#/smartscape/grail) · **View:** Custom (`renderSmartscape`) · **Scope:** segment
-- **Screenshot:** [12-smartscape-grail](screenshots/12-smartscape-grail.png)
-
-```
-smartscapeNodes "*"
-| summarize nodes = count(), by:{type}
-| sort nodes desc
 ```
 
 ### Smartscape / Infrastructure overview
