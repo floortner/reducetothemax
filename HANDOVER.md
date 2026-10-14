@@ -104,7 +104,7 @@ Below 700 px the prototype shows a read-only subset: Home, Problems, Services, L
 
 Goal: Datadog users (DevOps and dev teams) feel at home. Dynatrace fans value dtctl and the API for "freedom, power, automation". All code is in `site/new/index.html`:
 - **Root cause per problem:** `probRel`, `probDrawer`. Root cause column in Problems and at the top of its details panel.
-- **Smartscape "Around an entity"** (default view): `renderAround`, `arLanes`, `AR_CALLS` (the service call graph), `arFit` (fits the graph beside the panel). Readable type names: `SS_TN`, `ssTypeName`.
+- **Smartscape "Around an entity"** (the default view is "Smartscape on Grail"): `renderAround`, `arLanes`, `AR_CALLS` (the service call graph), `arFit` (fits the graph beside the panel). Readable type names: `SS_TN`, `ssTypeName`.
 - **Manage as code** on SLOs, workflows and templates: `codeBlock`, `codeText` (dtctl, API, Terraform, Monaco).
 - **key:value search** in every filter box: `kvParse`, `kvCompose`, `kvSuggest`, `KV_ALIAS` (Datadog keys as aliases). Live DQL translation in `dqlFor`.
 - **Services:** Version column and deploy markers: `exDeps`, `exDepSvg`.

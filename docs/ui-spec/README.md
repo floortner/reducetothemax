@@ -317,11 +317,11 @@ Rules: Esc closes it. **Focus returns to the row that opened it** (a fixed acces
 
 ### 5.5 Smartscape — Required (behaviour), Your call (rendering)
 
-![Around an entity](screenshots/11-smartscape-around.png)
+![Smartscape on Grail](screenshots/12-smartscape-grail.png)
 
-- **One page with a view picker**, no tabs: Around an entity (default), Problem graph, Smartscape on Grail, Infrastructure overview, Service dependency graph, Kubernetes, AWS, Azure, AI Observability, Security problem, Network devices.
-- **Around an entity:** the selected entity in the middle, "Called by" on the left, "Calls" on the right, "Runs on" below. Selecting a node moves there. The side panel shows health, the open problem, the root cause and next steps.
-- **Large graphs** ([Grail view, about 15,000 nodes](screenshots/12-smartscape-grail.png)) group by environment (AWS, Azure, on-premises zones), use a force, vertical or horizontal layout, and offer find, type filters, "Affected by problem" and "Hide unconnected nodes". Clicking a node highlights it and its neighbours.
+- **One page with a view picker**, no tabs: Smartscape on Grail (default, first in the picker), Around an entity, Problem graph, Infrastructure overview, Service dependency graph, Kubernetes, AWS, Azure, AI Observability, Security problem, Network devices.
+- **Around an entity** ([screenshot](screenshots/11-smartscape-around.png)): the selected entity in the middle, "Called by" on the left, "Calls" on the right, "Runs on" below. Selecting a node moves there. The side panel shows health, the open problem, the root cause and next steps.
+- **Large graphs** (the Grail view, about 15,000 nodes) group by environment (AWS, Azure, on-premises zones), use a force, vertical or horizontal layout, and offer find, type filters, "Affected by problem" and "Hide unconnected nodes". Clicking a node highlights it and its neighbours.
 - **Shared controls:** zoom +/−, fit, mouse-wheel zoom, drag to pan, a mini map. One overlay panel on the left that collapses as a whole.
 - **Problem graph** ([screenshot](screenshots/13-problem-graph.png)): columns Root cause → Directly affected → Impacted frontends → Users, with a spread selector (1–3 hops).
 - **Required for performance:** render large graphs on canvas or WebGL, not one DOM/SVG element per node (11.2).
