@@ -3127,9 +3127,9 @@ function renderUserMenu(){
   const pref=document.documentElement.dataset.themePref||'light';
   $('#usermenu').innerHTML=`<div class="um-h"><span class="avatar big">F</span><div><b>Florian Ortner</b><small>Signed in to this prototype</small></div></div><div class="msep"></div><h5>Theme</h5>`+
    THEMES_UI.map(([id,n,sub,sw])=>`<button class="mi" role="menuitemradio" data-theme-opt="${id}" aria-checked="${pref===id}"><i class="rd"></i><span class="sw" aria-hidden="true">${sw.map(c=>`<i style="background:${c}"></i>`).join('')}</span>${esc(n)}${sub?`<small>${esc(sub)}</small>`:''}</button>`).join('')+
-   `<div class="msep"></div><h5>Navigation</h5><a class="mi" role="menuitemradio" aria-checked="${PROTO_OPT==='B'}" href="index.html" data-proto><i class="rd"></i>Option B<small>12 apps, current prototype</small></a><a class="mi" role="menuitemradio" aria-checked="${PROTO_OPT==='A'}" href="minimal.html" data-proto><i class="rd"></i>Option A<small>6 apps, alternative</small></a>`+
+   `<div class="msep"></div><h5>Navigation</h5><a class="mi" role="menuitemradio" aria-checked="${PROTO_OPT==='B'}" href="index.html" data-proto><i class="rd"></i>Dynatrace<small>12 apps, default</small></a><a class="mi" role="menuitemradio" aria-checked="${PROTO_OPT==='A'}" href="minimal.html" data-proto><i class="rd"></i>Minimal<small>6 apps</small></a>`+
    `<div class="msep"></div><button class="mi hlrow" role="menuitemcheckbox" aria-checked="${HL}" data-hl><span>Highlight menu groups<small>Blue, yellow, purple and gray</small></span><span class="hlsw" aria-hidden="true"><i></i></span></button>`+
-   `<div class="msep"></div><button class="mi" role="menuitem" data-why>Compared with Datadog<small>Share this view</small></button><a class="mi" role="menuitem" href="https://github.com/floortner/reducetothemax/blob/main/site/new/${PROTO_OPT==='A'?'minimal.html':'index.html'}" target="_blank" rel="noopener noreferrer">Source on GitHub<small>site/new/${PROTO_OPT==='A'?'minimal.html':'index.html'}</small></a><a class="mi" role="menuitem" href="https://github.com/floortner/reducetothemax/tree/main/docs/ui-spec" target="_blank" rel="noopener noreferrer">UI spec on GitHub<small>docs/ui-spec</small></a><button class="mi" data-toast="Sign out">Sign out</button>`;
+   `<div class="msep"></div><button class="mi" role="menuitem" data-why>Compared with Datadog<small>Share this view</small></button><a class="mi" role="menuitem" href="https://github.com/floortner/reducetothemax/tree/main/docs/ui-spec" target="_blank" rel="noopener noreferrer">UI spec on GitHub<small>docs/ui-spec</small></a><button class="mi" data-toast="Sign out">Sign out</button>`;
 }
 /* ---------- DQL / dtctl ---------- */
 const dur=m=>m<60?`${Math.round(m)}m`:m<1440?`${+(m/60).toFixed(1)}h`:`${+(m/1440).toFixed(1)}d`;
@@ -4580,8 +4580,8 @@ if(!location.hash)history.replaceState(null,'','#/home/overview');
 render();
 </script>
 <script>
-/* Option A navigation layer.
-   Loaded after the Option B prototype (site/new/index.html). It leaves every page and route untouched and only
+/* Minimal navigation layer (Option A).
+   Loaded after the Dynatrace prototype (site/new/index.html, Option B). It leaves every page and route untouched and only
    replaces the navigation chrome: the rail, the header tabs, the type switcher and the phone menu.
    6 apps instead of 12: Home, Explore, Issues, Library, Automate, Admin. */
 (function(){
@@ -4671,7 +4671,7 @@ renderMmenu=function(){
 /* header group link and chrome elements */
 document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('.gname');if(a){e.preventDefault();e.stopPropagation();const g=where().g;go(...g.tabs[0].routes[0].split("/"))}},true);
 $('#body').insertAdjacentHTML('beforebegin','<nav class="aswitch" id="aswitch" hidden aria-label="View type"></nav>');
-$('.apphead > .pop:last-child').insertAdjacentHTML('beforebegin','<span class="abadge" id="abadge" hidden title="Option A: 6 apps">Option A</span>');
+$('.apphead > .pop:last-child').insertAdjacentHTML('beforebegin','<span class="abadge" id="abadge" hidden title="Minimal navigation: 6 apps">Minimal</span>');
 const st=document.createElement('style');st.textContent=`
 .aswitch{display:flex;align-items:center;gap:6px;padding:8px 20px;border-bottom:1px solid var(--line);background:var(--panel);overflow-x:auto;white-space:nowrap}
 .aswitch[hidden]{display:none}
