@@ -1636,7 +1636,7 @@ const APPS=[
       {label:'Prioritization',rows:VULNS,sort:{k:'score',dir:-1},search:['name','id'],cols:[C('id','ID','mono'),C('name','Vulnerability','name'),C('score','Security score','num1',{num:1}),C('severity','Severity','badge'),C('vtype','Type'),C('entities','Affected entities','int',{num:1}),C('status','Status','badge')],facets:[{k:'severity',label:'Severity'},{k:'status',label:'Status'},{k:'vtype',label:'Type'}]},
       {label:'Findings',rows:FINDS,search:['name','id','entity'],cols:[C('id','ID','mono'),C('name','Finding','name'),C('entity','Entity'),C('severity','Severity','badge'),C('vtype','Type'),C('status','Status','badge'),C('opened','Open since','ago')],facets:[{k:'severity',label:'Severity'},{k:'status',label:'Status'},{k:'vtype',label:'Type'}]}],
      views:[{name:'Critical and open',f:{severity:['Critical'],status:['Open']}},{name:'All',f:{}}]},
-   {id:'siem',name:'SIEM',kind:'Apps & tabs',noSeg:true,render:renderSecurity},
+   {id:'siem',name:'SIEM',badge:{label:'New',tone:'p'},kind:'Apps & tabs',noSeg:true,render:renderSecurity},
    {id:'user-audits',related:[{label:'Show user sessions',app:'telemetry',tab:'user-sessions',key:'user'},{label:'Open detections',app:'security',tab:'detectors',all:true}],name:'User audits',kind:'Telemetry',noun:'audit events',rows:USERAUD,scoped:false,tk:'ago',sort:{k:'ago',dir:1},search:['name','user','ip'],
      cols:[C('ago','Time','ago'),C('user','User'),C('name','Event','name'),C('action','Action'),C('result','Result','badge'),C('risk','Risk','badge'),C('method','Method'),C('ip','Source IP','mono'),C('loc','Location')],
      facets:[{k:'action',label:'Action'},{k:'result',label:'Result'},{k:'risk',label:'Risk'},{k:'method',label:'Method'},{k:'user',label:'User'}]},
