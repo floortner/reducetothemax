@@ -1,6 +1,6 @@
-# Handover: Dynatrace "Option B" navigation prototype
+# Handover: Dynatrace navigation prototype
 
-**Status (2026-10-14):** everything is merged to `main`; no open PRs or branches. Work only on `site/new/index.html` (Option B). Use your own `git worktree` and a PR (see `CLAUDE.md`); two sessions in one folder have swept each other's changes into commits. The open items are listed at the end ("Open items").
+**Status (2026-10-14):** everything is merged to `main`; no open PRs or branches. Work only on `site/new/index.html` (the Dynatrace option). Use your own `git worktree` and a PR (see `CLAUDE.md`); two sessions in one folder have swept each other's changes into commits. The open items are listed at the end ("Open items").
 
 ## Project
 - **Repo:** GitHub `floortner/reducetothemax`. It's a static site: `site/` holds the mantras page for reducetothemax.com (see `CLAUDE.md`).
@@ -9,7 +9,7 @@
 
 ## What was built
 - **Deliverable:** `site/new/index.html`, a single self-contained file of about 560 KB (CSS and JS inline, no external requests, icons as data URIs). It's served at `/new/` after deploy.
-- **Origin:** I analysed the screenshots and proposed two groupings to reduce the number of apps: **Option A** (aggressive, few apps and tabs) and **Option B** (relaxed). Option B is the prototype. Option A exists only as a parked alternative, `site/new/minimal.html` (live at `/new/minimal.html`): a self-contained file (a copy of an earlier `index.html` with the Option A navigation layer inlined as a second `<script>` at the end). Don't maintain it beyond the shared user menu; it is out of date. The user menu in both files has a Navigation switch (Option B / Option A) that keeps the current view. The original analysis is captured below.
+- **Origin:** I analysed the screenshots and proposed two groupings to reduce the number of apps: **Minimal** (aggressive, few apps and tabs; first called Option A) and **Dynatrace** (relaxed; first called Option B). Dynatrace is the prototype and the default. Minimal exists only as a parked alternative, `site/new/minimal.html` (live at `/new/minimal.html`): a self-contained file (a copy of an earlier `index.html` with the Minimal navigation layer inlined as a second `<script>` at the end). Don't maintain it beyond the shared user menu; it is out of date. The user menu in both files has a Navigation switch (Dynatrace / Minimal) that keeps the current view. The original analysis is captured below.
 - **Menu order (hard-coded in `renderRail` and `renderMmenu`):** Home | Search, Assist, Recents | Problems, Smartscape, Infrastructure, Applications, Experience, Security, Telemetry | Documents, Automate, Admin, QuickStart | pinned view | Collapse.
 - **Tabs:**
   - Home: Overview, Business (industry dashboard templates)
@@ -35,7 +35,7 @@ Four patterns drove both groupings:
 
 Both options group by user job instead of by product. Both also move Fleet, Coverage and Private locations to Admin (setup work, not daily use). Alert setup was split across Infrastructure Alert templates, K8s Recommendations and Problems, and consolidating it was called the best single UX win.
 
-### Option A: aggressive (22 apps → 6, about 10 tabs)
+### Minimal: aggressive (22 apps → 6, about 10 tabs)
 
 | App | Tabs | Absorbs |
 |---|---|---|
@@ -50,12 +50,12 @@ Both options group by user job instead of by product. Both also move Fleet, Cove
 - **Telemetry** is a signal switch for Logs, Traces and Events. Live logs and Exceptions become toggles, and Failures and Response Time become saved views.
 - **Why:** a user thinks "what's broken?" (Issues), "show me the thing" (Explore), "keep my analysis" (Library), "automate it" (Automate) or "configure it" (Admin). Nobody thinks "open the Kubernetes app."
 - **Risk:** Explore carries a lot, so the type tree has to scale well.
-- **Suggested start:** the Library and Automate merges are the lowest risk. Decide between A and B for Explore using real tab-usage telemetry, since the screenshots show layout, not usage.
+- **Suggested start:** the Library and Automate merges are the lowest risk. Decide between Minimal and Dynatrace for Explore using real tab-usage telemetry, since the screenshots show layout, not usage.
 
-### Option B: relaxed on tabs (22 apps → 8, about 30 tabs), as first proposed
+### Dynatrace: relaxed on tabs (22 apps → 8, about 30 tabs), as first proposed
 Home (Overview, Topology, Business); Infrastructure (Hosts & Network, Kubernetes, Clouds, Alert templates); Applications (Services, Failures, Response Time, Synthetic, Frontends); Telemetry (Logs, Live logs, Traces, Exceptions, Business events); Issues & Security (Problems, Vulnerabilities, Investigations, Recommendations); Library (Dashboards, Notebooks, one shared filter bar); Automate (Workflows, Executions, Guardians); Admin (Coverage, Fleet, Apps, Settings). The prototype has since evolved well beyond this (see the tab list above).
 
-### Mapping Option A onto the current prototype
+### Mapping Minimal onto the current prototype
 - **Home:** the Overview tab exists. The Business tab and QuickStart would fold into it.
 - **Explore (Entities):** this is Hosts, Network, Clouds, Kubernetes, Synthetic, Services, Errors, Response time and Frontends. All use the same table engine, so a type tree plus one table needs only a new top-level view over the existing row arrays (`HOSTS_ONLY`, `NETDEV`, `K8S`, `SYNTH`, `SERVICES`, `FRONT`).
 - **Explore (Telemetry):** Logs, Traces, Metrics, Events, User sessions and AI would become a signal switch.
@@ -93,7 +93,7 @@ Home (Overview, Topology, Business); Infrastructure (Hosts & Network, Kubernetes
   - There are a few different "stat" tile layouts (`.kpi`, `.tile`, `.sx-kpi`).
 - **Preferences:** replies should be very short, and look up library docs before using them. Wording is sentence case, with "Open" for navigation, "Show" for a filtered list and "Create" for a new object. Red badges stay red (square for Security and SLOs, round for Problems). The Dynatrace logo wordmark is lowercase.
 
-## For revised Option A
+## For a revised Minimal
 Reuse these pieces: the `APPS` definition, the table engine, the `related`, `DQL` and `XV` maps, the drawer and detail routes, and the SLO, Synthetic and Security data models. The fewer-apps grouping is mostly a change to the `APPS` structure, `renderRail`, the link targets and the copy. Run the route sweep and the link-target check after regrouping.
 
 ## Phone layout
