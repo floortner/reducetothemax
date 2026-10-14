@@ -9,6 +9,11 @@ for Dynatrace R&D. No build step, no framework, no dependencies. The whole site 
 files in `site/`: `index.html` (empty markup shell), `styles.css`, `app.js` (vanilla
 renderer), and `mantras.json` (all content).
 
+## Prototype and parallel sessions
+
+- `site/new/` is the Dynatrace navigation prototype. Read `HANDOVER.md` before changing it.
+- When more than one Claude session works in this repo, each uses its own `git worktree`. Sessions sharing one folder have committed each other's work.
+
 ## Local preview
 
 The page `fetch()`es `mantras.json`, so it must be served over HTTP — opening
