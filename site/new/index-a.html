@@ -4495,7 +4495,7 @@ render();
 </script>
 <script>
 /* Option A navigation layer.
-   Loaded after the Option B prototype (site/new). It leaves every page and route untouched and only
+   Loaded after the Option B prototype (site/new/index.html). It leaves every page and route untouched and only
    replaces the navigation chrome: the rail, the header tabs, the type switcher and the phone menu.
    6 apps instead of 12: Home, Explore, Issues, Library, Automate, Admin. */
 (function(){
@@ -4578,7 +4578,7 @@ renderMmenu=function(){
 };
 
 const _um=renderUserMenu;
-renderUserMenu=function(){_um();$('#usermenu').insertAdjacentHTML('afterbegin',`<a class="mi" role="menuitem" href="../new/">Switch to Option B<small>Original navigation, 12 apps</small></a><div class="msep"></div>`)};
+renderUserMenu=function(){_um();$('#usermenu').insertAdjacentHTML('afterbegin',`<a class="mi" role="menuitem" href="index.html">Switch to Option B<small>Original navigation, 12 apps</small></a><div class="msep"></div>`)};
 
 /* Home absorbs QuickStart, Business templates and the Smartscape launcher */
 {const ht=appOf('home').tabs.find(t=>t.id==='overview'),_r=ht.render;
